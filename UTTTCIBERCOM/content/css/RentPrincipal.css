@@ -1,0 +1,262 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .menuLink {
+        color: black;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLink:hover {
+            color: black;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkActivo {
+        color: black;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkActivo:hover {
+            color: black;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtn {
+        color: black;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtn:hover {
+            color: black;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtnActivo {
+        color: black;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtnActivo:hover {
+            color: black;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .menuLink {
+        color: black;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLink:hover {
+            color: black;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+        }
+
+x {
+        color: black;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkActivo:hover {
+            color: black;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtn {
+        color: black;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtn:hover {
+            color: black;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtnActivo {
+        color: black;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtnActivo:hover {
+            color: black;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .menuLink {
+        color: black;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLink:hover {
+            color: black;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkActivo {
+        color: black;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkActivo:hover {
+            color: black;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtn {
+        color: black;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtn:hover {
+            color: black;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtnActivo {
+        color: black;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtnActivo:hover {
+            color: black;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .menuLink {
+        color: white;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLink:hover {
+            color: white;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+            padding: 3vh;
+        }
+
+    .menuLinkActivo {
+        color: black;
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkActivo:hover {
+            color: black;
+            font-weight: bolder;
+            font-size: 1.1em;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtn {
+        color: white;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtn:hover {
+            color: white;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+
+    .menuLinkBtnActivo {
+        color: black;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        text-decoration: none;
+        transition: linear 0.1s;
+    }
+
+        .menuLinkBtnActivo:hover {
+            color: black;
+            font-weight: bolder;
+            transition: linear 0.1s;
+        }
+
+}
+
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.bg-theme{
+    background-color:#003333;
+}
+
+.imagenBanner {
+    height: 10vh;
+}
+
+.light {
+    font-weight: lighter;
+    color:#FFF;
+}
+
+.menuActivo {
+    background-color: white;
+}
+
+.menu {
+    height: 13vh;
+    margin: -1.5vh;
+    padding: 5vh;
+    margin-right: 2%;
+}

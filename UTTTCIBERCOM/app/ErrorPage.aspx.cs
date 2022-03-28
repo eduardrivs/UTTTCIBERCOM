@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using UTTTCIBERCOM.Control;
 
 namespace UTTTCIBERCOM.app
 {
@@ -11,7 +12,9 @@ namespace UTTTCIBERCOM.app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //edel.meza@uttt.edu.mx
+            EmailManager ob = new EmailManager("19300671@uttt.edu.mx");
+            ob.enviarMensaje(SessionManager._lastError.ToString());
         }
     }
 }

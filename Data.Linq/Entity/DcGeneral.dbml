@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UTTTCIBERCOMDB" Class="DcGeneralDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=UTTTCIBERCOMDB.mssql.somee.com;Initial Catalog=UTTTCIBERCOMDB;Persist Security Info=True;User ID=EduardoRivas_SQLLogin_1" SettingsObjectName="Data.Linq.Properties.Settings" SettingsPropertyName="UTTTCIBERCOMDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CatArea" Member="CatArea">
+    <Type Name="CatArea">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strArea" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="strDescripcion" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="CatArea_COMPUTADORA" Member="COMPUTADORA" ThisKey="Id" OtherKey="idArea" Type="COMPUTADORA" />
+      <Association Name="CatArea_EMPLEADO" Member="EMPLEADO" ThisKey="Id" OtherKey="idArea" Type="EMPLEADO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.USUARIO" Member="USUARIO">
+    <Type Name="USUARIO">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="isValid" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="idEmpleado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="USUARIO_CatRecoveryToken" Member="CatRecoveryToken" ThisKey="Id" OtherKey="idUsuario" Type="CatRecoveryToken" />
+      <Association Name="EMPLEADO_USUARIO" Member="EMPLEADO" ThisKey="idEmpleado" OtherKey="Id" Type="EMPLEADO" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CatRecoveryToken" Member="CatRecoveryToken">
+    <Type Name="CatRecoveryToken">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="dteFechaAlta" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="strRecoveryToken" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="isValid" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="USUARIO_CatRecoveryToken" Member="USUARIO" ThisKey="idUsuario" OtherKey="Id" Type="USUARIO" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CatRol" Member="CatRol">
+    <Type Name="CatRol">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strRol" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="strDescripcion" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="CatRol_EMPLEADO" Member="EMPLEADO" ThisKey="Id" OtherKey="idRol" Type="EMPLEADO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.COMPUTADORA" Member="COMPUTADORA">
+    <Type Name="COMPUTADORA">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strNombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strDescripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dteFechaAlta" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="idArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="monTarifa" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="strTeclado" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strMonitor" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strMouse" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strAudifonos" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strCPU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strRAM" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strGPU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="tempInicioRenta" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="COMPUTADORA_RENTA" Member="RENTA" ThisKey="Id" OtherKey="idEquipo" Type="RENTA" />
+      <Association Name="CatArea_COMPUTADORA" Member="CatArea" ThisKey="idArea" OtherKey="Id" Type="CatArea" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EMPLEADO" Member="EMPLEADO">
+    <Type Name="EMPLEADO">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strNombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="strAPaterno" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strAMaterno" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dteFechaNacimiento" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="intEdad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="strCURP" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="strRFC" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dteFechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="idRol" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="boolActivo" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="EMPLEADO_USUARIO" Member="USUARIO" ThisKey="Id" OtherKey="idEmpleado" Type="USUARIO" />
+      <Association Name="EMPLEADO_RENTA" Member="RENTA" ThisKey="Id" OtherKey="idEmpleado" Type="RENTA" />
+      <Association Name="CatArea_EMPLEADO" Member="CatArea" ThisKey="idArea" OtherKey="Id" Type="CatArea" IsForeignKey="true" />
+      <Association Name="CatRol_EMPLEADO" Member="CatRol" ThisKey="idRol" OtherKey="Id" Type="CatRol" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RENTA" Member="RENTA">
+    <Type Name="RENTA">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="dteFechaInicio" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dteFechaFinal" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dteTiempoTotal" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="idEmpleado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idEquipo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="monSubtotal" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="monIVA" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="monTotal" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="monPago" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="monCambio" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Association Name="COMPUTADORA_RENTA" Member="COMPUTADORA" ThisKey="idEquipo" OtherKey="Id" Type="COMPUTADORA" IsForeignKey="true" />
+      <Association Name="EMPLEADO_RENTA" Member="EMPLEADO" ThisKey="idEmpleado" OtherKey="Id" Type="EMPLEADO" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
