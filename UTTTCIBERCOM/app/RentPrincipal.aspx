@@ -58,7 +58,7 @@
             <div class="ps-5" style="width: 80%;">
                 <div class="table-responsive-lg">
                     <asp:GridView ID="GridView1" runat="server"
-                        AllowPaging="false" AutoGenerateColumns="False" DataSourceID="DataSourceComputadora"
+                        AllowPaging="true" AutoGenerateColumns="False" DataSourceID="DataSourceComputadora"
                         Width="100%" CellPadding="3" GridLines="Horizontal"
                         OnRowCommand="dgvComputadora_RowCommand" BackColor="White"
                         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
