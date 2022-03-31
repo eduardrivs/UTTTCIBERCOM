@@ -29,15 +29,15 @@
                     </div>
                     <div class="offcanvas-body ms-5">
                         <div class="menu menuActivo">
-                            <asp:Button Text="Rentas" runat="server" class="menuLinkBtnActivo text-center" />
+                            <asp:Button Text="Rentas" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnRentPrincipal_Click" />
                             <%--<a href="#" class="menuLinkActivo">Rentas</a>--%>
                         </div>
                         <div class="menu">
-                            <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" />
+                            <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                         </div>
                         <div class="menu">
-                            <asp:Button Text="Empleados" runat="server" class="menuLinkBtn text-center" />
+                            <asp:Button Text="Empleados" runat="server" class="menuLinkBtn text-center" OnClick="btnUserPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Empleados</a>--%>
                         </div>
                         <div class="menu">
@@ -56,48 +56,79 @@
                 <div class="my-4"><a href="#" class="menuLinkActivo"><i class="me-2 bi bi-pc-display"></i>Ver maquinas</a></div>
             </div>
             <div class="ps-5" style="width: 80%;">
-                <div class="table-responsive-lg">
-                    <asp:GridView ID="GridView1" runat="server"
-                        AllowPaging="true" AutoGenerateColumns="False" DataSourceID="DataSourceComputadora"
-                        Width="100%" CellPadding="3" GridLines="Horizontal"
-                        OnRowCommand="dgvComputadora_RowCommand" BackColor="White"
-                        BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
-                        ViewStateMode="Disabled" class="table table-sm mt-2">
-                        <AlternatingRowStyle BackColor="#F7F7F7" />
-                        <Columns>
-                            <asp:BoundField DataField="strNombre" HeaderText="Nombre" ReadOnly="True"
-                                SortExpression="strNombre" />
-                            <asp:BoundField DataField="tempInicioRenta" HeaderText="Renta Actual" ReadOnly="True"
-                                SortExpression="tmpInicioRenta" />
-                            <asp:TemplateField HeaderText="Editar">
-                                <ItemTemplate>
-                                    <asp:ImageButton runat="server" ID="imgEditar" CommandName="Editar" CommandArgument='<%#Bind("Id") %>' ImageUrl="~/content/images/editrecord_16x16.png" />
-                                </ItemTemplate>
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" Width="50px" />
-
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Eliminar" Visible="True">
-                                <ItemTemplate>
-                                    <asp:ImageButton runat="server" ID="imgEliminar" CommandName="Eliminar" CommandArgument='<%#Bind("Id") %>' ImageUrl="~/content/images/delrecord_16x16.png" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
-                                </ItemTemplate>
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" Width="50px" />
-                            </asp:TemplateField>
-                        </Columns>
-
-                    </asp:GridView>
+                <div class="table-responsive-lg p-4" style="width:100%">
+                    <asp:ListView ID="lstViewComputadoras" runat="server" DataSourceID="DataSourceComputadora" GroupItemCount="5">
+                        <ItemTemplate>
+                            <td runat="server">
+                                <asp:ImageButton runat="server" ID="imgEliminar" Width="50%" CommandName="Eliminar" CommandArgument='<%# Bind("id") %>' ImageUrl="~/content/images/PCOff.png" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                                <br />
+                                <asp:Label ID="tempInicioRentaLabel" runat="server" Text='<%# Eval("tempInicioRenta") %>' />
+                                <%--<% if (String.IsNullOrEmpty(Eval("tempInicioRenta").ToString()))
+                                    {%>
+                                    <asp:ImageButton runat="server" ID="imgEliminar" Width="50%" CommandName="Eliminar" CommandArgument='<%#Bind("id") %>' ImageUrl="~/content/images/PCO.png" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                                <% }
+                                    else
+                                    { %>
+                                    <asp:ImageButton runat="server" ID="ImageButton1" Width="50%" CommandName="Eliminar" CommandArgument='<%#Bind("id") %>' ImageUrl="~/content/images/PCOn.png" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
+                                <%} %>--%>
+                                <%--<asp:ImageButton runat="server" ID="imgEliminar" Width="50%" CommandName="Eliminar" CommandArgument='<%# Bind("id") %>' ImageUrl='<%# (String.IsNullOrEmpty("Wenas".ToString())) ? "~/ content / images / PCOff.png" : "~/content/images/ProtectedConfigurationProvider.png" %>' OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />--%>
+                            </td>
+                        </ItemTemplate>
+                        <EmptyDataTemplate>
+                            <table runat="server" style="">
+                                <tr>
+                                    <td>No se han devuelto datos.</td>
+                                </tr>
+                            </table>
+                        </EmptyDataTemplate>
+                        <EmptyItemTemplate>
+                            <td runat="server" />
+                        </EmptyItemTemplate>
+                        <GroupTemplate>
+                            <tr id="itemPlaceholderContainer" runat="server">
+                                <td id="itemPlaceholder" runat="server"></td>
+                            </tr>
+                        </GroupTemplate>
+                        <LayoutTemplate>
+                            <table runat="server">
+                                <tr runat="server">
+                                    <td runat="server">
+                                        <table id="groupPlaceholderContainer" runat="server" border="0" style="">
+                                            <tr id="groupPlaceholder" runat="server">
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr runat="server">
+                                    <td runat="server" style=""></td>
+                                </tr>
+                            </table>
+                        </LayoutTemplate>
+                        <SelectedItemTemplate>
+                            <td runat="server" style="">Id:
+                                <asp:Label ID="IdLabel" runat="server" Text='<%# Eval("Id") %>' />
+                                <br />
+                                strNombre:
+                                <asp:Label ID="strNombreLabel" runat="server" Text='<%# Eval("strNombre") %>' />
+                                <br />
+                                tempInicioRenta:
+                                <asp:Label ID="tempInicioRentaLabel" runat="server" Text='<%# Eval("tempInicioRenta") %>' />
+                                <br />
+                            </td>
+                        </SelectedItemTemplate>
+                    </asp:ListView>
                 </div>
             </div>
+
         </div>
 
     </form>
 
     <!-- DATA SOURCE -->
     <asp:LinqDataSource ID="DataSourceComputadora" runat="server"
-        ContextTypeName="DcGeneralDataContext"
+        ContextTypeName="Data.Linq.Entity.DcGeneralDataContext"
         OnSelecting="DataSourceComputadora_Selecting"
-        Select="new (strNombre,tempInicioRenta,Id)"
+        Select="new (Id, strNombre, tempInicioRenta)"
         TableName="COMPUTADORA" EntityTypeName="">
     </asp:LinqDataSource>
 

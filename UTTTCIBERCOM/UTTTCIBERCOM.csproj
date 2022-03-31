@@ -91,7 +91,9 @@
   <ItemGroup>
     <Content Include="app\ErrorPage.aspx" />
     <Content Include="app\Login.aspx" />
+    <Content Include="app\PCPrincipal.aspx" />
     <Content Include="app\RentPrincipal.aspx" />
+    <Content Include="app\UserPrincipal.aspx" />
     <Content Include="content\bootstrap.css" />
     <Content Include="content\bootstrap.js" />
     <Content Include="content\css\ErrorPageStyle.css" />
@@ -104,6 +106,8 @@
     <Content Include="content\images\Logo2Flat.png" />
     <Content Include="content\images\LogoBanner.png" />
     <Content Include="content\images\LogoBannerNeg.png" />
+    <Content Include="content\images\PCOff.png" />
+    <Content Include="content\images\PCOn.png" />
     <Content Include="content\images\printrecord_16x16.png" />
     <Content Include="content\js\validaciones.js" />
     <Content Include="Web.config" />
@@ -123,6 +127,13 @@
     <Compile Include="app\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="app\PCPrincipal.aspx.cs">
+      <DependentUpon>PCPrincipal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\PCPrincipal.aspx.designer.cs">
+      <DependentUpon>PCPrincipal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="app\RentPrincipal.aspx.cs">
       <DependentUpon>RentPrincipal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -130,11 +141,19 @@
     <Compile Include="app\RentPrincipal.aspx.designer.cs">
       <DependentUpon>RentPrincipal.aspx</DependentUpon>
     </Compile>
+    <Compile Include="app\UserPrincipal.aspx.cs">
+      <DependentUpon>UserPrincipal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\UserPrincipal.aspx.designer.cs">
+      <DependentUpon>UserPrincipal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\bootstrap.bundle.js" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

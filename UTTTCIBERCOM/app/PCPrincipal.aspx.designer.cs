@@ -11,7 +11,7 @@ namespace UTTTCIBERCOM.app
 {
 
 
-    public partial class RentPrincipal
+    public partial class PCPrincipal
     {
 
         /// <summary>
@@ -24,21 +24,21 @@ namespace UTTTCIBERCOM.app
         protected global::System.Web.UI.HtmlControls.HtmlForm renta;
 
         /// <summary>
-        /// Control lstViewComputadoras.
+        /// Control GridView1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lstViewComputadoras;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
 
         /// <summary>
-        /// Control DataSourceComputadora.
+        /// Control DataSourcePC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinqDataSource DataSourceComputadora;
+        protected global::System.Web.UI.WebControls.LinqDataSource DataSourcePC;
     }
 }
