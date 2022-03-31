@@ -8,15 +8,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UTTTCIBERCOM.Control;
-using UTTTCIBERCOM.Control.Filters;
 
 namespace UTTTCIBERCOM.app
 {
-    public partial class RentPrincipal : System.Web.UI.Page
+    public partial class UserPrincipal : System.Web.UI.Page
     {
-
         #region Variables
-
         int index = 0;
         private SessionManager session;
         DataContext dataContext;
@@ -27,22 +24,6 @@ namespace UTTTCIBERCOM.app
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                AppDomain.CurrentDomain.FirstChanceException += (senderr, ee) => {
-                    System.Text.StringBuilder msg = new System.Text.StringBuilder();
-                    msg.AppendLine(ee.Exception.GetType().FullName);
-                    msg.AppendLine(ee.Exception.Message);
-                    System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
-                    msg.AppendLine(st.ToString());
-                    msg.AppendLine();
-                    SessionManager._lastError = msg;
-                };
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
 
             try
             {
@@ -155,16 +136,34 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void DataSourceComputadora_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        protected void DataSourceEmpleado_Selecting(object sender, LinqDataSourceSelectEventArgs e)
         {
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
+                //bool nombreBool = false;
+                //bool sexoBool = false;
+                //if (!this.txtNombre.Text.Equals(String.Empty))
+                //{
+                //    nombreBool = true;
+                //}
+                //if (this.ddlSexo.Text != "-1")
+                //{
+                //    sexoBool = true;
+                //}
 
-                List<COMPUTADORA> listaPC =
-                    dcConsulta.GetTable<COMPUTADORA>().ToList();
-                listaComputadoras = listaPC;
-                e.Result = listaPC;
+                //Expression<Func<UTTT.Ejemplo.Linq.Data.Entity.Persona, bool>>
+                //    predicate =
+                //    (c =>
+                //    ((sexoBool) ? c.idCatSexo == int.Parse(this.ddlSexo.Text) : true) &&
+                //    ((nombreBool) ? (((nombreBool) ? c.strNombre.Contains(this.txtNombre.Text.Trim()) : false)) : true)
+                //    );
+
+                //predicate.Compile();
+
+                List<EMPLEADO> listaPersona =
+                    dcConsulta.GetTable<EMPLEADO>().ToList();
+                e.Result = listaPersona;
             }
             catch (Exception _e)
             {
@@ -172,28 +171,32 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void dgvComputadora_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void dgvEmpleados_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
-                int idPC = int.Parse(e.CommandArgument.ToString());
+                int idPersona = int.Parse(e.CommandArgument.ToString());
                 switch (e.CommandName)
                 {
                     case "Editar":
-                        this.editar(idPC);
+                        this.editar(idPersona);
                         break;
                     case "Eliminar":
-                        this.eliminar(idPC);
+                        this.eliminar(idPersona);
+                        break;
+                    case "Usuario":
+                        this.usuario(idPersona);
                         break;
                 }
             }
             catch (Exception _e)
             {
-                Console.WriteLine("MAL");
+                throw _e;
             }
         }
 
         #endregion
+
 
         #region Metodos
 
@@ -207,7 +210,13 @@ namespace UTTTCIBERCOM.app
             Console.WriteLine("Pa tu casa");
         }
 
+        private void usuario(int _idPersona)
+        {
+            Console.WriteLine("wenas");
+        }
+
         #endregion
+
 
     }
 }
