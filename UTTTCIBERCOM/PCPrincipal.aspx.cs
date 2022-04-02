@@ -11,8 +11,9 @@ using UTTTCIBERCOM.Control;
 
 namespace UTTTCIBERCOM.app
 {
-    public partial class UserPrincipal : System.Web.UI.Page
+    public partial class PCPrincipal : System.Web.UI.Page
     {
+
         #region Variables
         int index = 0;
         private SessionManager session;
@@ -24,12 +25,28 @@ namespace UTTTCIBERCOM.app
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                AppDomain.CurrentDomain.FirstChanceException += (senderr, ee) => {
+                    System.Text.StringBuilder msg = new System.Text.StringBuilder();
+                    msg.AppendLine(ee.Exception.GetType().FullName);
+                    msg.AppendLine(ee.Exception.Message);
+                    System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
+                    msg.AppendLine(st.ToString());
+                    msg.AppendLine();
+                    SessionManager._lastError = msg;
+                };
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
 
             try
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["trylog"] == "1")
                 {
@@ -39,7 +56,7 @@ namespace UTTTCIBERCOM.app
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
                 }
 
             }
@@ -52,7 +69,7 @@ namespace UTTTCIBERCOM.app
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             ConfigurationManager.AppSettings["session"] = "0";
-            session.Pantalla = "~/app/Login.aspx";
+            session.Pantalla = "/Login.aspx";
             Session["SessionManager"] = null;
             this.Response.Redirect(this.session.Pantalla, false);
         }
@@ -64,15 +81,15 @@ namespace UTTTCIBERCOM.app
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["session"] == "1")
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
 
-                    this.session.Pantalla = "~/app/UserPrincipal.aspx";
+                    this.session.Pantalla = "/UserPrincipal.aspx";
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -90,15 +107,15 @@ namespace UTTTCIBERCOM.app
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["session"] == "1")
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
 
-                    this.session.Pantalla = "~/app/PCPrincipal.aspx";
+                    this.session.Pantalla = "/PCPrincipal.aspx";
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -116,15 +133,15 @@ namespace UTTTCIBERCOM.app
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["session"] == "1")
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
 
-                    this.session.Pantalla = "~/app/RentPrincipal.aspx";
+                    this.session.Pantalla = "/RentPrincipal.aspx";
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -136,7 +153,7 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void DataSourceEmpleado_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        protected void DataSourcePC_Selecting(object sender, LinqDataSourceSelectEventArgs e)
         {
             try
             {
@@ -161,8 +178,8 @@ namespace UTTTCIBERCOM.app
 
                 //predicate.Compile();
 
-                List<EMPLEADO> listaPersona =
-                    dcConsulta.GetTable<EMPLEADO>().ToList();
+                List<COMPUTADORA> listaPersona =
+                    dcConsulta.GetTable<COMPUTADORA>().ToList();
                 e.Result = listaPersona;
             }
             catch (Exception _e)
@@ -171,7 +188,7 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void dgvEmpleados_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void dgvPC_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
@@ -183,9 +200,6 @@ namespace UTTTCIBERCOM.app
                         break;
                     case "Eliminar":
                         this.eliminar(idPersona);
-                        break;
-                    case "Usuario":
-                        this.usuario(idPersona);
                         break;
                 }
             }
@@ -210,13 +224,7 @@ namespace UTTTCIBERCOM.app
             Console.WriteLine("Pa tu casa");
         }
 
-        private void usuario(int _idPersona)
-        {
-            Console.WriteLine("wenas");
-        }
-
         #endregion
-
 
     }
 }

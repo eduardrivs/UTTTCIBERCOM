@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -89,11 +92,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\ErrorPage.aspx" />
-    <Content Include="app\Login.aspx" />
-    <Content Include="app\PCPrincipal.aspx" />
-    <Content Include="app\RentPrincipal.aspx" />
-    <Content Include="app\UserPrincipal.aspx" />
+    <Content Include="content\css\ErrorPageServer.css" />
+    <Content Include="content\images\dribbble_1.gif" />
+    <Content Include="ErrorPage.aspx" />
+    <Content Include="ErrorPageServer.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="PCPrincipal.aspx" />
+    <Content Include="RentManager.aspx" />
+    <Content Include="RentPrincipal.aspx" />
+    <Content Include="UserPrincipal.aspx" />
     <Content Include="content\bootstrap.css" />
     <Content Include="content\bootstrap.js" />
     <Content Include="content\css\ErrorPageStyle.css" />
@@ -110,45 +117,67 @@
     <Content Include="content\images\PCOn.png" />
     <Content Include="content\images\printrecord_16x16.png" />
     <Content Include="content\js\validaciones.js" />
+    <Content Include="UserRecoveryPass.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="app\ErrorPage.aspx.cs">
+    <Compile Include="ErrorPage.aspx.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="app\ErrorPage.aspx.designer.cs">
+    <Compile Include="ErrorPage.aspx.designer.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="app\Login.aspx.cs">
+    <Compile Include="ErrorPageServer.aspx.cs">
+      <DependentUpon>ErrorPageServer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPageServer.aspx.designer.cs">
+      <DependentUpon>ErrorPageServer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="app\Login.aspx.designer.cs">
+    <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="app\PCPrincipal.aspx.cs">
+    <Compile Include="PCPrincipal.aspx.cs">
       <DependentUpon>PCPrincipal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="app\PCPrincipal.aspx.designer.cs">
+    <Compile Include="PCPrincipal.aspx.designer.cs">
       <DependentUpon>PCPrincipal.aspx</DependentUpon>
     </Compile>
-    <Compile Include="app\RentPrincipal.aspx.cs">
+    <Compile Include="RentManager.aspx.cs">
+      <DependentUpon>RentManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RentManager.aspx.designer.cs">
+      <DependentUpon>RentManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RentPrincipal.aspx.cs">
       <DependentUpon>RentPrincipal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="app\RentPrincipal.aspx.designer.cs">
+    <Compile Include="RentPrincipal.aspx.designer.cs">
       <DependentUpon>RentPrincipal.aspx</DependentUpon>
     </Compile>
-    <Compile Include="app\UserPrincipal.aspx.cs">
+    <Compile Include="UserPrincipal.aspx.cs">
       <DependentUpon>UserPrincipal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="app\UserPrincipal.aspx.designer.cs">
+    <Compile Include="UserPrincipal.aspx.designer.cs">
       <DependentUpon>UserPrincipal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserRecoveryPass.aspx.cs">
+      <DependentUpon>UserRecoveryPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserRecoveryPass.aspx.designer.cs">
+      <DependentUpon>UserRecoveryPass.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\bootstrap.bundle.js" />

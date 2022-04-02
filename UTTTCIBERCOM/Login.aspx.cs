@@ -56,9 +56,9 @@ namespace UTTTCIBERCOM.app
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (session.IsLoged)
-                        this.Response.Redirect("~/app/RentPrincipal.aspx", true);
+                        this.Response.Redirect("/RentPrincipal.aspx", true);
                     else
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
                 }
             }
             catch (Exception error)
@@ -80,8 +80,9 @@ namespace UTTTCIBERCOM.app
             if(baseEntity != null)
             {
                 session = new SessionManager(baseEntity.idEmpleado);
-                session.Pantalla = "~/app/RentPrincipal.aspx";
+                session.Pantalla = "/RentPrincipal.aspx";
                 Session["SessionManager"] = this.session;
+                Session["idUser"] = baseEntity.Id;
                 this.Response.Redirect(this.session.Pantalla, false);
             }
             else
@@ -90,6 +91,11 @@ namespace UTTTCIBERCOM.app
                 this.txtAlerta.Visible = true;
             }
             
+        }
+
+        protected void btnRecoveryPass_Click(object sender, EventArgs e)
+        {
+            this.Response.Redirect("/UserRecoveryPass.aspx", false);
         }
 
         #endregion
