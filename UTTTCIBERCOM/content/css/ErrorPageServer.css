@@ -56,10 +56,6 @@
             font-weight: bolder;
             transition: linear 0.1s;
         }
-
-    .bodySize {
-        width: 100%;
-    }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -77,18 +73,18 @@
             transition: linear 0.1s;
         }
 
-    .menuLinkActivo {
+    x {
         color: black;
         text-decoration: none;
         transition: linear 0.1s;
     }
 
-        .menuLinkActivo:hover {
-            color: black;
-            font-weight: bolder;
-            font-size: 1.1em;
-            transition: linear 0.1s;
-        }
+    .menuLinkActivo:hover {
+        color: black;
+        font-weight: bolder;
+        font-size: 1.1em;
+        transition: linear 0.1s;
+    }
 
     .menuLinkBtn {
         color: black;
@@ -117,11 +113,6 @@
             font-weight: bolder;
             transition: linear 0.1s;
         }
-
-    .bodySize {
-        width: 100%;
-    }
-
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -179,11 +170,6 @@
             font-weight: bolder;
             transition: linear 0.1s;
         }
-
-    .bodySize {
-        width: 100%;
-    }
-
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -242,11 +228,6 @@
             font-weight: bolder;
             transition: linear 0.1s;
         }
-
-    .bodySize{
-        width:80% !important;
-    }
-
 }
 
 
@@ -254,8 +235,8 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.bg-theme{
-    background-color:#003333;
+.bg-theme {
+    background-color: #003333;
 }
 
 .imagenBanner {
@@ -264,7 +245,7 @@
 
 .light {
     font-weight: lighter;
-    color:#FFF;
+    color: #FFF;
 }
 
 .menuActivo {
@@ -278,22 +259,46 @@
     margin-right: 2%;
 }
 
-.btnFormAct {
-    color: white;
-    padding:1vh 2vh;
-    border: none;
-    background-color: #003333;
-    border-radius: 3px;
-    text-decoration: none;
-    transition: linear 0.1s;
+
+/*======================
+    404 page
+=======================*/
+
+
+.page_404 {
+    padding: 30px 0px;
+    background: #fff;
+    font-family: 'Arvo', serif;
 }
 
-.btnForm {
-    color: black;
-    padding: 1vh 2vh;
-    border: solid 1px #AAAAAA;
-    background-color: #DDDDDD;
-    border-radius: 3px;
-    text-decoration: none;
-    transition: linear 0.1s;
+    .page_404 img {
+        width: 100vh;
+    }
+
+.four_zero_four_bg {
+    background-image: url('../images/dribbble_1.gif');
+    /*background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);*/
+    height: 380px;
+    background-position: center;
+}
+
+
+    .four_zero_four_bg h1 {
+        font-size: 80px;
+    }
+
+    .four_zero_four_bg h3 {
+        font-size: 80px;
+    }
+
+.link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: #003333;
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.contant_box_404 {
+    margin-top: -50px;
 }

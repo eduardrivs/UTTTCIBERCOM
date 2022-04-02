@@ -1,20 +1,24 @@
 ﻿using Data.Linq.Entity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UTTTCIBERCOM.Control;
+using UTTTCIBERCOM.Control.Filters;
 
 namespace UTTTCIBERCOM.app
 {
-    public partial class PCPrincipal : System.Web.UI.Page
+    public partial class RentPrincipal : System.Web.UI.Page
     {
 
         #region Variables
+
         int index = 0;
         private SessionManager session;
         DataContext dataContext;
@@ -46,7 +50,7 @@ namespace UTTTCIBERCOM.app
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["trylog"] == "1")
                 {
@@ -56,7 +60,7 @@ namespace UTTTCIBERCOM.app
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
                 }
 
             }
@@ -64,12 +68,30 @@ namespace UTTTCIBERCOM.app
             {
                 throw error;
             }
+
+            //Llenar etiquetas
+            try
+            {
+                DataContext dcConsulta = new DcGeneralDataContext();
+
+                List<COMPUTADORA> listaPCOcupadas =
+                    dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString().Length > 0).ToList();
+                this.txtPCUsando.Text = listaPCOcupadas.Count().ToString();
+
+                List<COMPUTADORA> listaPCLibres =
+                    dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString() == null).ToList();
+                this.txtPCLibres.Text = listaPCLibres.Count().ToString();
+            }
+            catch (Exception _e)
+            {
+                throw _e;
+            }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             ConfigurationManager.AppSettings["session"] = "0";
-            session.Pantalla = "~/app/Login.aspx";
+            session.Pantalla = "/Login.aspx";
             Session["SessionManager"] = null;
             this.Response.Redirect(this.session.Pantalla, false);
         }
@@ -81,15 +103,15 @@ namespace UTTTCIBERCOM.app
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["session"] == "1")
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
 
-                    this.session.Pantalla = "~/app/UserPrincipal.aspx";
+                    this.session.Pantalla = "/UserPrincipal.aspx";
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -107,15 +129,15 @@ namespace UTTTCIBERCOM.app
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["session"] == "1")
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
 
-                    this.session.Pantalla = "~/app/PCPrincipal.aspx";
+                    this.session.Pantalla = "/PCPrincipal.aspx";
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -133,15 +155,15 @@ namespace UTTTCIBERCOM.app
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    this.Response.Redirect("~/app/Login.aspx", true);
+                    this.Response.Redirect("/Login.aspx", true);
                 }
                 if (ConfigurationManager.AppSettings["session"] == "1")
                 {
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
-                        this.Response.Redirect("~/app/Login.aspx", true);
+                        this.Response.Redirect("/Login.aspx", true);
 
-                    this.session.Pantalla = "~/app/RentPrincipal.aspx";
+                    this.session.Pantalla = "/RentPrincipal.aspx";
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -153,34 +175,16 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void DataSourcePC_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        protected void DataSourceComputadora_Selecting(object sender, LinqDataSourceSelectEventArgs e)
         {
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
-                //bool nombreBool = false;
-                //bool sexoBool = false;
-                //if (!this.txtNombre.Text.Equals(String.Empty))
-                //{
-                //    nombreBool = true;
-                //}
-                //if (this.ddlSexo.Text != "-1")
-                //{
-                //    sexoBool = true;
-                //}
 
-                //Expression<Func<UTTT.Ejemplo.Linq.Data.Entity.Persona, bool>>
-                //    predicate =
-                //    (c =>
-                //    ((sexoBool) ? c.idCatSexo == int.Parse(this.ddlSexo.Text) : true) &&
-                //    ((nombreBool) ? (((nombreBool) ? c.strNombre.Contains(this.txtNombre.Text.Trim()) : false)) : true)
-                //    );
-
-                //predicate.Compile();
-
-                List<COMPUTADORA> listaPersona =
+                List<COMPUTADORA> listaPC =
                     dcConsulta.GetTable<COMPUTADORA>().ToList();
-                e.Result = listaPersona;
+                listaComputadoras = listaPC;
+                e.Result = listaPC;
             }
             catch (Exception _e)
             {
@@ -188,41 +192,61 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void dgvPC_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void dgvComputadora_RowCommand(object sender, ListViewCommandEventArgs e)
         {
             try
             {
-                int idPersona = int.Parse(e.CommandArgument.ToString());
-                switch (e.CommandName)
+                int idPC = int.Parse(e.CommandArgument.ToString());
+                //ClientScript.RegisterClientScriptBlock(this.GetType(),"alerta1","<script>alert('"+idPC+"')</script>");
+
+                try
                 {
-                    case "Editar":
-                        this.editar(idPersona);
-                        break;
-                    case "Eliminar":
-                        this.eliminar(idPersona);
-                        break;
+                    if (ConfigurationManager.AppSettings["session"] == "0")
+                    {
+                        this.Response.Redirect("/Login.aspx", true);
+                    }
+                    if (ConfigurationManager.AppSettings["session"] == "1")
+                    {
+                        this.session = (SessionManager)Session["SessionManager"];
+                        if (!session.IsLoged)
+                            this.Response.Redirect("/Login.aspx", true);
+
+                        DataContext dcConsulta = new DcGeneralDataContext();
+                        COMPUTADORA pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c=>c.Id == idPC);
+                        if (String.IsNullOrEmpty(pc.tempInicioRenta.ToString()))
+                        {
+                            pc.tempInicioRenta = DateTime.Now;
+                            dcConsulta.SubmitChanges();
+                            this.DataBind();
+                        }
+                        else
+                        {
+                            Hashtable parametrosRagion = new Hashtable();
+                            parametrosRagion.Add("idPC", idPC);
+                            this.session.Parametros = parametrosRagion;
+                            this.session.Pantalla = "/RentManager.aspx";
+
+                            Session["SessionManager"] = this.session;
+                            this.Response.Redirect(this.session.Pantalla, false);
+                        }
+                        
+                    }
+
+                }
+                catch (Exception error)
+                {
+                    throw error;
                 }
             }
             catch (Exception _e)
             {
-                throw _e;
+                Console.WriteLine("MAL");
             }
         }
 
         #endregion
 
-
         #region Metodos
-
-        private void editar(int _idPersona)
-        {
-            Console.WriteLine("Wnas");
-        }
-
-        private void eliminar(int _idPersona)
-        {
-            Console.WriteLine("Pa tu casa");
-        }
 
         #endregion
 

@@ -1813,7 +1813,7 @@ namespace Data.Linq.Entity
 		
 		private System.Nullable<System.DateTime> _dteFechaFinal;
 		
-		private System.Nullable<System.DateTime> _dteTiempoTotal;
+		private System.Nullable<double> _dteTiempoTotal;
 		
 		private int _idEmpleado;
 		
@@ -1843,7 +1843,7 @@ namespace Data.Linq.Entity
     partial void OndteFechaInicioChanged();
     partial void OndteFechaFinalChanging(System.Nullable<System.DateTime> value);
     partial void OndteFechaFinalChanged();
-    partial void OndteTiempoTotalChanging(System.Nullable<System.DateTime> value);
+    partial void OndteTiempoTotalChanging(System.Nullable<double> value);
     partial void OndteTiempoTotalChanged();
     partial void OnidEmpleadoChanging(int value);
     partial void OnidEmpleadoChanged();
@@ -1928,8 +1928,8 @@ namespace Data.Linq.Entity
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dteTiempoTotal", DbType="DateTime")]
-		public System.Nullable<System.DateTime> dteTiempoTotal
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dteTiempoTotal", DbType="Float")]
+		public System.Nullable<double> dteTiempoTotal
 		{
 			get
 			{

@@ -20,9 +20,9 @@ namespace UTTTCIBERCOM.Control
 
         public void enviarMensaje(String mensaje)
         {
-            var fromAddress = new MailAddress("eduardo.rivas.uttt@gmail.com");
+            var fromAddress = new MailAddress("prueba4SMTP1@gmail.com");
             var toAddress = new MailAddress(_eMail);
-            const string fromPassword = "Uurxi!5b.F8tAYQ";
+            const string fromPassword = "Ws4m6jx98UeN!sm";
             const string subject = "ERROR en sitio http://www.JoseEduardoRivas.somee.com";
             var body = "Error del " + System.DateTime.Now.ToString() + "\n\n" + mensaje;
 
@@ -41,7 +41,14 @@ namespace UTTTCIBERCOM.Control
                 Body = body
             })
             {
-                smtp.Send(message);
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
         }
     }

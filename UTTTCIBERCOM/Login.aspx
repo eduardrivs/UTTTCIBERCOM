@@ -66,7 +66,7 @@
                 <div class=" justify-content-center text-center row mt-4">
                     <div class="col-md-3 col-12">
                         <div class="col justify-content-center d-flex">
-                            <asp:Button Text="¿Olvidaste tu contraseña?" runat="server" class="btn nav-link text-center"/>
+                            <asp:Button Text="¿Olvidaste tu contraseña?" runat="server" class="btn nav-link text-center" OnClick="btnRecoveryPass_Click"/>
                         </div>
                     </div>
                 </div>

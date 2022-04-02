@@ -38,34 +38,28 @@
         <elementListCompartment Id="c7883d1b-ca6a-4a6a-b345-c846c26fcac2" absoluteBounds="3.515, 2.835, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6d1d6f3d-fca1-4535-b1a1-58364753e3b9" absoluteBounds="6.25, 5, 2, 2.9247054036458326">
-      <DataClassMoniker Name="/DcGeneralDataContext/RENTA" />
-      <nestedChildShapes>
-        <elementListCompartment Id="2f0aca68-389f-4ebe-baa4-5ad89a088a8b" absoluteBounds="6.265, 5.46, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(8.25 : 2.88544840494792); (9 : 2.88544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 2.88544840494792); (9 : 2.88544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DcGeneralDataContext/USUARIO/USUARIO_CatRecoveryToken" />
       <nodes>
         <classShapeMoniker Id="fb2e051a-75c1-4e48-acf1-ff72b73e3f9d" />
         <classShapeMoniker Id="1ba20909-f1c9-4193-a67a-a1402204cde4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 5.5112939453125); (1.75 : 8.75080485026042); (3.5 : 8.75080485026042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 5.5112939453125); (1.75 : 8.75080485026042); (3.5 : 8.75080485026042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DcGeneralDataContext/CatArea/CatArea_COMPUTADORA" />
       <nodes>
         <classShapeMoniker Id="7f80c777-4afe-4ed2-984d-287cb4dd5884" />
         <classShapeMoniker Id="69ca0707-dac6-4e8f-ae54-8d91fb6bd519" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 3.10659912109375); (6.25 : 3.10659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 3.10659912109375); (6.25 : 3.10659912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DcGeneralDataContext/EMPLEADO/EMPLEADO_USUARIO" />
       <nodes>
         <classShapeMoniker Id="f10a4081-c602-4c16-b943-1c844ffabc6c" />
         <classShapeMoniker Id="fb2e051a-75c1-4e48-acf1-ff72b73e3f9d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.80850341796875); (3.5 : 4.80850341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 4.80850341796875); (3.5 : 4.80850341796875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DcGeneralDataContext/CatArea/CatArea_EMPLEADO" />
       <nodes>
         <classShapeMoniker Id="7f80c777-4afe-4ed2-984d-287cb4dd5884" />
@@ -79,18 +73,24 @@
         <classShapeMoniker Id="f10a4081-c602-4c16-b943-1c844ffabc6c" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 7.46235270182292); (6.25 : 7.46235270182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="49740e95-ddc4-4aa2-8c6d-89c465a9b03f" absoluteBounds="6.5, 6.125, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/DcGeneralDataContext/RENTA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3772cd28-07f0-4dd5-b9e0-03ced4b2407f" absoluteBounds="6.515, 6.585, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 8.02485270182292); (6.5 : 8.02485270182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/DcGeneralDataContext/COMPUTADORA/COMPUTADORA_RENTA" />
       <nodes>
         <classShapeMoniker Id="69ca0707-dac6-4e8f-ae54-8d91fb6bd519" />
-        <classShapeMoniker Id="6d1d6f3d-fca1-4535-b1a1-58364753e3b9" />
+        <classShapeMoniker Id="49740e95-ddc4-4aa2-8c6d-89c465a9b03f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 5.24600341796875); (6.25 : 5.24600341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 4.6963525390625); (8.40625 : 4.6963525390625); (8.40625 : 6.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/DcGeneralDataContext/EMPLEADO/EMPLEADO_RENTA" />
       <nodes>
         <classShapeMoniker Id="f10a4081-c602-4c16-b943-1c844ffabc6c" />
-        <classShapeMoniker Id="6d1d6f3d-fca1-4535-b1a1-58364753e3b9" />
+        <classShapeMoniker Id="49740e95-ddc4-4aa2-8c6d-89c465a9b03f" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
