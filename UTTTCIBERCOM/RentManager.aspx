@@ -102,7 +102,8 @@
                     </asp:UpdatePanel>--%>
                     <div class="my-3">
                         <div><label for="txtIdEquipo">Id Equipo:</label></div>
-                        <asp:TextBox ID="txtIdEquipo" runat="server" Width="90%" ViewStateMode="Disabled" Enabled="false"></asp:TextBox>
+                        <%--<asp:TextBox ID="txtIdEquipo" runat="server" Width="90%" ViewStateMode="Disabled" Enabled="false"></asp:TextBox>--%>
+                        <asp:DropDownList ID="ddlEquipo" class="btn btn-secondary dropdown-toggle me-2" runat="server"></asp:DropDownList>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">

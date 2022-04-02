@@ -69,13 +69,13 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtIdEmplado;
 
         /// <summary>
-        /// Control txtIdEquipo.
+        /// Control ddlEquipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdEquipo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEquipo;
 
         /// <summary>
         /// Control txtSubtotal.

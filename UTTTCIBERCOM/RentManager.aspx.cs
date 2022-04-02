@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Web;
@@ -16,10 +17,7 @@ namespace UTTTCIBERCOM
     {
         #region Variables
 
-        int index = 0;
         private SessionManager session;
-        DataContext dataContext;
-        List<COMPUTADORA> listaComputadoras = null;
         RENTA nuevaRenta = new RENTA();
         #endregion
 
@@ -75,35 +73,66 @@ namespace UTTTCIBERCOM
                 {
                     COMPUTADORA pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c=>c.Id == int.Parse(this.session.Parametros["idPC"].ToString()));
 
-                    this.txtFechaInicio.Text = pc.tempInicioRenta.ToString();
-                    nuevaRenta.dteFechaInicio = pc.tempInicioRenta;
-                    this.txtFechaFinal.Text = DateTime.Now.ToString();
-                    nuevaRenta.dteFechaFinal = DateTime.Now;
-                    this.txtTiempoTotal.Text = (DateTime.Now - pc.tempInicioRenta.GetValueOrDefault()).TotalHours.ToString();
-                    if (double.TryParse(this.txtTiempoTotal.Text, out double tTotal))
-                        nuevaRenta.dteTiempoTotal = tTotal;
-                    this.txtIdEmplado.Text = this.Session["idUser"].ToString();
-                    if (int.TryParse(this.Session["idUser"].ToString(), out int idEmp))
-                        nuevaRenta.idEmpleado = idEmp;
-                    this.txtIdEquipo.Text = pc.strNombre;
-                    nuevaRenta.idEquipo = pc.Id;
-                    //this.txtSubtotal.Text = ((double.Parse((DateTime.Now - pc.tempInicioRenta.GetValueOrDefault()).TotalHours.ToString()))*double.Parse(pc.monTarifa.ToString())).ToString();
-                    this.txtSubtotal.Text = ((double.Parse(txtTiempoTotal.Text)) * double.Parse(pc.monTarifa.ToString())).ToString();
-                    if (decimal.TryParse(txtSubtotal.Text, out decimal subTotal))
-                        nuevaRenta.monSubtotal = subTotal;
-                    this.txtIVA.Text = (double.Parse(txtSubtotal.Text) * 0.16).ToString();
-                    if (decimal.TryParse(txtIVA.Text, out decimal iva))
-                        nuevaRenta.monIVA = iva;
-                    this.txtTotal.Text = ((double.Parse(txtSubtotal.Text))+(double.Parse(txtIVA.Text))).ToString();
-                    if (decimal.TryParse(txtTotal.Text, out decimal total))
-                        nuevaRenta.monTotal = total;
-                    if(double.TryParse(this.txtPago.Text,out double pagoTotal))
+                    if (pc != null)
                     {
-                        if (decimal.TryParse(txtPago.Text, out decimal pago))
-                            nuevaRenta.monPago = pago;
-                        this.txtCambio.Text = (pagoTotal - double.Parse(txtTotal.Text)).ToString();
-                        if (decimal.TryParse(txtCambio.Text, out decimal cambio))
-                            nuevaRenta.monCambio = cambio;
+                        this.txtFechaInicio.Text = pc.tempInicioRenta.ToString();
+                        nuevaRenta.dteFechaInicio = pc.tempInicioRenta;
+                        this.txtFechaFinal.Text = DateTime.Now.ToString();
+                        nuevaRenta.dteFechaFinal = DateTime.Now;
+                        this.txtTiempoTotal.Text = (DateTime.Now - pc.tempInicioRenta.GetValueOrDefault()).TotalHours.ToString();
+                        if (double.TryParse(this.txtTiempoTotal.Text, out double tTotal))
+                            nuevaRenta.dteTiempoTotal = tTotal;
+                        this.txtIdEmplado.Text = this.Session["idUser"].ToString();
+                        if (int.TryParse(this.Session["idUser"].ToString(), out int idEmp))
+                            nuevaRenta.idEmpleado = idEmp;
+                        ListItem i = new ListItem(pc.strNombre, pc.Id.ToString());
+                        this.ddlEquipo.Items.Add(i);
+                        nuevaRenta.idEquipo = pc.Id;
+                        //this.txtSubtotal.Text = ((double.Parse((DateTime.Now - pc.tempInicioRenta.GetValueOrDefault()).TotalHours.ToString()))*double.Parse(pc.monTarifa.ToString())).ToString();
+                        this.txtSubtotal.Text = ((double.Parse(txtTiempoTotal.Text)) * double.Parse(pc.monTarifa.ToString())).ToString();
+                        if (decimal.TryParse(txtSubtotal.Text, out decimal subTotal))
+                            nuevaRenta.monSubtotal = subTotal;
+                        this.txtIVA.Text = (double.Parse(txtSubtotal.Text) * 0.16).ToString();
+                        if (decimal.TryParse(txtIVA.Text, out decimal iva))
+                            nuevaRenta.monIVA = iva;
+                        this.txtTotal.Text = ((double.Parse(txtSubtotal.Text)) + (double.Parse(txtIVA.Text))).ToString();
+                        if (decimal.TryParse(txtTotal.Text, out decimal total))
+                            nuevaRenta.monTotal = total;
+                        if (double.TryParse(this.txtPago.Text, out double pagoTotal))
+                        {
+                            if (decimal.TryParse(txtPago.Text, out decimal pago))
+                                nuevaRenta.monPago = pago;
+                            this.txtCambio.Text = (pagoTotal - double.Parse(txtTotal.Text)).ToString();
+                            if (decimal.TryParse(txtCambio.Text, out decimal cambio))
+                                nuevaRenta.monCambio = cambio;
+                        }
+                    }
+                }
+                else
+                {
+                    COMPUTADORA pc = null;
+                    if (int.TryParse(this.ddlEquipo.Text, out int idPCW))
+                         pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == idPCW && c.tempInicioRenta != null);
+                    if (pc != null)
+                    {
+                        this.session.Parametros["idPC"] = pc.Id;
+                        this.ddlEquipo.Enabled = false;
+                        this.txtPago.Enabled = true;
+                        this.Page_Load(sender, e);
+                    }
+                    else
+                    {
+                        this.txtPago.Enabled = false;
+                        this.ddlEquipo.Enabled = true;
+                        this.ddlEquipo.AutoPostBack = true;
+
+                        ListItem i;
+                        List<COMPUTADORA> PCLista = dcConsulta.GetTable<COMPUTADORA>().ToList();
+                        foreach (var r in PCLista)
+                        {
+                            i = new ListItem(r.strNombre.ToString(), r.Id.ToString());
+                            ddlEquipo.Items.Add(i);
+                        }
                     }
                 }
             }
@@ -137,6 +166,7 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/UserPrincipal.aspx";
+                    this.session.Parametros["idPC"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -163,6 +193,7 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/PCPrincipal.aspx";
+                    this.session.Parametros["idPC"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -189,6 +220,7 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/RentPrincipal.aspx";
+                    this.session.Parametros["idPC"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -210,7 +242,7 @@ namespace UTTTCIBERCOM
                 pc.tempInicioRenta = null;
                 dcConsulta.SubmitChanges();
 
-                this.session.Parametros["idPC"] = 0;
+                this.session.Parametros["idPC"] = null;
             }
 
             try
@@ -226,6 +258,7 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/RentPrincipal.aspx";
+                    this.session.Parametros["idPC"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
