@@ -98,6 +98,7 @@
     <Content Include="ErrorPageServer.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="PCPrincipal.aspx" />
+    <Content Include="RentasPrincipal.aspx" />
     <Content Include="RentManager.aspx" />
     <Content Include="RentPrincipal.aspx" />
     <Content Include="UserPrincipal.aspx" />
@@ -148,6 +149,13 @@
     </Compile>
     <Compile Include="PCPrincipal.aspx.designer.cs">
       <DependentUpon>PCPrincipal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RentasPrincipal.aspx.cs">
+      <DependentUpon>RentasPrincipal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RentasPrincipal.aspx.designer.cs">
+      <DependentUpon>RentasPrincipal.aspx</DependentUpon>
     </Compile>
     <Compile Include="RentManager.aspx.cs">
       <DependentUpon>RentManager.aspx</DependentUpon>

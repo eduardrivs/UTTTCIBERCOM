@@ -46,25 +46,6 @@ namespace UTTTCIBERCOM.app
                 throw error;
             }
 
-            try
-            {
-                if (ConfigurationManager.AppSettings["trylog"] == "1")
-                {
-                    this.ClientScript.RegisterStartupScript(this.GetType(), "ClientScript", "error()", true);
-                }
-                if (ConfigurationManager.AppSettings["session"] == "1")
-                {
-                    this.session = (SessionManager)Session["SessionManager"];
-                    if (session.IsLoged)
-                        this.Response.Redirect("/RentPrincipal.aspx", true);
-                    else
-                        this.Response.Redirect("/Login.aspx", true);
-                }
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)

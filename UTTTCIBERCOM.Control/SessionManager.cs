@@ -30,7 +30,7 @@ namespace UTTTCIBERCOM.Control
         public bool IsLoged
         {
             get {
-                if(!(isLoged && DateTime.Now < horaLogeo.AddMinutes(10)))
+                if(!(isLoged && DateTime.Now < horaLogeo.AddMinutes(15)))
                 {
                     ConfigurationManager.AppSettings["session"] = "0";
                     isLoged = false;

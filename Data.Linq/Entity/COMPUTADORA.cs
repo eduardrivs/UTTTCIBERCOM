@@ -10,7 +10,7 @@ namespace Data.Linq.Entity
     {
         public override string ToString()
         {
-            return this.strNombre;
+            return this.Id.ToString();
         }
     }
 }

@@ -1,50 +1,29 @@
 ﻿using Data.Linq.Entity;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UTTTCIBERCOM.Control;
-using UTTTCIBERCOM.Control.Filters;
 
-namespace UTTTCIBERCOM.app
+namespace UTTTCIBERCOM
 {
-    public partial class RentPrincipal : System.Web.UI.Page
+    public partial class RentasPrincipal : System.Web.UI.Page
     {
-
         #region Variables
-
         int index = 0;
         private SessionManager session;
         DataContext dataContext;
-        List<COMPUTADORA> listaComputadoras = null;
+        List<RENTA> listaRenta = null;
         #endregion
 
         #region Eventos
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                AppDomain.CurrentDomain.FirstChanceException += (senderr, ee) => {
-                    System.Text.StringBuilder msg = new System.Text.StringBuilder();
-                    msg.AppendLine(ee.Exception.GetType().FullName);
-                    msg.AppendLine(ee.Exception.Message);
-                    System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
-                    msg.AppendLine(st.ToString());
-                    msg.AppendLine();
-                    SessionManager._lastError = msg;
-                };
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
 
             try
             {
@@ -67,24 +46,6 @@ namespace UTTTCIBERCOM.app
             catch (Exception error)
             {
                 throw error;
-            }
-
-            //Llenar etiquetas
-            try
-            {
-                DataContext dcConsulta = new DcGeneralDataContext();
-
-                List<COMPUTADORA> listaPCOcupadas =
-                    dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString().Length > 0).ToList();
-                this.txtPCUsando.Text = listaPCOcupadas.Count().ToString();
-
-                List<COMPUTADORA> listaPCLibres =
-                    dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString() == null).ToList();
-                this.txtPCLibres.Text = listaPCLibres.Count().ToString();
-            }
-            catch (Exception _e)
-            {
-                throw _e;
             }
         }
 
@@ -175,34 +136,6 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void btnRentManager_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (ConfigurationManager.AppSettings["session"] == "0")
-                {
-                    this.Response.Redirect("/Login.aspx", true);
-                }
-                if (ConfigurationManager.AppSettings["session"] == "1")
-                {
-                    this.session = (SessionManager)Session["SessionManager"];
-                    if (!session.IsLoged)
-                        this.Response.Redirect("/Login.aspx", true);
-
-                    this.session.Pantalla = "/RentManager.aspx";
-
-                    Session["SessionManager"] = this.session;
-                    this.Response.Redirect(this.session.Pantalla, false);
-                }
-
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
-
-        }
-
         protected void btnRentas_Click(object sender, EventArgs e)
         {
             try
@@ -229,16 +162,15 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void DataSourceComputadora_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        protected void DataSourceRentas_Selecting(object sender, LinqDataSourceSelectEventArgs e)
         {
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
 
-                List<COMPUTADORA> listaPC =
-                    dcConsulta.GetTable<COMPUTADORA>().ToList();
-                listaComputadoras = listaPC;
-                e.Result = listaPC;
+                List<RENTA> listaRentas =
+                    dcConsulta.GetTable<RENTA>().ToList();
+                e.Result = listaRentas;
             }
             catch (Exception _e)
             {
@@ -246,63 +178,42 @@ namespace UTTTCIBERCOM.app
             }
         }
 
-        protected void dgvComputadora_RowCommand(object sender, ListViewCommandEventArgs e)
+        protected void dgvRentas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
             {
-                int idPC = int.Parse(e.CommandArgument.ToString());
-                //ClientScript.RegisterClientScriptBlock(this.GetType(),"alerta1","<script>alert('"+idPC+"')</script>");
-
-                try
+                int idRenta = int.Parse(e.CommandArgument.ToString());
+                switch (e.CommandName)
                 {
-                    if (ConfigurationManager.AppSettings["session"] == "0")
-                    {
-                        this.Response.Redirect("/Login.aspx", true);
-                    }
-                    if (ConfigurationManager.AppSettings["session"] == "1")
-                    {
-                        this.session = (SessionManager)Session["SessionManager"];
-                        if (!session.IsLoged)
-                            this.Response.Redirect("/Login.aspx", true);
-
-                        DataContext dcConsulta = new DcGeneralDataContext();
-                        COMPUTADORA pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c=>c.Id == idPC);
-                        if (String.IsNullOrEmpty(pc.tempInicioRenta.ToString()))
-                        {
-                            pc.tempInicioRenta = DateTime.Now;
-                            dcConsulta.SubmitChanges();
-                            this.DataBind();
-                        }
-                        else
-                        {
-                            Hashtable parametrosRagion = new Hashtable();
-                            parametrosRagion.Add("idPC", idPC);
-                            this.session.Parametros = parametrosRagion;
-                            this.session.Pantalla = "/RentManager.aspx";
-
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
-                        }
-                        
-                    }
-
-                }
-                catch (Exception error)
-                {
-                    throw error;
+                    case "Editar":
+                        this.editar(idRenta);
+                        break;
+                    case "Eliminar":
+                        this.eliminar(idRenta);
+                        break;
                 }
             }
             catch (Exception _e)
             {
-                Console.WriteLine("MAL");
+                throw _e;
             }
         }
 
         #endregion
 
+
         #region Metodos
 
-        #endregion
+        private void editar(int _idPersona)
+        {
+            Console.WriteLine("Wnas");
+        }
 
+        private void eliminar(int _idPersona)
+        {
+            Console.WriteLine("Pa tu casa");
+        }
+
+        #endregion
     }
 }

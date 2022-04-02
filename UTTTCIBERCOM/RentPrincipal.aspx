@@ -34,11 +34,11 @@
                             <div class="d-lg-none d-inline">
                                 <div class="my-4" runat="server">
                                     <i class="me-2 bi bi-calendar-plus"></i>
-                                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnLogout_Click" />
+                                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
                                 </div>
                                 <div class="my-4" runat="server">
                                     <i class="me-2 bi bi-calendar2-x"></i>
-                                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnLogout_Click" />
+                                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
                                 </div>
                                 <div class="my-4" runat="server">
                                     <i class="me-2 bi bi-pc-display"></i>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="my-4" runat="server">
                                     <i class="me-2 bi bi-cash-stack"></i>
-                                    <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo" OnClick="btnLogout_Click" />
+                                    <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo" OnClick="btnRentas_Click" />
                                 </div>
                             </div>
                         </div>
@@ -71,11 +71,11 @@
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar-plus"></i>
-                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnLogout_Click" />
+                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
                 </div>
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar2-x"></i>
-                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnLogout_Click" />
+                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
                 </div>
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-pc-display"></i>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-cash-stack"></i>
-                    <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo" OnClick="btnLogout_Click" />
+                    <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo" OnClick="btnRentas_Click" />
                 </div>
             </div>
             <!-- Para dispositivo grande -->
