@@ -297,3 +297,7 @@
     text-decoration: none;
     transition: linear 0.1s;
 }
+
+.linkActivo {
+    font-weight: bolder;
+}

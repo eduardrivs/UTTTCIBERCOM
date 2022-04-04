@@ -18,34 +18,16 @@ namespace UTTTCIBERCOM.app
     {
 
         #region Variables
-
-        int index = 0;
         private SessionManager session;
-        DataContext dataContext;
         List<COMPUTADORA> listaComputadoras = null;
+        DataContext dcConsulta = new DcGeneralDataContext();
         #endregion
 
         #region Eventos
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                AppDomain.CurrentDomain.FirstChanceException += (senderr, ee) => {
-                    System.Text.StringBuilder msg = new System.Text.StringBuilder();
-                    msg.AppendLine(ee.Exception.GetType().FullName);
-                    msg.AppendLine(ee.Exception.Message);
-                    System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
-                    msg.AppendLine(st.ToString());
-                    msg.AppendLine();
-                    SessionManager._lastError = msg;
-                };
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
-
+            //Valida Session
             try
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
@@ -72,15 +54,7 @@ namespace UTTTCIBERCOM.app
             //Llenar etiquetas
             try
             {
-                DataContext dcConsulta = new DcGeneralDataContext();
-
-                List<COMPUTADORA> listaPCOcupadas =
-                    dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString().Length > 0).ToList();
-                this.txtPCUsando.Text = listaPCOcupadas.Count().ToString();
-
-                List<COMPUTADORA> listaPCLibres =
-                    dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString() == null).ToList();
-                this.txtPCLibres.Text = listaPCLibres.Count().ToString();
+                llenarEtiquetas();
             }
             catch (Exception _e)
             {
@@ -95,7 +69,6 @@ namespace UTTTCIBERCOM.app
             Session["SessionManager"] = null;
             this.Response.Redirect(this.session.Pantalla, false);
         }
-
 
         protected void btnUserPrincipal_Click(object sender, EventArgs e)
         {
@@ -271,6 +244,7 @@ namespace UTTTCIBERCOM.app
                         {
                             pc.tempInicioRenta = DateTime.Now;
                             dcConsulta.SubmitChanges();
+                            llenarEtiquetas();
                             this.DataBind();
                         }
                         else
@@ -301,6 +275,19 @@ namespace UTTTCIBERCOM.app
         #endregion
 
         #region Metodos
+
+        private void llenarEtiquetas()
+        {
+            List<COMPUTADORA> listaPCOcupadas =
+                    dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString().Length > 0).ToList();
+            this.txtPCUsando.Text = listaPCOcupadas.Count().ToString();
+            this.txtPCUsando2.Text = listaPCOcupadas.Count().ToString();
+
+            List<COMPUTADORA> listaPCLibres =
+                dcConsulta.GetTable<COMPUTADORA>().Where(C => C.tempInicioRenta.ToString() == null).ToList();
+            this.txtPCLibres.Text = listaPCLibres.Count().ToString();
+            this.txtPCLibres2.Text = listaPCLibres.Count().ToString();
+        }
 
         #endregion
 

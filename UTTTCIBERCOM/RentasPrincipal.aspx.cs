@@ -1,5 +1,6 @@
 ﻿using Data.Linq.Entity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
@@ -14,17 +15,14 @@ namespace UTTTCIBERCOM
     public partial class RentasPrincipal : System.Web.UI.Page
     {
         #region Variables
-        int index = 0;
         private SessionManager session;
-        DataContext dataContext;
-        List<RENTA> listaRenta = null;
         #endregion
 
         #region Eventos
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //Valida Session
             try
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
@@ -49,6 +47,7 @@ namespace UTTTCIBERCOM
             }
         }
 
+        #region Eventos del menu
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             ConfigurationManager.AppSettings["session"] = "0";
@@ -56,7 +55,6 @@ namespace UTTTCIBERCOM
             Session["SessionManager"] = null;
             this.Response.Redirect(this.session.Pantalla, false);
         }
-
 
         protected void btnUserPrincipal_Click(object sender, EventArgs e)
         {
@@ -162,6 +160,35 @@ namespace UTTTCIBERCOM
             }
         }
 
+        protected void btnRentManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/RentManager.aspx";
+
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+
+        }
+        #endregion
+
         protected void DataSourceRentas_Selecting(object sender, LinqDataSourceSelectEventArgs e)
         {
             try
@@ -204,14 +231,43 @@ namespace UTTTCIBERCOM
 
         #region Metodos
 
-        private void editar(int _idPersona)
+        private void editar(int idRenta)
         {
-            Console.WriteLine("Wnas");
+            try
+            {
+                DataContext dcConsulta = new DcGeneralDataContext();
+                RENTA renta = dcConsulta.GetTable<RENTA>().FirstOrDefault(c=>c.Id == idRenta);
+
+                Hashtable parametrosRagion = new Hashtable();
+                parametrosRagion.Add("idPC", renta.idEquipo);
+                parametrosRagion.Add("idRenta", idRenta);
+                this.session.Parametros = parametrosRagion;
+                this.session.Pantalla = "/RentManager.aspx";
+
+                Session["SessionManager"] = this.session;
+                this.Response.Redirect(this.session.Pantalla, false);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        private void eliminar(int _idPersona)
+        private void eliminar(int idPC)
         {
-            Console.WriteLine("Pa tu casa");
+            try
+            {
+                DataContext dcDelete = new DcGeneralDataContext();
+                RENTA renta = dcDelete.GetTable<RENTA>().First(c => c.Id == idPC);
+                dcDelete.GetTable<RENTA>().DeleteOnSubmit(renta);
+                dcDelete.SubmitChanges();
+                this.showMessage("El registro se elimino correctamente.");
+                this.DataSourceRentas.RaiseViewChanged();
+            }
+            catch (Exception _e)
+            {
+                throw _e;
+            }
         }
 
         #endregion
