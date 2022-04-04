@@ -28,9 +28,27 @@
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body ms-5">
-                        <div class="menu menuActivo">
+                        <div class="menu menuActivo d-inline">
                             <asp:Button Text="Rentas" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnRentPrincipal_Click" />
                             <%--<a href="#" class="menuLinkActivo">Rentas</a>--%>
+                            <div class="d-lg-none d-inline">
+                                <div class="my-4" runat="server">
+                                    <i class="me-2 bi bi-calendar-plus"></i>
+                                    <asp:Button Text="Iniciar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
+                                </div>
+                                <div class="my-4" runat="server">
+                                    <i class="me-2 bi bi-calendar2-x"></i>
+                                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
+                                </div>
+                                <div class="my-4" runat="server">
+                                    <i class="me-2 bi bi-cash-stack"></i>
+                                    <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo linkActivo" OnClick="btnRentas_Click" />
+                                </div>
+                                <div class="my-4" runat="server">
+                                    <i class="me-2 bi bi-pc-display"></i>
+                                    <asp:Button Text="Ver maquinas" runat="server" class="menuLinkBtnActivo" OnClick="btnPCPrincipal_Click" />
+                                </div>
+                            </div>
                         </div>
                         <div class="menu">
                             <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" OnClick="btnPCPrincipal_Click" />
@@ -53,19 +71,19 @@
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar-plus"></i>
-                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
+                    <asp:Button Text="Iniciar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
                 </div>
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar2-x"></i>
-                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnLogout_Click" />
+                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
+                </div>
+                <div class="my-4" runat="server">
+                    <i class="me-2 bi bi-cash-stack"></i>
+                    <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo linkActivo" OnClick="btnRentas_Click" />
                 </div>
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-pc-display"></i>
                     <asp:Button Text="Ver maquinas" runat="server" class="menuLinkBtnActivo" OnClick="btnPCPrincipal_Click" />
-                </div>
-                <div class="my-4" runat="server">
-                    <i class="me-2 bi bi-cash-stack"></i>
-                    <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo" OnClick="btnRentas_Click" />
                 </div>
             </div>
 
@@ -85,14 +103,15 @@
                         </div>
                     </nav>
                 </div>
+                <div class="mt-2 ms-4"><h3>Rentas realizadas</h3></div>
                 <!-- Tabla de contenido -->
                 <div class="table-responsive p-4" style="width: 100%">
                     <asp:GridView ID="dgvRentas" runat="server"
-                        AllowPaging="True" AutoGenerateColumns="False" DataSourceID="DataSourceRentas"
+                        AllowPaging="false" AutoGenerateColumns="False" DataSourceID="DataSourceRentas"
                         Width="100%" CellPadding="3" GridLines="Horizontal"
                         OnRowCommand="dgvRentas_RowCommand" BackColor="White"
                         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
-                        ViewStateMode="Disabled" class="table table-sm mt-2">
+                        ViewStateMode="Disabled" class="table table-sm ">
                         <AlternatingRowStyle BackColor="#F7F7F7" />
                         <Columns>
                             <asp:BoundField DataField="dteFechaInicio" HeaderText="Fecha Inicio" ReadOnly="True"

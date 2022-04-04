@@ -60,22 +60,22 @@ namespace UTTTCIBERCOM.app
         protected global::System.Web.UI.WebControls.ListView ListView1;
 
         /// <summary>
-        /// Control Label1.
+        /// Control txtPCUsando2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label txtPCUsando2;
 
         /// <summary>
-        /// Control Label2.
+        /// Control txtPCLibres2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label txtPCLibres2;
 
         /// <summary>
         /// Control DataSourceComputadora.

@@ -34,19 +34,19 @@
                             <div class="d-lg-none d-inline">
                                 <div class="my-4" runat="server">
                                     <i class="me-2 bi bi-calendar-plus"></i>
-                                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
+                                    <asp:Button Text="Iniciar Renta" runat="server" class="menuLinkBtnActivo linkActivo" OnClick="btnRentPrincipal_Click" />
                                 </div>
                                 <div class="my-4" runat="server">
                                     <i class="me-2 bi bi-calendar2-x"></i>
                                     <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
                                 </div>
                                 <div class="my-4" runat="server">
-                                    <i class="me-2 bi bi-pc-display"></i>
-                                    <asp:Button Text="Ver maquinas" runat="server" class="menuLinkBtnActivo" OnClick="btnPCPrincipal_Click" />
-                                </div>
-                                <div class="my-4" runat="server">
                                     <i class="me-2 bi bi-cash-stack"></i>
                                     <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo" OnClick="btnRentas_Click" />
+                                </div>
+                                <div class="my-4" runat="server">
+                                    <i class="me-2 bi bi-pc-display"></i>
+                                    <asp:Button Text="Ver maquinas" runat="server" class="menuLinkBtnActivo" OnClick="btnPCPrincipal_Click" />
                                 </div>
                             </div>
                         </div>
@@ -71,19 +71,19 @@
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar-plus"></i>
-                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
+                    <asp:Button Text="Iniciar Renta" runat="server" class="menuLinkBtnActivo linkActivo" OnClick="btnRentPrincipal_Click" />
                 </div>
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar2-x"></i>
                     <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
                 </div>
                 <div class="my-4" runat="server">
-                    <i class="me-2 bi bi-pc-display"></i>
-                    <asp:Button Text="Ver maquinas" runat="server" class="menuLinkBtnActivo" OnClick="btnPCPrincipal_Click" />
-                </div>
-                <div class="my-4" runat="server">
                     <i class="me-2 bi bi-cash-stack"></i>
                     <asp:Button Text="Ver rentas" runat="server" class="menuLinkBtnActivo" OnClick="btnRentas_Click" />
+                </div>
+                <div class="my-4" runat="server">
+                    <i class="me-2 bi bi-pc-display"></i>
+                    <asp:Button Text="Ver maquinas" runat="server" class="menuLinkBtnActivo" OnClick="btnPCPrincipal_Click" />
                 </div>
             </div>
             <!-- Para dispositivo grande -->
@@ -152,7 +152,7 @@
 
             <!-- Para dispositivo pequeño -->
             <div class="ps-3 d-block d-lg-none" style="width: 100%;">
-                <div class="table-responsive-lg p-4" style="width: 100%">
+                <div class="table-responsive-lg" style="width: 100%">
                     <asp:ListView ID="ListView1" runat="server" DataSourceID="DataSourceComputadora" GroupItemCount="5">
                         <ItemTemplate>
                             <td runat="server">
@@ -208,9 +208,9 @@
                     </asp:ListView>
                     <div class="mt-5">
                         <span class="me-5">En uso: <strong>
-                            <asp:Label ID="Label1" runat="server" Text="a" /></strong></span>
+                            <asp:Label ID="txtPCUsando2" runat="server" Text="a" /></strong></span>
                         <span>Libres: <strong>
-                            <asp:Label ID="Label2" runat="server" Text="b" /></strong></span>
+                            <asp:Label ID="txtPCLibres2" runat="server" Text="b" /></strong></span>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -25,23 +26,7 @@ namespace UTTTCIBERCOM.app
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                AppDomain.CurrentDomain.FirstChanceException += (senderr, ee) => {
-                    System.Text.StringBuilder msg = new System.Text.StringBuilder();
-                    msg.AppendLine(ee.Exception.GetType().FullName);
-                    msg.AppendLine(ee.Exception.Message);
-                    System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace();
-                    msg.AppendLine(st.ToString());
-                    msg.AppendLine();
-                    SessionManager._lastError = msg;
-                };
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
-
+            //Verificacion de sesion
             try
             {
                 if (ConfigurationManager.AppSettings["session"] == "0")
@@ -58,14 +43,28 @@ namespace UTTTCIBERCOM.app
                     if (!session.IsLoged)
                         this.Response.Redirect("/Login.aspx", true);
                 }
-
             }
             catch (Exception error)
             {
                 throw error;
             }
+
+            //Llenado de etiquetas
+            if (!this.IsPostBack)
+            {
+                ListItem i = new ListItem("Todos", "0");
+                this.ddlDisp.Items.Add(i);
+                ListItem i1 = new ListItem("Libre", "1");
+                this.ddlDisp.Items.Add(i1);
+                ListItem i2 = new ListItem("Renta", "2");
+                this.ddlDisp.Items.Add(i2);
+
+                this.ddlDisp.SelectedIndex = 0;
+                this.ddlDisp.DataBind();
+            }
         }
 
+        #region Eventos del Menu
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             ConfigurationManager.AppSettings["session"] = "0";
@@ -73,7 +72,6 @@ namespace UTTTCIBERCOM.app
             Session["SessionManager"] = null;
             this.Response.Redirect(this.session.Pantalla, false);
         }
-
 
         protected void btnUserPrincipal_Click(object sender, EventArgs e)
         {
@@ -153,34 +151,102 @@ namespace UTTTCIBERCOM.app
             }
         }
 
+        protected void btnRentManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/RentManager.aspx";
+
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+
+        }
+
+        protected void btnPCManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/PCManager.aspx";
+
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+        }
+        #endregion
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.DataSourcePC.RaiseViewChanged();
+            }
+            catch (Exception _e)
+            {
+                this.showMessage("Ha ocurrido un problema al buscar");
+            }
+        }
+
         protected void DataSourcePC_Selecting(object sender, LinqDataSourceSelectEventArgs e)
         {
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
-                //bool nombreBool = false;
-                //bool sexoBool = false;
-                //if (!this.txtNombre.Text.Equals(String.Empty))
-                //{
-                //    nombreBool = true;
-                //}
-                //if (this.ddlSexo.Text != "-1")
-                //{
-                //    sexoBool = true;
-                //}
+                bool nombreBool = false;
+                bool dispBool = false;
+                if (!this.txtBuscar.Text.Equals(String.Empty))
+                {
+                    nombreBool = true;
+                }
+                if (this.ddlDisp.SelectedItem.Value != "0")
+                {
+                    dispBool = true;
+                }
 
-                //Expression<Func<UTTT.Ejemplo.Linq.Data.Entity.Persona, bool>>
-                //    predicate =
-                //    (c =>
-                //    ((sexoBool) ? c.idCatSexo == int.Parse(this.ddlSexo.Text) : true) &&
-                //    ((nombreBool) ? (((nombreBool) ? c.strNombre.Contains(this.txtNombre.Text.Trim()) : false)) : true)
-                //    );
+                Expression<Func<COMPUTADORA, bool>>
+                    predicate =
+                    (c =>
+                    ((dispBool) ? ((this.ddlDisp.SelectedItem.Value == "1") ? c.tempInicioRenta == null : c.tempInicioRenta != null) : true) &&
+                    ((nombreBool) ? (((nombreBool) ? c.strNombre.Contains(this.txtBuscar.Text.Trim()) : false)) : true)
+                    );
 
-                //predicate.Compile();
+                predicate.Compile();
 
-                List<COMPUTADORA> listaPersona =
-                    dcConsulta.GetTable<COMPUTADORA>().ToList();
-                e.Result = listaPersona;
+                List<COMPUTADORA> listaPC =
+                    dcConsulta.GetTable<COMPUTADORA>().Where(predicate).ToList();
+                e.Result = listaPC;
             }
             catch (Exception _e)
             {
@@ -210,7 +276,6 @@ namespace UTTTCIBERCOM.app
         }
 
         #endregion
-
 
         #region Metodos
 
