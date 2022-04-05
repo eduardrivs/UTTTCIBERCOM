@@ -321,6 +321,28 @@ namespace UTTTCIBERCOM
         {
             try
             {
+                if(String.IsNullOrEmpty(this.txtNombre.Text + this.txtAPaterno.Text + this.txtAMaterno.Text + this.txtFechaNacimiento.Text
+                    + this.txtEdad.Text + this.txtCURP.Text + this.txtRFC.Text + txtFechaIngreso.Text + this.txtRol.Text + this.txtArea.Text))
+                {
+                    if (ConfigurationManager.AppSettings["session"] == "0")
+                    {
+                        this.Response.Redirect("/Login.aspx", true);
+                    }
+                    if (ConfigurationManager.AppSettings["session"] == "1")
+                    {
+                        this.session = (SessionManager)Session["SessionManager"];
+                        if (!session.IsLoged)
+                            this.Response.Redirect("/Login.aspx", true);
+
+                        this.session.Pantalla = "/UserPrincipal.aspx";
+                        this.session.Parametros["idPC"] = null;
+                        this.session.Parametros["idRenta"] = null;
+                        this.session.Parametros["idEmp"] = null;
+                        Session["SessionManager"] = this.session;
+                        this.Response.Redirect(this.session.Pantalla, true);
+                    }
+                }
+
                 DataContext dcConsulta = new DcGeneralDataContext();
                 if (this.session.Parametros["idEmp"] != null)
                 {
@@ -392,11 +414,11 @@ namespace UTTTCIBERCOM
                 res = int.TryParse(this.txtEdad.Text, out int newEdad) ? res + 1 : 115;
                 res = DateTime.TryParse(this.txtFechaIngreso.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaIngreso) ? res + 1 : 125;
                 res = int.TryParse(this.txtRol.Text, out int newIdRol) ? res + 1 : 135;
-                CatRol catRol = dcConsulta.GetTable<CatRol>().First(c => c.Id == newIdRol);
+                CatRol catRol = dcConsulta.GetTable<CatRol>().FirstOrDefault(c => c.Id == newIdRol);
                 if (catRol == null)
                     res = 145;
                 res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 155;
-                CatArea catArea = dcConsulta.GetTable<CatArea>().First(c => c.Id == newIdArea);
+                CatArea catArea = dcConsulta.GetTable<CatArea>().FirstOrDefault(c => c.Id == newIdArea);
                 if (catArea == null)
                     res = 165;
 
@@ -461,11 +483,11 @@ namespace UTTTCIBERCOM
                 res = int.TryParse(this.txtEdad.Text, out int newEdad) ? res + 1 : 115;
                 res = DateTime.TryParse(this.txtFechaIngreso.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaIngreso) ? res + 1 : 125;
                 res = int.TryParse(this.txtRol.Text, out int newIdRol) ? res + 1 : 135;
-                CatRol catRol = dcConsulta.GetTable<CatRol>().First(c => c.Id == newIdRol);
+                CatRol catRol = dcConsulta.GetTable<CatRol>().FirstOrDefault(c => c.Id == newIdRol);
                 if (catRol == null)
                     res = 145;
                 res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 155;
-                CatArea catArea = dcConsulta.GetTable<CatArea>().First(c => c.Id == newIdArea);
+                CatArea catArea = dcConsulta.GetTable<CatArea>().FirstOrDefault(c => c.Id == newIdArea);
                 if (catArea == null)
                     res = 165;
 

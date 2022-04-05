@@ -17,7 +17,9 @@ namespace UTTTCIBERCOM
         #region Variables
 
         private SessionManager session;
-        USUARIO user;
+        USUARIO user = null;
+        EMPLEADO emp = null;
+        bool valid = false;
         #endregion
 
         #region Eventos
@@ -53,29 +55,99 @@ namespace UTTTCIBERCOM
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
                 if (this.session.Parametros["idEmp"] != null)
-                {
-                    this.lblAction.Text = "Editar Usuario";
+                {   
+                    emp = dcConsulta.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idEmp"].ToString()));
                     user = dcConsulta.GetTable<USUARIO>().FirstOrDefault(c => c.idEmpleado == int.Parse(this.session.Parametros["idEmp"].ToString()));
-                    EMPLEADO emp = dcConsulta.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == user.idEmpleado);
 
-                    if (user != null && emp != null && !this.IsPostBack)
+                    if (user != null && emp != null)
                     {
-                        this.txtNombre.Text = emp.strNombre;
-                        this.txtAPaterno.Text = emp.strAPaterno;
-                        this.txtAMaterno.Text = emp.strAMaterno;
-                        this.txtCorreo.Text = user.email.ToString();
-                        this.txtUsername.Text = user.username.ToString();
-                        this.txtPassword.Text = user.password.ToString();
-                        this.chbxActivo.Checked = user.isValid;
-                        this.txtIdEmp.Text = user.idEmpleado.ToString();
+                        if (!this.IsPostBack)
+                        {
+                            this.lblAction.Text = "Editar Usuario";
+                            this.lblMensaje2.Text = "Si la contraseña se deja vacia, no se modificara";
+                            this.lblMensaje2.Visible = true;
+                            this.txtNombre.Text = emp.strNombre;
+                            this.txtAPaterno.Text = emp.strAPaterno;
+                            this.txtAMaterno.Text = emp.strAMaterno;
+                            this.txtCorreo.Text = user.email.ToString();
+                            this.txtUsername.Text = user.username.ToString();
+                            this.txtPassword.Text = user.password.ToString();
+                            this.chbxActivo.Checked = user.isValid;
+                            this.txtIdEmp.Text = user.idEmpleado.ToString();
+                            this.txtIdEmp.Enabled = false;
+                            this.btnDelete.Enabled = true;
+                        }
+                    }
+                    else if (emp != null)
+                    {
+                        if (!this.IsPostBack)
+                        {
+                            this.txtNombre.Text = emp.strNombre;
+                            this.txtAPaterno.Text = emp.strAPaterno;
+                            this.txtAMaterno.Text = emp.strAMaterno;
+                            this.txtIdEmp.Text = emp.Id.ToString();
+                            this.txtIdEmp.Enabled = false;
+                        }
+                        else
+                        {
+                            this.txtIdEmp.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        this.lblMensaje.Text = "Error al procesar la informacion";
+                        this.lblMensaje.Visible = true;
+                        this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+
+                        valid = false;
                     }
                 }
                 else
                 {
-                    this.txtNombre.Enabled = true;
-                    this.txtAPaterno.Enabled = true;
-                    this.txtAMaterno.Enabled = true;
-                    this.txtIdEmp.Enabled = true;
+                    this.lblAction.Text = "Nuevo Usuario";
+
+                    if (this.IsPostBack)
+                    {
+                        if (int.TryParse(this.txtIdEmp.Text, out int newIdEmp))
+                        {
+                            EMPLEADO newEmpleado = dcConsulta.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == newIdEmp);
+                            if (newEmpleado != null)
+                            {
+                                if (dcConsulta.GetTable<USUARIO>().FirstOrDefault(c => c.idEmpleado == newIdEmp) != null)
+                                {
+                                    this.lblMensaje.Text = "El empleado ya tiene un usuario";
+                                    this.lblMensaje.Visible = true;
+                                    this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+
+                                    valid = false;
+                                }
+                                else
+                                {
+                                    this.txtNombre.Text = newEmpleado.strNombre;
+                                    this.txtAPaterno.Text = newEmpleado.strAPaterno;
+                                    this.txtAMaterno.Text = newEmpleado.strAMaterno;
+
+                                    this.lblMensaje.Visible = false;
+                                    valid = true;
+                                }
+                            }
+                            else
+                            {
+                                this.lblMensaje.Text = "El empleado no existe";
+                                this.lblMensaje.Visible = true;
+                                this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                                
+                                valid = false;
+                            }
+                        }
+                        else
+                        {
+                            this.lblMensaje.Text = "El id del empleado es erroneo";
+                            this.lblMensaje.Visible = true;
+                            this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                            valid = false;
+                        }
+                    }
                 }
             }
             catch (Exception _e)
@@ -353,24 +425,50 @@ namespace UTTTCIBERCOM
                     DataContext dcConsulta = new DcGeneralDataContext();
                     if (this.session.Parametros["idEmp"] != null)
                     {
-                        if (updateDatos())
+                        if (user != null && emp != null)
                         {
-                            if (ConfigurationManager.AppSettings["session"] == "0")
+                            if (updateDatos())
                             {
-                                this.Response.Redirect("/Login.aspx", true);
-                            }
-                            if (ConfigurationManager.AppSettings["session"] == "1")
-                            {
-                                this.session = (SessionManager)Session["SessionManager"];
-                                if (!session.IsLoged)
+                                if (ConfigurationManager.AppSettings["session"] == "0")
+                                {
                                     this.Response.Redirect("/Login.aspx", true);
+                                }
+                                if (ConfigurationManager.AppSettings["session"] == "1")
+                                {
+                                    this.session = (SessionManager)Session["SessionManager"];
+                                    if (!session.IsLoged)
+                                        this.Response.Redirect("/Login.aspx", true);
 
-                                this.session.Pantalla = "/UserPrincipal.aspx";
-                                this.session.Parametros["idPC"] = null;
-                                this.session.Parametros["idRenta"] = null;
-                                this.session.Parametros["idEmp"] = null;
-                                Session["SessionManager"] = this.session;
-                                this.Response.Redirect(this.session.Pantalla, false);
+                                    this.session.Pantalla = "/UserPrincipal.aspx";
+                                    this.session.Parametros["idPC"] = null;
+                                    this.session.Parametros["idRenta"] = null;
+                                    this.session.Parametros["idEmp"] = null;
+                                    Session["SessionManager"] = this.session;
+                                    this.Response.Redirect(this.session.Pantalla, false);
+                                }
+                            }
+                        }
+                        else if (emp != null)
+                        {
+                            if (llenarDatos())
+                            {
+                                if (ConfigurationManager.AppSettings["session"] == "0")
+                                {
+                                    this.Response.Redirect("/Login.aspx", true);
+                                }
+                                if (ConfigurationManager.AppSettings["session"] == "1")
+                                {
+                                    this.session = (SessionManager)Session["SessionManager"];
+                                    if (!session.IsLoged)
+                                        this.Response.Redirect("/Login.aspx", true);
+
+                                    this.session.Pantalla = "/UserPrincipal.aspx";
+                                    this.session.Parametros["idPC"] = null;
+                                    this.session.Parametros["idRenta"] = null;
+                                    this.session.Parametros["idEmp"] = null;
+                                    Session["SessionManager"] = this.session;
+                                    this.Response.Redirect(this.session.Pantalla, false);
+                                }
                             }
                         }
                     }
@@ -406,6 +504,39 @@ namespace UTTTCIBERCOM
 
         }
 
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataContext dcDelete = new DcGeneralDataContext();
+                USUARIO userDelete = dcDelete.GetTable<USUARIO>().First(c => c.Id == user.Id);
+                dcDelete.GetTable<USUARIO>().DeleteOnSubmit(userDelete);
+                dcDelete.SubmitChanges();
+
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/UserPrincipal.aspx";
+                    this.session.Parametros["idPC"] = null;
+                    this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+            }
+            catch (Exception _e)
+            {
+                throw _e;
+            }
+        }
+
         #endregion
 
         #region Metodos
@@ -414,39 +545,26 @@ namespace UTTTCIBERCOM
         {
             try
             {
-                int res = 0;
                 DataContext dcConsulta = new DcGeneralDataContext();
                 USUARIO updateUser = dcConsulta.GetTable<USUARIO>().FirstOrDefault(c => c.Id == user.Id);
 
-                res = int.TryParse(this.txtIdEmp.Text, out int newIdEmp) ? res + 1 : 105;
-                EMPLEADO catEmp = dcConsulta.GetTable<EMPLEADO>().First(c => c.Id == newIdEmp);
-                if (catEmp == null)
-                    res = 115;
-
-                if (res == 1)
+                if(this.txtPassword.Text.Equals(this.txtPassword2.Text))
                 {
                     updateUser.email = this.txtCorreo.Text;
                     updateUser.username = this.txtUsername.Text;
-                    updateUser.password = this.txtPassword.Text;
+                    if(!String.IsNullOrEmpty(this.txtPassword.Text))
+                        updateUser.password = this.txtPassword.Text;
                     updateUser.isValid = this.chbxActivo.Checked;
-                    updateUser.idEmpleado = newIdEmp;
-                    
+
                     dcConsulta.SubmitChanges();
 
                     return true;
                 }
                 else
                 {
-                    if (res > 100 && res < 110)
-                        this.lblMensaje.Text = "El ID del empleado no es correcto";
-                    else if (res > 110 && res < 120)
-                        this.lblMensaje.Text = "El ID del empleado no existe";
-                    else
-                        this.lblMensaje.Text = "Error al procesar los datos llenados";
-
                     this.lblMensaje.Visible = true;
+                    this.lblMensaje.Text = "Las contraseñas no coinciden";
                     this.lblMensaje.ForeColor = System.Drawing.Color.Red;
-
                     return false;
                 }
             }
@@ -460,42 +578,54 @@ namespace UTTTCIBERCOM
         {
             try
             {
-                int res = 0;
-                DataContext dcConsulta = new DcGeneralDataContext();
-                USUARIO newUser = new USUARIO();
-
-                res = int.TryParse(this.txtIdEmp.Text, out int newIdEmp) ? res + 1 : 105;
-                EMPLEADO catEmp = dcConsulta.GetTable<EMPLEADO>().First(c => c.Id == newIdEmp);
-                if (catEmp == null)
-                    res = 115;
-
-                if (res == 1)
+                if (valid)
                 {
-                    newUser.email = this.txtCorreo.Text;
-                    newUser.username = this.txtUsername.Text;
-                    newUser.password = this.txtPassword.Text;
-                    newUser.isValid = this.chbxActivo.Checked;
-                    newUser.idEmpleado = newIdEmp;
+                    int res = 0;
+                    DataContext dcConsulta = new DcGeneralDataContext();
+                    USUARIO newUser = new USUARIO();
+                    int newIdEmp = 0;
+                    if (this.txtIdEmp.Enabled)
+                        res = int.TryParse(this.txtIdEmp.Text, out newIdEmp) ? res + 1 : 105;
+                    else
+                        res = int.TryParse(this.session.Parametros["idEmp"].ToString(), out newIdEmp) ? res + 1 : 105;
+                    EMPLEADO catEmp = dcConsulta.GetTable<EMPLEADO>().First(c => c.Id == newIdEmp);
+                    if (catEmp == null)
+                        res = 115;
+                    if (!this.txtPassword.Text.Equals(this.txtPassword2.Text))
+                        res = 125;
 
-                    dcConsulta.GetTable<USUARIO>().InsertOnSubmit(newUser);
-                    dcConsulta.SubmitChanges();
+                    if (res == 1)
+                    {
+                        newUser.email = this.txtCorreo.Text;
+                        newUser.username = this.txtUsername.Text;
+                        newUser.password = this.txtPassword.Text;
+                        newUser.isValid = this.chbxActivo.Checked;
+                        newUser.idEmpleado = newIdEmp;
 
-                    return true;
+                        dcConsulta.GetTable<USUARIO>().InsertOnSubmit(newUser);
+                        dcConsulta.SubmitChanges();
+
+                        return true;
+                    }
+                    else
+                    {
+                        if (res > 100 && res < 110)
+                            this.lblMensaje.Text = "El ID del empleado no es correcto";
+                        else if (res > 110 && res < 120)
+                            this.lblMensaje.Text = "El ID del empleado no existe";
+                        else if (res > 120 && res < 130)
+                            this.lblMensaje.Text = "Las contraseñas no coinciden";
+                        else
+                            this.lblMensaje.Text = "Error al procesar los datos llenados";
+
+                        this.lblMensaje.Visible = true;
+                        this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+
+                        return false;
+                    }
                 }
                 else
-                {
-                    if (res > 100 && res < 110)
-                        this.lblMensaje.Text = "El ID del empleado no es correcto";
-                    else if (res > 110 && res < 120)
-                        this.lblMensaje.Text = "El ID del empleado no existe";
-                    else
-                        this.lblMensaje.Text = "Error al procesar los datos llenados";
-
-                    this.lblMensaje.Visible = true;
-                    this.lblMensaje.ForeColor = System.Drawing.Color.Red;
-
                     return false;
-                }
             }
             catch (Exception)
             {

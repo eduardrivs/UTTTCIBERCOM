@@ -60,11 +60,19 @@ namespace UTTTCIBERCOM.app
 
             if(baseEntity != null)
             {
-                session = new SessionManager(baseEntity.idEmpleado);
-                session.Pantalla = "/RentPrincipal.aspx";
-                Session["SessionManager"] = this.session;
-                Session["idUser"] = baseEntity.Id;
-                this.Response.Redirect(this.session.Pantalla, false);
+                if (baseEntity.isValid)
+                {
+                    session = new SessionManager(baseEntity.idEmpleado);
+                    session.Pantalla = "/RentPrincipal.aspx";
+                    Session["SessionManager"] = this.session;
+                    Session["idUser"] = baseEntity.Id;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+                else
+                {
+                    ConfigurationManager.AppSettings["trylog"] = "1";
+                    this.txtAlerta.Visible = true;
+                }
             }
             else
             {
