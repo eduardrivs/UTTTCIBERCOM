@@ -69,6 +69,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtAMaterno;
 
         /// <summary>
+        /// Control txtIdEmp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdEmp;
+
+        /// <summary>
         /// Control chbxActivo.
         /// </summary>
         /// <remarks>
@@ -105,13 +114,22 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
         /// <summary>
-        /// Control txtIdEmp.
+        /// Control txtPassword2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdEmp;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword2;
+
+        /// <summary>
+        /// Control lblMensaje2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje2;
 
         /// <summary>
         /// Control lblMensaje.
@@ -121,6 +139,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
+
+        /// <summary>
+        /// Control btnDelete.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelete;
 
         /// <summary>
         /// Control btnFin.

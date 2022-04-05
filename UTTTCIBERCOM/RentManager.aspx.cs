@@ -95,9 +95,13 @@ namespace UTTTCIBERCOM
                                 if (decimal.TryParse(txtCambio.Text, out decimal cambio))
                                     nuevaRenta.monCambio = cambio;
                                 if (pagoTotal - double.Parse(txtTotal.Text) >= 0)
-                                {
                                     this.btnFin.Enabled = true;
-                                }
+                                else
+                                    this.btnFin.Enabled = false;
+                            }
+                            else
+                            {
+                                this.btnFin.Enabled = false;
                             }
                         }
                         else
@@ -139,10 +143,10 @@ namespace UTTTCIBERCOM
                             this.txtPago.AutoPostBack = false;
                             this.txtCambio.Enabled = true;
 
-                            if (double.Parse(txtPago.Text) - double.Parse(txtTotal.Text) >= 0)
-                            {
-                                this.btnFin.Enabled = true;
-                            }
+                            if(double.TryParse(txtPago.Text, out double pago))
+                                if(double.TryParse(txtTotal.Text, out double total))
+                                    if(pago - total >= 0)
+                                        this.btnFin.Enabled = true;
                         }
                     }
                 }

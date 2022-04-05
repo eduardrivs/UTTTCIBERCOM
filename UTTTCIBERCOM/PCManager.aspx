@@ -81,31 +81,46 @@
                     <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
                 </div>
             </div>
-            <!-- Cuerpo -->
+            <!-- Contenido -->
             <div class="bodySize ps-5 ms-3 ms-lg-0 row d-flex">
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
-                        <div><label for="txtNombre">Nombre:</label></div>
-                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtNombre">Nombre:</label>
+                            <asp:RequiredFieldValidator ID="rvfNombre" runat="server" class="text-danger me-5" ControlToValidate="txtNombre" ErrorMessage="&quot;El nombre es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtDescripcion">Descripcion:</label></div>
-                        <asp:TextBox ID="txtDescripcion" runat="server" Width="90%" Height="100px" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtDescripcion">Descripcion:</label>
+                            <asp:RequiredFieldValidator ID="rvfDescripcion" runat="server" class="text-danger me-5" ControlToValidate="txtDescripcion" ErrorMessage="&quot;La descripcion es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtDescripcion" runat="server" Width="90%" Height="100px" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtFechaAlta">Fecha de alta:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtFechaAlta">Fecha de alta:</label>
+                            <asp:RequiredFieldValidator ID="rvfFechaAlta" runat="server" class="text-danger me-5" ControlToValidate="txtFechaAlta" ErrorMessage="&quot;La fecha de alta es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <div class="d-flex">
                             <asp:TextBox ID="txtFechaAlta" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
                             <asp:ImageButton ID="imgPopup" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
                         </div>
-                        <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaAlta" Format="dd-MM-yyyy HH:mm:ss tt" />
+                        <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaAlta" Format="dd-MM-yyyy HH:mm:ss tt"/>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtArea">Id Area:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtArea">Id Area:</label>
+                            <asp:RequiredFieldValidator ID="rvfIdArea" runat="server" class="text-danger me-5" ControlToValidate="txtArea" ErrorMessage="&quot;El aera es obligatoria&quot;" ValidationGroup="gvSave" MaxLength="2"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtArea" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtTarifa">Tarifa por hora:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtTarifa">Tarifa por hora:</label>
+                            <asp:RequiredFieldValidator ID="rvfTarifa" runat="server" class="text-danger me-5" ControlToValidate="txtTarifa" ErrorMessage="&quot;La tarifa es obligatoria&quot;" ValidationGroup="gvSave" MaxLength="10"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtTarifa" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaDinero(event);"></asp:TextBox>                        
                     </div>
                     <div class="my-3">
@@ -119,32 +134,53 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
-                        <div><label for="txtTeclado">Teclado:</label></div>
-                        <asp:TextBox ID="txtTeclado" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtTeclado">Teclado:</label>
+                            <asp:RequiredFieldValidator ID="rvfTeclado" runat="server" class="text-danger me-5" ControlToValidate="txtTeclado" ErrorMessage="&quot;El teclado es necesario&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtTeclado" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtMonitor">Monitor:</label></div>
-                        <asp:TextBox ID="txtMonitor" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtMonitor">Monitor:</label>
+                            <asp:RequiredFieldValidator ID="rvfMonitor" runat="server" class="text-danger me-5" ControlToValidate="txtMonitor" ErrorMessage="&quot;El monitor es necesario&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtMonitor" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtMouse">Mouse:</label></div>
-                        <asp:TextBox ID="txtMouse" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtMouse">Mouse:</label>
+                            <asp:RequiredFieldValidator ID="rvfMouse" runat="server" class="text-danger me-5" ControlToValidate="txtMouse" ErrorMessage="&quot;El mouse es necesario&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtMouse" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtAudifonos">Audifonos:</label></div>
-                        <asp:TextBox ID="txtAudifonos" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtAudifonos">Audifonos:</label>
+                            <asp:RequiredFieldValidator ID="rvfAudifonos" runat="server" class="text-danger me-5" ControlToValidate="txtAudifonos" ErrorMessage="&quot;El mouse es necesario&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtAudifonos" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtCPU">CPU:</label></div>
-                        <asp:TextBox ID="txtCPU" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtCPU">CPU:</label>
+                            <asp:RequiredFieldValidator ID="rvfCPU" runat="server" class="text-danger me-5" ControlToValidate="txtCPU" ErrorMessage="&quot;El CPU es necesario&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtCPU" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtRAM">RAM:</label></div>
-                        <asp:TextBox ID="txtRAM" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtRAM">RAM:</label>
+                            <asp:RequiredFieldValidator ID="rvfRAM" runat="server" class="text-danger me-5" ControlToValidate="txtRAM" ErrorMessage="&quot;La RAM es necesaria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtRAM" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtGPU">GPU:</label></div>
-                        <asp:TextBox ID="txtGPU" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtGPU">GPU:</label>
+                            <asp:RequiredFieldValidator ID="rvfGPU" runat="server" class="text-danger me-5" ControlToValidate="txtGPU" ErrorMessage="&quot;La GPU es necesaria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
+                        <asp:TextBox ID="txtGPU" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
                     </div>
                 </div>
                 <div class="mt-2 pe-5 text-end">

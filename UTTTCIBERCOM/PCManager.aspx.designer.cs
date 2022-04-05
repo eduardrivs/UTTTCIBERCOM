@@ -33,6 +33,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
+        /// Control rvfNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfNombre;
+
+        /// <summary>
         /// Control txtNombre.
         /// </summary>
         /// <remarks>
@@ -42,6 +51,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
+        /// Control rvfDescripcion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfDescripcion;
+
+        /// <summary>
         /// Control txtDescripcion.
         /// </summary>
         /// <remarks>
@@ -49,6 +67,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+
+        /// <summary>
+        /// Control rvfFechaAlta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfFechaAlta;
 
         /// <summary>
         /// Control txtFechaAlta.
@@ -78,6 +105,15 @@ namespace UTTTCIBERCOM
         protected global::AjaxControlToolkit.CalendarExtender calendar1;
 
         /// <summary>
+        /// Control rvfIdArea.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfIdArea;
+
+        /// <summary>
         /// Control txtArea.
         /// </summary>
         /// <remarks>
@@ -85,6 +121,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtArea;
+
+        /// <summary>
+        /// Control rvfTarifa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfTarifa;
 
         /// <summary>
         /// Control txtTarifa.
@@ -123,6 +168,15 @@ namespace UTTTCIBERCOM
         protected global::AjaxControlToolkit.CalendarExtender CalendarExtender2;
 
         /// <summary>
+        /// Control rvfTeclado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfTeclado;
+
+        /// <summary>
         /// Control txtTeclado.
         /// </summary>
         /// <remarks>
@@ -130,6 +184,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTeclado;
+
+        /// <summary>
+        /// Control rvfMonitor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfMonitor;
 
         /// <summary>
         /// Control txtMonitor.
@@ -141,6 +204,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtMonitor;
 
         /// <summary>
+        /// Control rvfMouse.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfMouse;
+
+        /// <summary>
         /// Control txtMouse.
         /// </summary>
         /// <remarks>
@@ -148,6 +220,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMouse;
+
+        /// <summary>
+        /// Control rvfAudifonos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfAudifonos;
 
         /// <summary>
         /// Control txtAudifonos.
@@ -159,6 +240,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtAudifonos;
 
         /// <summary>
+        /// Control rvfCPU.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfCPU;
+
+        /// <summary>
         /// Control txtCPU.
         /// </summary>
         /// <remarks>
@@ -168,6 +258,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtCPU;
 
         /// <summary>
+        /// Control rvfRAM.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfRAM;
+
+        /// <summary>
         /// Control txtRAM.
         /// </summary>
         /// <remarks>
@@ -175,6 +274,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRAM;
+
+        /// <summary>
+        /// Control rvfGPU.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfGPU;
 
         /// <summary>
         /// Control txtGPU.

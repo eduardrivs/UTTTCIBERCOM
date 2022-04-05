@@ -266,57 +266,89 @@ namespace UTTTCIBERCOM
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            try
+            if (String.IsNullOrEmpty((txtNombre.Text + txtDescripcion.Text + txtFechaAlta.Text + txtArea.Text + txtTarifa.Text + txtTempRenta.Text 
+                + txtTeclado.Text + txtMonitor.Text + txtMouse.Text + txtAudifonos.Text + txtCPU.Text + txtRAM.Text + txtGPU.Text).Trim()))
             {
-                DataContext dcConsulta = new DcGeneralDataContext();
-                if (this.session.Parametros["idPC"] != null)
+                if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    if (updateDatos())
-                    {
-                        if (ConfigurationManager.AppSettings["session"] == "0")
-                        {
-                            this.Response.Redirect("/Login.aspx", true);
-                        }
-                        if (ConfigurationManager.AppSettings["session"] == "1")
-                        {
-                            this.session = (SessionManager)Session["SessionManager"];
-                            if (!session.IsLoged)
-                                this.Response.Redirect("/Login.aspx", true);
-
-                            this.session.Pantalla = "/PCPrincipal.aspx";
-                            this.session.Parametros["idPC"] = null;
-                            this.session.Parametros["idRenta"] = null;
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
-                        }
-                    }
+                    this.Response.Redirect("/Login.aspx", true);
                 }
-                else
+                if (ConfigurationManager.AppSettings["session"] == "1")
                 {
-                    if (llenarDatos())
-                    {
-                        if (ConfigurationManager.AppSettings["session"] == "0")
-                        {
-                            this.Response.Redirect("/Login.aspx", true);
-                        }
-                        if (ConfigurationManager.AppSettings["session"] == "1")
-                        {
-                            this.session = (SessionManager)Session["SessionManager"];
-                            if (!session.IsLoged)
-                                this.Response.Redirect("/Login.aspx", true);
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
 
-                            this.session.Pantalla = "/PCPrincipal.aspx";
-                            this.session.Parametros["idPC"] = null;
-                            this.session.Parametros["idRenta"] = null;
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
-                        }
-                    }
+                    this.session.Pantalla = "/PCPrincipal.aspx";
+                    this.session.Parametros["idPC"] = null;
+                    this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
                 }
             }
-            catch (Exception)
+            else
             {
-                throw;
+                this.btnFin.ValidationGroup = "gvSave";
+                Page.Validate("gvSave");
+
+                if (!Page.IsValid)
+                {
+                    return;
+                }
+
+                try
+                {
+                    DataContext dcConsulta = new DcGeneralDataContext();
+                    if (this.session.Parametros["idPC"] != null)
+                    {
+                        if (updateDatos())
+                        {
+                            if (ConfigurationManager.AppSettings["session"] == "0")
+                            {
+                                this.Response.Redirect("/Login.aspx", true);
+                            }
+                            if (ConfigurationManager.AppSettings["session"] == "1")
+                            {
+                                this.session = (SessionManager)Session["SessionManager"];
+                                if (!session.IsLoged)
+                                    this.Response.Redirect("/Login.aspx", true);
+
+                                this.session.Pantalla = "/PCPrincipal.aspx";
+                                this.session.Parametros["idPC"] = null;
+                                this.session.Parametros["idRenta"] = null;
+                                Session["SessionManager"] = this.session;
+                                this.Response.Redirect(this.session.Pantalla, false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (llenarDatos())
+                        {
+                            if (ConfigurationManager.AppSettings["session"] == "0")
+                            {
+                                this.Response.Redirect("/Login.aspx", true);
+                            }
+                            if (ConfigurationManager.AppSettings["session"] == "1")
+                            {
+                                this.session = (SessionManager)Session["SessionManager"];
+                                if (!session.IsLoged)
+                                    this.Response.Redirect("/Login.aspx", true);
+
+                                this.session.Pantalla = "/PCPrincipal.aspx";
+                                this.session.Parametros["idPC"] = null;
+                                this.session.Parametros["idRenta"] = null;
+                                Session["SessionManager"] = this.session;
+                                this.Response.Redirect(this.session.Pantalla, false);
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
 
         }
@@ -466,6 +498,12 @@ namespace UTTTCIBERCOM
             {
                 throw;
             }
+        }
+
+        private bool validar()
+        {
+
+            return false;
         }
 
         #endregion

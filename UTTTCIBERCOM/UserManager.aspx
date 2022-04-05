@@ -80,15 +80,15 @@
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
                         <div><label for="txtNombre">Nombre:</label></div>
-                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div><label for="txtAPaterno">A.Paterno:</label></div>
-                        <asp:TextBox ID="txtAPaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtAPaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div><label for="txtAMaterno">A.Materno:</label></div>
-                        <asp:TextBox ID="txtAMaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtAMaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div><label for="txtFechaNacimiento">Fecha de nacimiento:</label></div>

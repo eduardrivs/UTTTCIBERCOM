@@ -80,15 +80,19 @@
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
                         <div><label for="txtNombre">Nombre:</label></div>
-                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);" Enabled="false"></asp:TextBox>
+                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div><label for="txtAPaterno">A.Paterno:</label></div>
-                        <asp:TextBox ID="txtAPaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);" Enabled="false"></asp:TextBox>
+                        <asp:TextBox ID="txtAPaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div><label for="txtAMaterno">A.Materno:</label></div>
-                        <asp:TextBox ID="txtAMaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);" Enabled="false"></asp:TextBox>
+                        <asp:TextBox ID="txtAMaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);" Enabled="false"></asp:TextBox>
+                    </div>
+                    <div class="my-3">
+                        <div><label for="txtIdEmp">ID Empleado:</label></div>
+                        <asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" AutoPostBack="true" ></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo"/>
@@ -97,7 +101,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
                         <div><label for="txtCorreo">Correo electronico:</label></div>
-                        <asp:TextBox ID="txtCorreo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaCorreo(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtCorreo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaCorreo(event);" TextMode="Email"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div><label for="txtUsername">Username:</label></div>
@@ -105,15 +109,19 @@
                     </div>
                     <div class="my-3">
                         <div><label for="txtPassword">Password:</label></div>
-                        <asp:TextBox ID="txtPassword" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtPassword" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" TextMode="Password"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtIdEmp">ID Empleado:</label></div>
-                        <asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" Enabled="false"></asp:TextBox>
+                        <div><label for="txtPassword2">Password:</label></div>
+                        <asp:TextBox ID="txtPassword2" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" TextMode="Password"></asp:TextBox>
+                    </div>
+                    <div class="my-3">
+                        <div><asp:Label ID="lblMensaje2" Text="text" runat="server" Visible="false" CssClass="mx-2"/></div>
                     </div>
                 </div>
                 <div class="mt-2 pe-5 text-end">
                     <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2"/>
+                    <asp:Button ID="btnDelete" Text="Eliminar" runat="server" class="btnForm mx-1" OnClick="btnDelete_Click" Enabled="false"/>
                     <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
                     <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click"/>
                 </div>
