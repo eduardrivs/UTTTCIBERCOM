@@ -12,12 +12,12 @@ using UTTTCIBERCOM.Control;
 
 namespace UTTTCIBERCOM
 {
-    public partial class PCManager : System.Web.UI.Page
+    public partial class UserManager : System.Web.UI.Page
     {
         #region Variables
 
         private SessionManager session;
-        RENTA nuevaRenta = new RENTA();
+        EMPLEADO emp;
         #endregion
 
         #region Eventos
@@ -52,25 +52,24 @@ namespace UTTTCIBERCOM
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
-                if (this.session.Parametros["idPC"] != null)
+                if (this.session.Parametros["idEmp"] != null)
                 {
-                    COMPUTADORA pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idPC"].ToString()));
+                    this.lblAction.Text = "Editar empleado";
+                    emp = dcConsulta.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idEmp"].ToString()));
 
-                    if (pc != null && !this.IsPostBack)
+                    if (emp != null && !this.IsPostBack)
                     {
-                        this.txtNombre.Text = pc.strNombre.ToString();
-                        this.txtDescripcion.Text = pc.strDescripcion.ToString();
-                        this.txtFechaAlta.Text = pc.dteFechaAlta.ToString();
-                        this.txtArea.Text = pc.idArea.ToString();
-                        this.txtTarifa.Text = pc.monTarifa.ToString();
-                        this.txtTeclado.Text = pc.strTeclado.ToString();
-                        this.txtMonitor.Text = pc.strMonitor.ToString();
-                        this.txtMouse.Text = pc.strMouse.ToString();
-                        this.txtAudifonos.Text = pc.strAudifonos.ToString();
-                        this.txtCPU.Text = pc.strCPU.ToString();
-                        this.txtRAM.Text = pc.strRAM.ToString();
-                        this.txtGPU.Text = pc.strGPU.ToString();
-                        this.txtTempRenta.Text = pc.tempInicioRenta.ToString();
+                        this.txtNombre.Text = emp.strNombre.ToString();
+                        this.txtAPaterno.Text = emp.strAPaterno.ToString();
+                        this.txtAMaterno.Text = emp.strAMaterno.ToString();
+                        this.txtFechaNacimiento.Text = emp.dteFechaNacimiento.ToString();
+                        this.txtEdad.Text = emp.intEdad.ToString();
+                        this.txtCURP.Text = emp.strCURP.ToString();
+                        this.txtRFC.Text = emp.strRFC.ToString();
+                        this.txtFechaIngreso.Text = emp.dteFechaIngreso.ToString();
+                        this.txtRol.Text = emp.idRol.ToString();
+                        this.txtArea.Text = emp.idArea.ToString();
+                        this.chbxActivo.Checked = emp.boolActivo;
                     }
                 }
             }
@@ -106,6 +105,7 @@ namespace UTTTCIBERCOM
                     this.session.Pantalla = "/UserPrincipal.aspx";
                     this.session.Parametros["idPC"] = null;
                     this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -134,6 +134,7 @@ namespace UTTTCIBERCOM
                     this.session.Pantalla = "/PCPrincipal.aspx";
                     this.session.Parametros["idPC"] = null;
                     this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -160,16 +161,12 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     if (this.session.Parametros["idRenta"] == null)
-                    {
                         this.session.Pantalla = "/RentPrincipal.aspx";
-                        this.session.Parametros["idPC"] = null;
-                    }
                     else
-                    {
                         this.session.Pantalla = "/RentasPrincipal.aspx";
-                        this.session.Parametros["idPC"] = null;
-                        this.session.Parametros["idRenta"] = null;
-                    }
+                    this.session.Parametros["idPC"] = null;
+                    this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -196,7 +193,9 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/RentManager.aspx";
-
+                    this.session.Parametros["idPC"] = null;
+                    this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -225,6 +224,7 @@ namespace UTTTCIBERCOM
 
                     this.session.Pantalla = "/RentasPrincipal.aspx";
                     this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -251,6 +251,59 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/PCManager.aspx";
+                    this.session.Parametros["idEmp"] = null;
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+        }
+
+        protected void btnUserManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/UserManager.aspx";
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+        }
+
+        protected void btnUserLogManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/UserLogManager.aspx";
 
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
@@ -269,7 +322,7 @@ namespace UTTTCIBERCOM
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
-                if (this.session.Parametros["idPC"] != null)
+                if (this.session.Parametros["idEmp"] != null)
                 {
                     if (updateDatos())
                     {
@@ -283,9 +336,10 @@ namespace UTTTCIBERCOM
                             if (!session.IsLoged)
                                 this.Response.Redirect("/Login.aspx", true);
 
-                            this.session.Pantalla = "/PCPrincipal.aspx";
+                            this.session.Pantalla = "/UserPrincipal.aspx";
                             this.session.Parametros["idPC"] = null;
                             this.session.Parametros["idRenta"] = null;
+                            this.session.Parametros["idEmp"] = null;
                             Session["SessionManager"] = this.session;
                             this.Response.Redirect(this.session.Pantalla, false);
                         }
@@ -305,9 +359,10 @@ namespace UTTTCIBERCOM
                             if (!session.IsLoged)
                                 this.Response.Redirect("/Login.aspx", true);
 
-                            this.session.Pantalla = "/PCPrincipal.aspx";
+                            this.session.Pantalla = "/UserPrincipal.aspx";
                             this.session.Parametros["idPC"] = null;
                             this.session.Parametros["idRenta"] = null;
+                            this.session.Parametros["idEmp"] = null;
                             Session["SessionManager"] = this.session;
                             this.Response.Redirect(this.session.Pantalla, false);
                         }
@@ -331,39 +386,33 @@ namespace UTTTCIBERCOM
             {
                 int res = 0;
                 DataContext dcConsulta = new DcGeneralDataContext();
-                COMPUTADORA updatePC = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idPC"].ToString()));
+                EMPLEADO updateEmp = dcConsulta.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == emp.Id);
 
-                res = DateTime.TryParse(this.txtFechaAlta.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newDteAlta) ? res + 1 : 105;
-                res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 115;
+                res = DateTime.TryParse(this.txtFechaNacimiento.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaNacimiento) ? res + 1 : 105;
+                res = int.TryParse(this.txtEdad.Text, out int newEdad) ? res + 1 : 115;
+                res = DateTime.TryParse(this.txtFechaIngreso.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaIngreso) ? res + 1 : 125;
+                res = int.TryParse(this.txtRol.Text, out int newIdRol) ? res + 1 : 135;
+                CatRol catRol = dcConsulta.GetTable<CatRol>().First(c => c.Id == newIdRol);
+                if (catRol == null)
+                    res = 145;
+                res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 155;
                 CatArea catArea = dcConsulta.GetTable<CatArea>().First(c => c.Id == newIdArea);
                 if (catArea == null)
-                    res = 125;
-                res = decimal.TryParse(this.txtTarifa.Text, out decimal newTarifa) ? res + 1 : 135;
+                    res = 165;
 
-                DateTime newTempRenta = DateTime.Now;
-                if (String.IsNullOrEmpty(txtTempRenta.Text))
-                    res++;
-                else
-                    res = DateTime.TryParse(this.txtTempRenta.Text, out newTempRenta) ? res + 1 : 145;
-
-                if (res == 4)
+                if (res == 5)
                 {
-                    updatePC.strNombre = this.txtNombre.Text;
-                    updatePC.strDescripcion = this.txtDescripcion.Text;
-                    updatePC.dteFechaAlta = newDteAlta;
-                    updatePC.idArea = newIdArea;
-                    updatePC.monTarifa = newTarifa;
-                    updatePC.strTeclado = this.txtTeclado.Text;
-                    updatePC.strMonitor = this.txtMonitor.Text;
-                    updatePC.strMouse = this.txtMouse.Text;
-                    updatePC.strAudifonos = this.txtAudifonos.Text;
-                    updatePC.strCPU = this.txtCPU.Text;
-                    updatePC.strRAM = this.txtRAM.Text;
-                    updatePC.strGPU = this.txtGPU.Text;
-                    if (String.IsNullOrEmpty(this.txtTempRenta.Text))
-                        updatePC.tempInicioRenta = null;
-                    else
-                        updatePC.tempInicioRenta = newTempRenta;
+                    updateEmp.strNombre = this.txtNombre.Text;
+                    updateEmp.strAPaterno = this.txtAPaterno.Text;
+                    updateEmp.strAMaterno = this.txtAMaterno.Text;
+                    updateEmp.dteFechaNacimiento = newFechaNacimiento;
+                    updateEmp.intEdad = newEdad;
+                    updateEmp.strCURP = this.txtCURP.Text;
+                    updateEmp.strRFC = this.txtRFC.Text;
+                    updateEmp.dteFechaIngreso = newFechaIngreso;
+                    updateEmp.idRol = newIdRol;
+                    updateEmp.idArea = newIdArea;
+                    updateEmp.boolActivo = this.chbxActivo.Checked;
 
                     dcConsulta.SubmitChanges();
 
@@ -372,15 +421,19 @@ namespace UTTTCIBERCOM
                 else
                 {
                     if (res > 100 && res < 110)
-                        this.lblMensaje.Text = "La fecha de alta no es correcta";
+                        this.lblMensaje.Text = "La fecha de nacimiento no es correcta";
                     else if (res > 110 && res < 120)
-                        this.lblMensaje.Text = "El ID del Area no es correcto";
+                        this.lblMensaje.Text = "La edad no es correcta";
                     else if (res > 120 && res < 130)
-                        this.lblMensaje.Text = "El ID del Area no existe";
+                        this.lblMensaje.Text = "La fecha de ingreso no es correcta";
                     else if (res > 130 && res < 140)
-                        this.lblMensaje.Text = "La tarifa no es correcta";
+                        this.lblMensaje.Text = "El Rol no es correcto";
                     else if (res > 140 && res < 150)
-                        this.lblMensaje.Text = "La renta actual no es correcta";
+                        this.lblMensaje.Text = "El Rol no existe";
+                    else if (res > 150 && res < 160)
+                        this.lblMensaje.Text = "El Area no es correcta";
+                    else if (res > 160 && res < 170)
+                        this.lblMensaje.Text = "El Are no existe";
                     else
                         this.lblMensaje.Text = "Error al procesar los datos llenados";
 
@@ -402,57 +455,55 @@ namespace UTTTCIBERCOM
             {
                 int res = 0;
                 DataContext dcConsulta = new DcGeneralDataContext();
-                COMPUTADORA newPC = new COMPUTADORA();
+                EMPLEADO newEmp = new EMPLEADO();
 
-                res = DateTime.TryParse(this.txtFechaAlta.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newDteAlta) ? res + 1 : 105;
-                res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 115;
+                res = DateTime.TryParse(this.txtFechaNacimiento.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaNacimiento) ? res + 1 : 105;
+                res = int.TryParse(this.txtEdad.Text, out int newEdad) ? res + 1 : 115;
+                res = DateTime.TryParse(this.txtFechaIngreso.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaIngreso) ? res + 1 : 125;
+                res = int.TryParse(this.txtRol.Text, out int newIdRol) ? res + 1 : 135;
+                CatRol catRol = dcConsulta.GetTable<CatRol>().First(c => c.Id == newIdRol);
+                if (catRol == null)
+                    res = 145;
+                res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 155;
                 CatArea catArea = dcConsulta.GetTable<CatArea>().First(c => c.Id == newIdArea);
                 if (catArea == null)
-                    res = 125;
-                res = decimal.TryParse(this.txtTarifa.Text, out decimal newTarifa) ? res + 1 : 135;
+                    res = 165;
 
-                DateTime newTempRenta = DateTime.Now;
-                if (String.IsNullOrEmpty(txtTempRenta.Text))
-                    res++;
-                else
-                    res = DateTime.TryParse(this.txtTempRenta.Text, out newTempRenta) ? res + 1 : 145;
-
-                if (res == 4)
+                if (res == 5)
                 {
-                    newPC.strNombre = this.txtNombre.Text;
-                    newPC.strDescripcion = this.txtDescripcion.Text;
-                    newPC.dteFechaAlta = newDteAlta;
-                    newPC.idArea = newIdArea;
-                    newPC.monTarifa = newTarifa;
-                    newPC.strTeclado = this.txtTeclado.Text;
-                    newPC.strMonitor = this.txtMonitor.Text;
-                    newPC.strMouse = this.txtMouse.Text;
-                    newPC.strAudifonos = this.txtAudifonos.Text;
-                    newPC.strCPU = this.txtCPU.Text;
-                    newPC.strRAM = this.txtRAM.Text;
-                    newPC.strGPU = this.txtGPU.Text;
-                    if (String.IsNullOrEmpty(this.txtTempRenta.Text))
-                        newPC.tempInicioRenta = null;
-                    else
-                        newPC.tempInicioRenta = newTempRenta;
+                    newEmp.strNombre = this.txtNombre.Text;
+                    newEmp.strAPaterno = this.txtAPaterno.Text;
+                    newEmp.strAMaterno = this.txtAMaterno.Text;
+                    newEmp.dteFechaNacimiento = newFechaNacimiento;
+                    newEmp.intEdad = newEdad;
+                    newEmp.strCURP = this.txtCURP.Text;
+                    newEmp.strRFC = this.txtRFC.Text;
+                    newEmp.dteFechaIngreso = newFechaIngreso;
+                    newEmp.idRol = newIdRol;
+                    newEmp.idArea = newIdArea;
+                    newEmp.boolActivo = this.chbxActivo.Checked;
 
-                    dcConsulta.GetTable<COMPUTADORA>().InsertOnSubmit(newPC);
+                    dcConsulta.GetTable<EMPLEADO>().InsertOnSubmit(newEmp);
                     dcConsulta.SubmitChanges();
 
                     return true;
                 }
                 else
                 {
-                    if(res>100 && res<110)
-                        this.lblMensaje.Text = "La fecha de alta no es correcta";
-                    else if(res>110 && res<120)
-                        this.lblMensaje.Text = "El ID del Area no es correcto";
-                    else if(res>120 && res<130)
-                        this.lblMensaje.Text = "El ID del Area no existe";
+                    if (res > 100 && res < 110)
+                        this.lblMensaje.Text = "La fecha de nacimiento no es correcta";
+                    else if (res > 110 && res < 120)
+                        this.lblMensaje.Text = "La edad no es correcta";
+                    else if (res > 120 && res < 130)
+                        this.lblMensaje.Text = "La fecha de ingreso no es correcta";
                     else if (res > 130 && res < 140)
-                        this.lblMensaje.Text = "La tarifa no es correcta";
+                        this.lblMensaje.Text = "El Rol no es correcto";
                     else if (res > 140 && res < 150)
-                        this.lblMensaje.Text = "La renta actual no es correcta";
+                        this.lblMensaje.Text = "El Rol no existe";
+                    else if (res > 150 && res < 160)
+                        this.lblMensaje.Text = "El Area no es correcta";
+                    else if (res > 160 && res < 170)
+                        this.lblMensaje.Text = "El Are no existe";
                     else
                         this.lblMensaje.Text = "Error al procesar los datos llenados";
 

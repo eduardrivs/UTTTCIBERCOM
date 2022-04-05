@@ -281,6 +281,62 @@ namespace UTTTCIBERCOM
             }
         }
 
+        protected void btnRentManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/RentManager.aspx";
+
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+
+        }
+
+        protected void btnRentas_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/RentasPrincipal.aspx";
+                    this.session.Parametros["idRenta"] = null;
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+        }
+        #endregion
+
         protected void btnFinalRenta_Click(object sender, EventArgs e)
         {
             try
@@ -376,62 +432,6 @@ namespace UTTTCIBERCOM
             }
 
         }
-
-        protected void btnRentManager_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (ConfigurationManager.AppSettings["session"] == "0")
-                {
-                    this.Response.Redirect("/Login.aspx", true);
-                }
-                if (ConfigurationManager.AppSettings["session"] == "1")
-                {
-                    this.session = (SessionManager)Session["SessionManager"];
-                    if (!session.IsLoged)
-                        this.Response.Redirect("/Login.aspx", true);
-
-                    this.session.Pantalla = "/RentManager.aspx";
-
-                    Session["SessionManager"] = this.session;
-                    this.Response.Redirect(this.session.Pantalla, false);
-                }
-
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
-
-        }
-
-        protected void btnRentas_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (ConfigurationManager.AppSettings["session"] == "0")
-                {
-                    this.Response.Redirect("/Login.aspx", true);
-                }
-                if (ConfigurationManager.AppSettings["session"] == "1")
-                {
-                    this.session = (SessionManager)Session["SessionManager"];
-                    if (!session.IsLoged)
-                        this.Response.Redirect("/Login.aspx", true);
-
-                    this.session.Pantalla = "/RentasPrincipal.aspx";
-                    this.session.Parametros["idRenta"] = null;
-                    Session["SessionManager"] = this.session;
-                    this.Response.Redirect(this.session.Pantalla, false);
-                }
-
-            }
-            catch (Exception error)
-            {
-                throw error;
-            }
-        }
-        #endregion
 
         #endregion
 

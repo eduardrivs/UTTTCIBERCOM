@@ -12,12 +12,12 @@ using UTTTCIBERCOM.Control;
 
 namespace UTTTCIBERCOM
 {
-    public partial class PCManager : System.Web.UI.Page
+    public partial class UserLogManager : System.Web.UI.Page
     {
         #region Variables
 
         private SessionManager session;
-        RENTA nuevaRenta = new RENTA();
+        USUARIO user;
         #endregion
 
         #region Eventos
@@ -52,26 +52,30 @@ namespace UTTTCIBERCOM
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
-                if (this.session.Parametros["idPC"] != null)
+                if (this.session.Parametros["idEmp"] != null)
                 {
-                    COMPUTADORA pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idPC"].ToString()));
+                    this.lblAction.Text = "Editar Usuario";
+                    user = dcConsulta.GetTable<USUARIO>().FirstOrDefault(c => c.idEmpleado == int.Parse(this.session.Parametros["idEmp"].ToString()));
+                    EMPLEADO emp = dcConsulta.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == user.idEmpleado);
 
-                    if (pc != null && !this.IsPostBack)
+                    if (user != null && emp != null && !this.IsPostBack)
                     {
-                        this.txtNombre.Text = pc.strNombre.ToString();
-                        this.txtDescripcion.Text = pc.strDescripcion.ToString();
-                        this.txtFechaAlta.Text = pc.dteFechaAlta.ToString();
-                        this.txtArea.Text = pc.idArea.ToString();
-                        this.txtTarifa.Text = pc.monTarifa.ToString();
-                        this.txtTeclado.Text = pc.strTeclado.ToString();
-                        this.txtMonitor.Text = pc.strMonitor.ToString();
-                        this.txtMouse.Text = pc.strMouse.ToString();
-                        this.txtAudifonos.Text = pc.strAudifonos.ToString();
-                        this.txtCPU.Text = pc.strCPU.ToString();
-                        this.txtRAM.Text = pc.strRAM.ToString();
-                        this.txtGPU.Text = pc.strGPU.ToString();
-                        this.txtTempRenta.Text = pc.tempInicioRenta.ToString();
+                        this.txtNombre.Text = emp.strNombre;
+                        this.txtAPaterno.Text = emp.strAPaterno;
+                        this.txtAMaterno.Text = emp.strAMaterno;
+                        this.txtCorreo.Text = user.email.ToString();
+                        this.txtUsername.Text = user.username.ToString();
+                        this.txtPassword.Text = user.password.ToString();
+                        this.chbxActivo.Checked = user.isValid;
+                        this.txtIdEmp.Text = user.idEmpleado.ToString();
                     }
+                }
+                else
+                {
+                    this.txtNombre.Enabled = true;
+                    this.txtAPaterno.Enabled = true;
+                    this.txtAMaterno.Enabled = true;
+                    this.txtIdEmp.Enabled = true;
                 }
             }
             catch (Exception _e)
@@ -106,6 +110,7 @@ namespace UTTTCIBERCOM
                     this.session.Pantalla = "/UserPrincipal.aspx";
                     this.session.Parametros["idPC"] = null;
                     this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -134,6 +139,7 @@ namespace UTTTCIBERCOM
                     this.session.Pantalla = "/PCPrincipal.aspx";
                     this.session.Parametros["idPC"] = null;
                     this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -160,16 +166,12 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     if (this.session.Parametros["idRenta"] == null)
-                    {
                         this.session.Pantalla = "/RentPrincipal.aspx";
-                        this.session.Parametros["idPC"] = null;
-                    }
                     else
-                    {
                         this.session.Pantalla = "/RentasPrincipal.aspx";
-                        this.session.Parametros["idPC"] = null;
-                        this.session.Parametros["idRenta"] = null;
-                    }
+                    this.session.Parametros["idPC"] = null;
+                    this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -196,7 +198,9 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/RentManager.aspx";
-
+                    this.session.Parametros["idPC"] = null;
+                    this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -225,6 +229,7 @@ namespace UTTTCIBERCOM
 
                     this.session.Pantalla = "/RentasPrincipal.aspx";
                     this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
                 }
@@ -251,6 +256,59 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect("/Login.aspx", true);
 
                     this.session.Pantalla = "/PCManager.aspx";
+                    this.session.Parametros["idEmp"] = null;
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+        }
+
+        protected void btnUserManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/UserManager.aspx";
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+        }
+
+        protected void btnUserLogManager_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["session"] == "0")
+                {
+                    this.Response.Redirect("/Login.aspx", true);
+                }
+                if (ConfigurationManager.AppSettings["session"] == "1")
+                {
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
+
+                    this.session.Pantalla = "/UserLogManager.aspx";
 
                     Session["SessionManager"] = this.session;
                     this.Response.Redirect(this.session.Pantalla, false);
@@ -266,57 +324,84 @@ namespace UTTTCIBERCOM
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            try
+            if (String.IsNullOrEmpty(this.txtNombre.Text) && String.IsNullOrEmpty(this.txtAPaterno.Text) && String.IsNullOrEmpty(this.txtAMaterno.Text)
+                && String.IsNullOrEmpty(this.txtCorreo.Text) && String.IsNullOrEmpty(this.txtUsername.Text) && String.IsNullOrEmpty(this.txtPassword.Text)
+                && String.IsNullOrEmpty(this.txtIdEmp.Text))
             {
-                DataContext dcConsulta = new DcGeneralDataContext();
-                if (this.session.Parametros["idPC"] != null)
+                if (ConfigurationManager.AppSettings["session"] == "0")
                 {
-                    if (updateDatos())
-                    {
-                        if (ConfigurationManager.AppSettings["session"] == "0")
-                        {
-                            this.Response.Redirect("/Login.aspx", true);
-                        }
-                        if (ConfigurationManager.AppSettings["session"] == "1")
-                        {
-                            this.session = (SessionManager)Session["SessionManager"];
-                            if (!session.IsLoged)
-                                this.Response.Redirect("/Login.aspx", true);
-
-                            this.session.Pantalla = "/PCPrincipal.aspx";
-                            this.session.Parametros["idPC"] = null;
-                            this.session.Parametros["idRenta"] = null;
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
-                        }
-                    }
+                    this.Response.Redirect("/Login.aspx", true);
                 }
-                else
+                if (ConfigurationManager.AppSettings["session"] == "1")
                 {
-                    if (llenarDatos())
-                    {
-                        if (ConfigurationManager.AppSettings["session"] == "0")
-                        {
-                            this.Response.Redirect("/Login.aspx", true);
-                        }
-                        if (ConfigurationManager.AppSettings["session"] == "1")
-                        {
-                            this.session = (SessionManager)Session["SessionManager"];
-                            if (!session.IsLoged)
-                                this.Response.Redirect("/Login.aspx", true);
+                    this.session = (SessionManager)Session["SessionManager"];
+                    if (!session.IsLoged)
+                        this.Response.Redirect("/Login.aspx", true);
 
-                            this.session.Pantalla = "/PCPrincipal.aspx";
-                            this.session.Parametros["idPC"] = null;
-                            this.session.Parametros["idRenta"] = null;
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
-                        }
-                    }
+                    this.session.Pantalla = "/UserPrincipal.aspx";
+                    this.session.Parametros["idPC"] = null;
+                    this.session.Parametros["idRenta"] = null;
+                    this.session.Parametros["idEmp"] = null;
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
                 }
             }
-            catch (Exception)
+            else
             {
-                throw;
+                try
+                {
+                    DataContext dcConsulta = new DcGeneralDataContext();
+                    if (this.session.Parametros["idEmp"] != null)
+                    {
+                        if (updateDatos())
+                        {
+                            if (ConfigurationManager.AppSettings["session"] == "0")
+                            {
+                                this.Response.Redirect("/Login.aspx", true);
+                            }
+                            if (ConfigurationManager.AppSettings["session"] == "1")
+                            {
+                                this.session = (SessionManager)Session["SessionManager"];
+                                if (!session.IsLoged)
+                                    this.Response.Redirect("/Login.aspx", true);
+
+                                this.session.Pantalla = "/UserPrincipal.aspx";
+                                this.session.Parametros["idPC"] = null;
+                                this.session.Parametros["idRenta"] = null;
+                                this.session.Parametros["idEmp"] = null;
+                                Session["SessionManager"] = this.session;
+                                this.Response.Redirect(this.session.Pantalla, false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (llenarDatos())
+                        {
+                            if (ConfigurationManager.AppSettings["session"] == "0")
+                            {
+                                this.Response.Redirect("/Login.aspx", true);
+                            }
+                            if (ConfigurationManager.AppSettings["session"] == "1")
+                            {
+                                this.session = (SessionManager)Session["SessionManager"];
+                                if (!session.IsLoged)
+                                    this.Response.Redirect("/Login.aspx", true);
+
+                                this.session.Pantalla = "/UserPrincipal.aspx";
+                                this.session.Parametros["idPC"] = null;
+                                this.session.Parametros["idRenta"] = null;
+                                this.session.Parametros["idEmp"] = null;
+                                Session["SessionManager"] = this.session;
+                                this.Response.Redirect(this.session.Pantalla, false);
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
 
         }
@@ -331,40 +416,21 @@ namespace UTTTCIBERCOM
             {
                 int res = 0;
                 DataContext dcConsulta = new DcGeneralDataContext();
-                COMPUTADORA updatePC = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idPC"].ToString()));
+                USUARIO updateUser = dcConsulta.GetTable<USUARIO>().FirstOrDefault(c => c.Id == user.Id);
 
-                res = DateTime.TryParse(this.txtFechaAlta.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newDteAlta) ? res + 1 : 105;
-                res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 115;
-                CatArea catArea = dcConsulta.GetTable<CatArea>().First(c => c.Id == newIdArea);
-                if (catArea == null)
-                    res = 125;
-                res = decimal.TryParse(this.txtTarifa.Text, out decimal newTarifa) ? res + 1 : 135;
+                res = int.TryParse(this.txtIdEmp.Text, out int newIdEmp) ? res + 1 : 105;
+                EMPLEADO catEmp = dcConsulta.GetTable<EMPLEADO>().First(c => c.Id == newIdEmp);
+                if (catEmp == null)
+                    res = 115;
 
-                DateTime newTempRenta = DateTime.Now;
-                if (String.IsNullOrEmpty(txtTempRenta.Text))
-                    res++;
-                else
-                    res = DateTime.TryParse(this.txtTempRenta.Text, out newTempRenta) ? res + 1 : 145;
-
-                if (res == 4)
+                if (res == 1)
                 {
-                    updatePC.strNombre = this.txtNombre.Text;
-                    updatePC.strDescripcion = this.txtDescripcion.Text;
-                    updatePC.dteFechaAlta = newDteAlta;
-                    updatePC.idArea = newIdArea;
-                    updatePC.monTarifa = newTarifa;
-                    updatePC.strTeclado = this.txtTeclado.Text;
-                    updatePC.strMonitor = this.txtMonitor.Text;
-                    updatePC.strMouse = this.txtMouse.Text;
-                    updatePC.strAudifonos = this.txtAudifonos.Text;
-                    updatePC.strCPU = this.txtCPU.Text;
-                    updatePC.strRAM = this.txtRAM.Text;
-                    updatePC.strGPU = this.txtGPU.Text;
-                    if (String.IsNullOrEmpty(this.txtTempRenta.Text))
-                        updatePC.tempInicioRenta = null;
-                    else
-                        updatePC.tempInicioRenta = newTempRenta;
-
+                    updateUser.email = this.txtCorreo.Text;
+                    updateUser.username = this.txtUsername.Text;
+                    updateUser.password = this.txtPassword.Text;
+                    updateUser.isValid = this.chbxActivo.Checked;
+                    updateUser.idEmpleado = newIdEmp;
+                    
                     dcConsulta.SubmitChanges();
 
                     return true;
@@ -372,15 +438,9 @@ namespace UTTTCIBERCOM
                 else
                 {
                     if (res > 100 && res < 110)
-                        this.lblMensaje.Text = "La fecha de alta no es correcta";
+                        this.lblMensaje.Text = "El ID del empleado no es correcto";
                     else if (res > 110 && res < 120)
-                        this.lblMensaje.Text = "El ID del Area no es correcto";
-                    else if (res > 120 && res < 130)
-                        this.lblMensaje.Text = "El ID del Area no existe";
-                    else if (res > 130 && res < 140)
-                        this.lblMensaje.Text = "La tarifa no es correcta";
-                    else if (res > 140 && res < 150)
-                        this.lblMensaje.Text = "La renta actual no es correcta";
+                        this.lblMensaje.Text = "El ID del empleado no existe";
                     else
                         this.lblMensaje.Text = "Error al procesar los datos llenados";
 
@@ -402,57 +462,32 @@ namespace UTTTCIBERCOM
             {
                 int res = 0;
                 DataContext dcConsulta = new DcGeneralDataContext();
-                COMPUTADORA newPC = new COMPUTADORA();
+                USUARIO newUser = new USUARIO();
 
-                res = DateTime.TryParse(this.txtFechaAlta.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newDteAlta) ? res + 1 : 105;
-                res = int.TryParse(this.txtArea.Text, out int newIdArea) ? res + 1 : 115;
-                CatArea catArea = dcConsulta.GetTable<CatArea>().First(c => c.Id == newIdArea);
-                if (catArea == null)
-                    res = 125;
-                res = decimal.TryParse(this.txtTarifa.Text, out decimal newTarifa) ? res + 1 : 135;
+                res = int.TryParse(this.txtIdEmp.Text, out int newIdEmp) ? res + 1 : 105;
+                EMPLEADO catEmp = dcConsulta.GetTable<EMPLEADO>().First(c => c.Id == newIdEmp);
+                if (catEmp == null)
+                    res = 115;
 
-                DateTime newTempRenta = DateTime.Now;
-                if (String.IsNullOrEmpty(txtTempRenta.Text))
-                    res++;
-                else
-                    res = DateTime.TryParse(this.txtTempRenta.Text, out newTempRenta) ? res + 1 : 145;
-
-                if (res == 4)
+                if (res == 1)
                 {
-                    newPC.strNombre = this.txtNombre.Text;
-                    newPC.strDescripcion = this.txtDescripcion.Text;
-                    newPC.dteFechaAlta = newDteAlta;
-                    newPC.idArea = newIdArea;
-                    newPC.monTarifa = newTarifa;
-                    newPC.strTeclado = this.txtTeclado.Text;
-                    newPC.strMonitor = this.txtMonitor.Text;
-                    newPC.strMouse = this.txtMouse.Text;
-                    newPC.strAudifonos = this.txtAudifonos.Text;
-                    newPC.strCPU = this.txtCPU.Text;
-                    newPC.strRAM = this.txtRAM.Text;
-                    newPC.strGPU = this.txtGPU.Text;
-                    if (String.IsNullOrEmpty(this.txtTempRenta.Text))
-                        newPC.tempInicioRenta = null;
-                    else
-                        newPC.tempInicioRenta = newTempRenta;
+                    newUser.email = this.txtCorreo.Text;
+                    newUser.username = this.txtUsername.Text;
+                    newUser.password = this.txtPassword.Text;
+                    newUser.isValid = this.chbxActivo.Checked;
+                    newUser.idEmpleado = newIdEmp;
 
-                    dcConsulta.GetTable<COMPUTADORA>().InsertOnSubmit(newPC);
+                    dcConsulta.GetTable<USUARIO>().InsertOnSubmit(newUser);
                     dcConsulta.SubmitChanges();
 
                     return true;
                 }
                 else
                 {
-                    if(res>100 && res<110)
-                        this.lblMensaje.Text = "La fecha de alta no es correcta";
-                    else if(res>110 && res<120)
-                        this.lblMensaje.Text = "El ID del Area no es correcto";
-                    else if(res>120 && res<130)
-                        this.lblMensaje.Text = "El ID del Area no existe";
-                    else if (res > 130 && res < 140)
-                        this.lblMensaje.Text = "La tarifa no es correcta";
-                    else if (res > 140 && res < 150)
-                        this.lblMensaje.Text = "La renta actual no es correcta";
+                    if (res > 100 && res < 110)
+                        this.lblMensaje.Text = "El ID del empleado no es correcto";
+                    else if (res > 110 && res < 120)
+                        this.lblMensaje.Text = "El ID del empleado no existe";
                     else
                         this.lblMensaje.Text = "Error al procesar los datos llenados";
 

@@ -68,5 +68,10 @@ namespace UTTTCIBERCOM.Control
             set { ultimoError = value;  }
         }
 
+        public int getEmpleado
+        {
+            get { return this.idEmpleado; }
+        }
+
     }
 }

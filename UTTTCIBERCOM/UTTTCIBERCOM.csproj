@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\css\ErrorPageServer.css" />
+    <Content Include="content\images\calendar.png" />
     <Content Include="content\images\dribbble_1.gif" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="ErrorPageServer.aspx" />
@@ -102,6 +103,8 @@
     <Content Include="RentasPrincipal.aspx" />
     <Content Include="RentManager.aspx" />
     <Content Include="RentPrincipal.aspx" />
+    <Content Include="UserLogManager.aspx" />
+    <Content Include="UserManager.aspx" />
     <Content Include="UserPrincipal.aspx" />
     <Content Include="content\bootstrap.css" />
     <Content Include="content\bootstrap.js" />
@@ -178,6 +181,20 @@
     </Compile>
     <Compile Include="RentPrincipal.aspx.designer.cs">
       <DependentUpon>RentPrincipal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserLogManager.aspx.cs">
+      <DependentUpon>UserLogManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserLogManager.aspx.designer.cs">
+      <DependentUpon>UserLogManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserManager.aspx.cs">
+      <DependentUpon>UserManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserManager.aspx.designer.cs">
+      <DependentUpon>UserManager.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserPrincipal.aspx.cs">
       <DependentUpon>UserPrincipal.aspx</DependentUpon>

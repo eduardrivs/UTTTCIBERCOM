@@ -1,5 +1,6 @@
 ﻿using Data.Linq.Entity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
@@ -258,14 +259,14 @@ namespace UTTTCIBERCOM.app
         {
             try
             {
-                int idPersona = int.Parse(e.CommandArgument.ToString());
+                int idPC = int.Parse(e.CommandArgument.ToString());
                 switch (e.CommandName)
                 {
                     case "Editar":
-                        this.editar(idPersona);
+                        this.editar(idPC);
                         break;
                     case "Eliminar":
-                        this.eliminar(idPersona);
+                        this.eliminar(idPC);
                         break;
                 }
             }
@@ -279,14 +280,39 @@ namespace UTTTCIBERCOM.app
 
         #region Metodos
 
-        private void editar(int _idPersona)
+        private void editar(int idPC)
         {
-            Console.WriteLine("Wnas");
+            try
+            {
+                Hashtable parametrosRagion = new Hashtable();
+                parametrosRagion.Add("idPC", idPC);
+                this.session.Parametros = parametrosRagion;
+                this.session.Pantalla = "/PCManager.aspx";
+
+                Session["SessionManager"] = this.session;
+                this.Response.Redirect(this.session.Pantalla, false);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        private void eliminar(int _idPersona)
+        private void eliminar(int idPC)
         {
-            Console.WriteLine("Pa tu casa");
+            try
+            {
+                DataContext dcDelete = new DcGeneralDataContext();
+                COMPUTADORA renta = dcDelete.GetTable<COMPUTADORA>().First(c => c.Id == idPC);
+                dcDelete.GetTable<COMPUTADORA>().DeleteOnSubmit(renta);
+                dcDelete.SubmitChanges();
+                this.showMessage("El registro se elimino correctamente.");
+                this.DataSourcePC.RaiseViewChanged();
+            }
+            catch (Exception _e)
+            {
+                throw _e;
+            }
         }
 
         #endregion
