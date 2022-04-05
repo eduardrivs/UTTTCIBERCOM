@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PCManager.aspx.cs" Inherits="UTTTCIBERCOM.PCManager" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserLogManager.aspx.cs" Inherits="UTTTCIBERCOM.UserLogManager" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
@@ -8,7 +8,7 @@
 <head runat="server">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Computadoras | Administración</title>
+    <title>Usuario | Administración</title>
     <link rel="icon" type="image/vnd.microsoft.icon" href="~/content/images/favicon.png">
     <link href="~/content/css/RentPrincipal.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -35,27 +35,23 @@
                             <asp:Button Text="Rentas" runat="server" class="menuLinkBtn text-center" OnClick="btnRentPrincipal_Click" />
                             <%--<a href="#" class="menuLinkActivo">Rentas</a>--%>
                         </div>
-                        <div class="menu menuActivo d-inline">
-                            <asp:Button Text="Computadoras" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnPCPrincipal_Click" />
+                        <div class="menu">
+                            <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
+                        </div>
+                        <div class="menu menuActivo d-inline">
+                            <asp:Button Text="Empleados" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnUserPrincipal_Click" />
+                            <%--<a href="#" class="menuLink">Empleados</a>--%>
                             <div class="d-lg-none d-inline">
                                 <div class="my-4" runat="server">
-                                    <i class="me-2 bi bi-plus-square-fill"></i>
-                                    <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
+                                    <i class="me-2 bi bi-person-plus-fill"></i>
+                                    <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                                 </div>
                                 <div class="my-4" runat="server">
-                                    <i class="me-2 bi bi-cash-stack"></i>
-                                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
-                                </div>
-                                <div class="my-4" runat="server">
-                                    <i class="me-2 bi bi-calendar2-x"></i>
-                                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
+                                    <i class="me-2 bi bi-person-badge"></i>
+                                    <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="menu">
-                            <asp:Button Text="Empleados" runat="server" class="menuLinkBtn text-center" OnClick="btnUserPrincipal_Click" />
-                            <%--<a href="#" class="menuLink">Empleados</a>--%>
                         </div>
                         <div class="menu">
                             <asp:Button Text="Cerrar sesión" runat="server" class="menuLinkBtn text-center" OnClick="btnLogout_Click" />
@@ -65,91 +61,60 @@
             </div>
         </nav>
 
-        <!-- Cuerpo -->
-        <div class="mt-2 row container-fluid">
+        <!-- Contenido -->
+        <div class="mt-4 row container-fluid">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
-                    <i class="me-2 bi bi-plus-square-fill"></i>
-                    <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
+                    <i class="me-2 bi bi-person-plus-fill"></i>
+                    <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
                 </div>
                 <div class="my-4" runat="server">
-                    <i class="me-2 bi bi-cash-stack"></i>
-                    <asp:Button Text="Nueva Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentPrincipal_Click" />
-                </div>
-                <div class="my-4" runat="server">
-                    <i class="me-2 bi bi-calendar2-x"></i>
-                    <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
+                    <i class="me-2 bi-person-badge"></i>
+                    <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                 </div>
             </div>
+
             <!-- Cuerpo -->
             <div class="bodySize ps-5 ms-3 ms-lg-0 row d-flex">
+                <asp:Label ID="lblAction" Text="Agregar usuario nuevo" runat="server" Font-Size="200%"/>
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
                         <div><label for="txtNombre">Nombre:</label></div>
-                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);"></asp:TextBox>
+                        <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtDescripcion">Descripcion:</label></div>
-                        <asp:TextBox ID="txtDescripcion" runat="server" Width="90%" Height="100px" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div><label for="txtAPaterno">A.Paterno:</label></div>
+                        <asp:TextBox ID="txtAPaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtFechaAlta">Fecha de alta:</label></div>
-                        <div class="d-flex">
-                            <asp:TextBox ID="txtFechaAlta" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
-                            <asp:ImageButton ID="imgPopup" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
-                        </div>
-                        <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaAlta" Format="dd-MM-yyyy HH:mm:ss tt" />
+                        <div><label for="txtAMaterno">A.Materno:</label></div>
+                        <asp:TextBox ID="txtAMaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtArea">Id Area:</label></div>
-                        <asp:TextBox ID="txtArea" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>
-                    </div>
-                    <div class="my-3">
-                        <div><label for="txtTarifa">Tarifa por hora:</label></div>
-                        <asp:TextBox ID="txtTarifa" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaDinero(event);"></asp:TextBox>                        
-                    </div>
-                    <div class="my-3">
-                        <div><label for="txtTempRenta">Renta actual:</label></div>
-                        <div class="d-flex">
-                            <asp:TextBox ID="txtTempRenta" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
-                            <asp:ImageButton ID="imgPopup2" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
-                        </div>
-                        <ajaxToolkit:CalendarExtender ID="CalendarExtender2" PopupButtonID="imgPopup2" runat="server" TargetControlID="txtTempRenta" Format="dd-MM-yyyy HH:mm:ss tt" />
+                        <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo"/>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
-                        <div><label for="txtTeclado">Teclado:</label></div>
-                        <asp:TextBox ID="txtTeclado" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div><label for="txtCorreo">Correo electronico:</label></div>
+                        <asp:TextBox ID="txtCorreo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaCorreo(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtMonitor">Monitor:</label></div>
-                        <asp:TextBox ID="txtMonitor" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div><label for="txtUsername">Username:</label></div>
+                        <asp:TextBox ID="txtUsername" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtMouse">Mouse:</label></div>
-                        <asp:TextBox ID="txtMouse" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div><label for="txtPassword">Password:</label></div>
+                        <asp:TextBox ID="txtPassword" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtAudifonos">Audifonos:</label></div>
-                        <asp:TextBox ID="txtAudifonos" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
-                    </div>
-                    <div class="my-3">
-                        <div><label for="txtCPU">CPU:</label></div>
-                        <asp:TextBox ID="txtCPU" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
-                    </div>
-                    <div class="my-3">
-                        <div><label for="txtRAM">RAM:</label></div>
-                        <asp:TextBox ID="txtRAM" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
-                    </div>
-                    <div class="my-3">
-                        <div><label for="txtGPU">GPU:</label></div>
-                        <asp:TextBox ID="txtGPU" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
+                        <div><label for="txtIdEmp">ID Empleado:</label></div>
+                        <asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" Enabled="false"></asp:TextBox>
                     </div>
                 </div>
                 <div class="mt-2 pe-5 text-end">
                     <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2"/>
-                    <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnPCPrincipal_Click" />
+                    <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
                     <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click"/>
                 </div>
             </div>
@@ -226,6 +191,15 @@
 
         function validaFecha(e) {
             var reges = new RegExp("^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})(\s)([0-1][0-9]|2[0-3])(:)([0-5][0-9])(:)([0-5][0-9])$");
+            var key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            if (!regex.test(key)) {
+                e.preventDefault();
+                return false;
+            }
+        }
+
+        function validaCorreo(e) {
+            var reges = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
             var key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
             if (!regex.test(key)) {
                 e.preventDefault();

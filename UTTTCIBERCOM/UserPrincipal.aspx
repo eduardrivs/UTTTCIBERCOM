@@ -36,9 +36,19 @@
                             <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                         </div>
-                        <div class="menu menuActivo">
+                        <div class="menu menuActivo d-inline">
                             <asp:Button Text="Empleados" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnUserPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Empleados</a>--%>
+                            <div class="d-lg-none d-inline">
+                                <div class="my-4" runat="server">
+                                    <i class="me-2 bi bi-person-plus-fill"></i>
+                                    <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
+                                </div>
+                                <div class="my-4" runat="server">
+                                    <i class="me-2 bi bi-person-badge"></i>
+                                    <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
+                                </div>
+                            </div>
                         </div>
                         <div class="menu">
                             <asp:Button Text="Cerrar sesión" runat="server" class="menuLinkBtn text-center" OnClick="btnLogout_Click" />
@@ -48,33 +58,41 @@
             </div>
         </nav>
 
-        <!-- Cuerpo -->
+        <!-- Contenido -->
         <div class="mt-4 row container-fluid">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
-                <div class="my-4" runat="server" onclick="btnLogout_Click"><a href="#" class="menuLinkActivo"><i class="me-2 bi bi-person-plus-fill"></i>Nuevo empleado</a></div>
-                <div class="my-4"><a href="#" class="menuLinkActivo"><i class="bi bi-person-badge"></i> Nuevo usuario</a></div>
+                <div class="my-4" runat="server">
+                    <i class="me-2 bi bi-person-plus-fill"></i>
+                    <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
+                </div>
+                <div class="my-4" runat="server">
+                    <i class="me-2 bi-person-badge"></i>
+                    <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
+                </div>
             </div>
 
-            <!-- Dispositivo Grande -->
-            <div class="ps-5 d-none d-lg-block" style="width: 80%;">
-                <div class="px-4">
-                    <nav class="navbar navbar-expand-lg navbar-light">
+            <!-- Cuerpo -->
+            <div class="ps-lg-5 ps-2 bodySize">
+                <!-- Barra Busqueda -->
+                <div class="px-lg-4">
+                    <nav class="navbar navbar-expand navbar-light">
                         <div class="container-fluid">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                                 <div class="d-flex">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                    <asp:DropDownList ID="ddlSexo" class="btn btn-secondary dropdown-toggle me-2" runat="server" />
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                    <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control me-2 d-flex" AutoPostBack="true" />
+                                    <asp:DropDownList ID="ddlDisp" class="btn btn-secondary dropdown-toggle me-2" runat="server" AutoPostBack="true" />
+                                    <asp:Button Text="Buscar" runat="server" CssClass="btn btn-outline-success" OnClick="btnBuscar_Click" />
                                 </div>
                             </div>
                         </div>
                     </nav>
                 </div>
+                <!-- Tabla de contenido -->
                 <!-- Tabla de contenido -->
                 <div class="table-responsive p-4" style="width: 100%">
                     <asp:GridView ID="dgvEmpleados" runat="server"
-                        AllowPaging="True" AutoGenerateColumns="False" DataSourceID="DataSourceEmpleados"
+                        AllowPaging="False" AutoGenerateColumns="False" DataSourceID="DataSourceEmpleados"
                         Width="100%" CellPadding="3" GridLines="Horizontal"
                         OnRowCommand="dgvEmpleados_RowCommand" BackColor="White"
                         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
@@ -83,79 +101,9 @@
                         <Columns>
                             <asp:BoundField DataField="strNombre" HeaderText="Nombre" ReadOnly="True"
                                 SortExpression="strNombre" />
-                            <asp:BoundField DataField="strAPaterno" HeaderText="APaterno" ReadOnly="True"
+                            <asp:BoundField DataField="strAPaterno" HeaderText="A.Paterno" ReadOnly="True"
                                 SortExpression="strAPaterno" />
-                            <asp:BoundField DataField="strAMaterno" HeaderText="AMaterno" ReadOnly="True"
-                                SortExpression="strAMaterno" />
-                            <asp:BoundField DataField="intEdad" HeaderText="Edad"
-                                SortExpression="intEdad" />
-                            <asp:BoundField DataField="dteFechaIngreso" HeaderText="Fecha Ingreso"
-                                SortExpression="dteFechaIngreso" />
-                            <asp:BoundField DataField="boolActivo" HeaderText="Estatus"
-                                SortExpression="boolActivo" />
-                            <asp:TemplateField HeaderText="Editar">
-
-                                <ItemTemplate>
-                                    <asp:ImageButton runat="server" ID="imgEditar" CommandName="Editar" CommandArgument='<%#Bind("id") %>' ImageUrl="~/content/images/editrecord_16x16.png" />
-                                </ItemTemplate>
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" Width="50px" />
-
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Eliminar" Visible="True">
-
-                                <ItemTemplate>
-                                    <asp:ImageButton runat="server" ID="imgEliminar" CommandName="Eliminar" CommandArgument='<%#Bind("id") %>' ImageUrl="~/content/images/delrecord_16x16.png" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />
-                                </ItemTemplate>
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" Width="50px" />
-
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Usuario">
-
-                                <ItemTemplate>
-                                    <asp:ImageButton runat="server" ID="imgUsuario" CommandName="Usuario" CommandArgument='<%#Bind("id") %>' ImageUrl="~/content/images/editrecord_16x16.png" />
-                                </ItemTemplate>
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" Width="50px" />
-
-                            </asp:TemplateField>
-                        </Columns>
-
-                    </asp:GridView>
-                </div>
-            </div>
-            <!-- Dispositivo Pequeño -->
-            <div class="ps-5 d-lg-none d-block" style="width: 100%;">
-                <div class="px-4">
-                    <nav class="navbar navbar-expand navbar-light">
-                        <div class="container-fluid">
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent2">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-                                <div class="d-flex">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                    <asp:DropDownList ID="DropDownList1" class="btn btn-secondary dropdown-toggle me-2" runat="server" />
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-                <!-- Tabla de contenido -->
-                <div class="table-responsive p-4" style="width: 100%">
-                    <asp:GridView ID="GridView1" runat="server"
-                        AllowPaging="True" AutoGenerateColumns="False" DataSourceID="DataSourceEmpleados"
-                        Width="100%" CellPadding="3" GridLines="Horizontal"
-                        OnRowCommand="dgvEmpleados_RowCommand" BackColor="White"
-                        BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
-                        ViewStateMode="Disabled" class="table table-sm mt-2">
-                        <AlternatingRowStyle BackColor="#F7F7F7" />
-                        <Columns>
-                            <asp:BoundField DataField="strNombre" HeaderText="Nombre" ReadOnly="True"
-                                SortExpression="strNombre" />
-                            <asp:BoundField DataField="strAPaterno" HeaderText="APaterno" ReadOnly="True"
-                                SortExpression="strAPaterno" />
-                            <asp:BoundField DataField="strAMaterno" HeaderText="AMaterno" ReadOnly="True"
+                            <asp:BoundField DataField="strAMaterno" HeaderText="A.Materno" ReadOnly="True"
                                 SortExpression="strAMaterno" />
                             <asp:BoundField DataField="intEdad" HeaderText="Edad"
                                 SortExpression="intEdad" />
@@ -196,7 +144,6 @@
                 </div>
             </div>
         </div>
-
     </form>
 
 

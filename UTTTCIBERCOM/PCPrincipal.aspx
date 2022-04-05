@@ -37,7 +37,7 @@
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                             <div class="d-lg-none d-inline">
                                 <div class="my-4" runat="server">
-                                    <i class="bi bi-plus-square-fill"></i>
+                                    <i class="me-2 bi bi-plus-square-fill"></i>
                                     <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                                 </div>
                                 <div class="my-4" runat="server">
@@ -66,7 +66,7 @@
         <div class="mt-4 row container-fluid">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
-                    <i class="bi bi-plus-square-fill"></i>
+                    <i class="me-2 bi bi-plus-square-fill"></i>
                     <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                 </div>
                 <div class="my-4" runat="server">
