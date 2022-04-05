@@ -357,6 +357,9 @@ namespace UTTTCIBERCOM.app
             {
                 DataContext dcDelete = new DcGeneralDataContext();
                 EMPLEADO empleado = dcDelete.GetTable<EMPLEADO>().First(c => c.Id == idEmp);
+                USUARIO userEmp = dcDelete.GetTable<USUARIO>().FirstOrDefault(c => c.idEmpleado == idEmp);
+                if(userEmp != null)
+                    dcDelete.GetTable<USUARIO>().DeleteOnSubmit(userEmp);
                 dcDelete.GetTable<EMPLEADO>().DeleteOnSubmit(empleado);
                 dcDelete.SubmitChanges();
                 this.showMessage("El registro se elimino correctamente.");

@@ -90,6 +90,14 @@ namespace UTTTCIBERCOM
                         }
                         else
                         {
+                            this.btnFin.ValidationGroup = "gvSave";
+                            Page.Validate("gvSave");
+
+                            this.txtNombre.Text = emp.strNombre;
+                            this.txtAPaterno.Text = emp.strAPaterno;
+                            this.txtAMaterno.Text = emp.strAMaterno;
+                            this.txtIdEmp.Text = emp.Id.ToString();
+
                             this.txtIdEmp.Enabled = false;
                         }
                     }
@@ -420,6 +428,14 @@ namespace UTTTCIBERCOM
             }
             else
             {
+                this.btnFin.ValidationGroup = "gvSave";
+                Page.Validate("gvSave");
+
+                if (!Page.IsValid)
+                    return;
+                else
+                    valid = true;
+
                 try
                 {
                     DataContext dcConsulta = new DcGeneralDataContext();

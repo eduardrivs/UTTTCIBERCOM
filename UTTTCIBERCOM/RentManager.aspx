@@ -68,7 +68,7 @@
         </nav>
 
         <!-- Cuerpo -->
-        <div class="mt-4 row container-fluid">
+        <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar-plus"></i>

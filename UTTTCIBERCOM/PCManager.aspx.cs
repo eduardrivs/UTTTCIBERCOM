@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data.Linq;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -60,7 +61,8 @@ namespace UTTTCIBERCOM
                     {
                         this.txtNombre.Text = pc.strNombre.ToString();
                         this.txtDescripcion.Text = pc.strDescripcion.ToString();
-                        this.txtFechaAlta.Text = pc.dteFechaAlta.ToString();
+                        if(DateTime.TryParse(pc.dteFechaAlta.ToString(), out DateTime fechaAlta))
+                            this.txtFechaAlta.Text = fechaAlta.ToString("dd-MM-yyyy HH:mm:ss");
                         this.txtArea.Text = pc.idArea.ToString();
                         this.txtTarifa.Text = pc.monTarifa.ToString();
                         this.txtTeclado.Text = pc.strTeclado.ToString();
@@ -70,7 +72,8 @@ namespace UTTTCIBERCOM
                         this.txtCPU.Text = pc.strCPU.ToString();
                         this.txtRAM.Text = pc.strRAM.ToString();
                         this.txtGPU.Text = pc.strGPU.ToString();
-                        this.txtTempRenta.Text = pc.tempInicioRenta.ToString();
+                        if (DateTime.TryParse(pc.dteFechaAlta.ToString(), out DateTime fechaTemp))
+                            this.txtFechaAlta.Text = fechaTemp.ToString("dd-MM-yyyy HH:mm:ss");
                     }
                 }
             }
@@ -297,57 +300,67 @@ namespace UTTTCIBERCOM
                     return;
                 }
 
-                try
-                {
-                    DataContext dcConsulta = new DcGeneralDataContext();
-                    if (this.session.Parametros["idPC"] != null)
+                String mensaje = "";
+                if (validar(ref mensaje)) {
+                    try
                     {
-                        if (updateDatos())
+                        DataContext dcConsulta = new DcGeneralDataContext();
+                        if (this.session.Parametros["idPC"] != null)
                         {
-                            if (ConfigurationManager.AppSettings["session"] == "0")
+                            if (updateDatos())
                             {
-                                this.Response.Redirect("/Login.aspx", true);
-                            }
-                            if (ConfigurationManager.AppSettings["session"] == "1")
-                            {
-                                this.session = (SessionManager)Session["SessionManager"];
-                                if (!session.IsLoged)
+                                if (ConfigurationManager.AppSettings["session"] == "0")
+                                {
                                     this.Response.Redirect("/Login.aspx", true);
+                                }
+                                if (ConfigurationManager.AppSettings["session"] == "1")
+                                {
+                                    this.session = (SessionManager)Session["SessionManager"];
+                                    if (!session.IsLoged)
+                                        this.Response.Redirect("/Login.aspx", true);
 
-                                this.session.Pantalla = "/PCPrincipal.aspx";
-                                this.session.Parametros["idPC"] = null;
-                                this.session.Parametros["idRenta"] = null;
-                                Session["SessionManager"] = this.session;
-                                this.Response.Redirect(this.session.Pantalla, false);
+                                    this.session.Pantalla = "/PCPrincipal.aspx";
+                                    this.session.Parametros["idPC"] = null;
+                                    this.session.Parametros["idRenta"] = null;
+                                    Session["SessionManager"] = this.session;
+                                    this.Response.Redirect(this.session.Pantalla, false);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (llenarDatos())
+                            {
+                                if (ConfigurationManager.AppSettings["session"] == "0")
+                                {
+                                    this.Response.Redirect("/Login.aspx", true);
+                                }
+                                if (ConfigurationManager.AppSettings["session"] == "1")
+                                {
+                                    this.session = (SessionManager)Session["SessionManager"];
+                                    if (!session.IsLoged)
+                                        this.Response.Redirect("/Login.aspx", true);
+
+                                    this.session.Pantalla = "/PCPrincipal.aspx";
+                                    this.session.Parametros["idPC"] = null;
+                                    this.session.Parametros["idRenta"] = null;
+                                    Session["SessionManager"] = this.session;
+                                    this.Response.Redirect(this.session.Pantalla, false);
+                                }
                             }
                         }
                     }
-                    else
+                    catch (Exception)
                     {
-                        if (llenarDatos())
-                        {
-                            if (ConfigurationManager.AppSettings["session"] == "0")
-                            {
-                                this.Response.Redirect("/Login.aspx", true);
-                            }
-                            if (ConfigurationManager.AppSettings["session"] == "1")
-                            {
-                                this.session = (SessionManager)Session["SessionManager"];
-                                if (!session.IsLoged)
-                                    this.Response.Redirect("/Login.aspx", true);
-
-                                this.session.Pantalla = "/PCPrincipal.aspx";
-                                this.session.Parametros["idPC"] = null;
-                                this.session.Parametros["idRenta"] = null;
-                                Session["SessionManager"] = this.session;
-                                this.Response.Redirect(this.session.Pantalla, false);
-                            }
-                        }
+                        throw;
                     }
                 }
-                catch (Exception)
+                else
                 {
-                    throw;
+                    this.lblMensaje.Text = mensaje;
+                    this.lblMensaje.Visible = true;
+                    this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    return;
                 }
             }
 
@@ -500,10 +513,315 @@ namespace UTTTCIBERCOM
             }
         }
 
-        private bool validar()
+        private bool validar(ref String _mensaje)
         {
+            #region Nombre
+            if (txtNombre.Text.Equals(String.Empty))
+            {
+                _mensaje = "El nombre esta vacio";
+                return false;
+            }
 
-            return false;
+            if (txtNombre.Text.Length < 2)
+            {
+                _mensaje = "El nombre debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtNombre.Text.Length > 50)
+            {
+                txtNombre.Text = Regex.Replace(txtNombre.Text, @"\s{2,}", " ");
+                if (txtNombre.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para Nombre rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_. ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Nombre' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region Descripcion
+            if (txtDescripcion.Text.Equals(String.Empty))
+            {
+                _mensaje = "La descripcion esta vacia";
+                return false;
+            }
+
+            if (txtDescripcion.Text.Length > 50)
+            {
+                txtDescripcion.Text = Regex.Replace(txtDescripcion.Text, @"\s{2,}", " ");
+                if (txtDescripcion.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para descripcion rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtDescripcion.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_., ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Descripcion' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region Fecha Alta
+            if (txtFechaAlta.Text.Equals(String.Empty))
+            {
+                _mensaje = "La fecha de alta esta vacia";
+                return false;
+            }
+
+            if (!Regex.IsMatch(txtFechaAlta.Text, @"^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})(\s)([0-1][0-9]|2[0-3])(:)([0-5][0-9])(:)([0-5][0-9])$"))
+            {
+                if (!Regex.IsMatch(txtFechaAlta.Text, @"^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$"))
+                {
+                    _mensaje = "La fecha de alta ingresada no corresponde con el formato solicitado";
+                    return false;
+                }
+            }
+            #endregion
+            #region Id Area
+            if (txtArea.Text.Equals(String.Empty))
+            {
+                _mensaje = "La clave del Area esta vacia";
+                return false;
+            }
+            if (int.TryParse(txtArea.Text, out int i) == false)
+            {
+                _mensaje = "La clave del Area no es un número";
+                return false;
+            }
+            #endregion
+            #region Tarifa
+            if (txtTarifa.Text.Equals(String.Empty))
+            {
+                _mensaje = "La tarifa esta vacia";
+                return false;
+            }
+            if (decimal.TryParse(txtTarifa.Text, out decimal tarifa) == false)
+            {
+                _mensaje = "La tarifa no es una cantidad valida";
+                return false;
+            }
+            #endregion
+            #region Fecha de Renta
+            if (!Regex.IsMatch(txtTempRenta.Text, @"^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})(\s)([0-1][0-9]|2[0-3])(:)([0-5][0-9])(:)([0-5][0-9])$"))
+            {
+                if (!String.IsNullOrEmpty(txtTempRenta.Text))
+                {
+                    _mensaje = "La fecha u hora de la Renta Actual no corresponde con el formato solicitado";
+                    return false;
+                }
+            }
+            #endregion
+            #region Teclado
+            if (txtTeclado.Text.Equals(String.Empty))
+            {
+                _mensaje = "El Teclado esta vacio";
+                return false;
+            }
+
+            if (txtTeclado.Text.Length < 2)
+            {
+                _mensaje = "El Teclado debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtTeclado.Text.Length > 50)
+            {
+                txtTeclado.Text = Regex.Replace(txtTeclado.Text, @"\s{2,}", " ");
+                if (txtTeclado.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para Teclado rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtTeclado.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_.,@()[\] ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Teclado' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region Monitor
+            if (txtMonitor.Text.Equals(String.Empty))
+            {
+                _mensaje = "El Monitor esta vacio";
+                return false;
+            }
+
+            if (txtMonitor.Text.Length < 2)
+            {
+                _mensaje = "El Monitor debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtMonitor.Text.Length > 50)
+            {
+                txtMonitor.Text = Regex.Replace(txtMonitor.Text, @"\s{2,}", " ");
+                if (txtMonitor.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para Monitor rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtMonitor.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_.,@()[\] ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Monitor' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region Mouse
+            if (txtMouse.Text.Equals(String.Empty))
+            {
+                _mensaje = "El Mouse esta vacio";
+                return false;
+            }
+
+            if (txtMouse.Text.Length < 2)
+            {
+                _mensaje = "El Mouse debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtMouse.Text.Length > 50)
+            {
+                txtMouse.Text = Regex.Replace(txtMouse.Text, @"\s{2,}", " ");
+                if (txtMouse.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para Mouse rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtMouse.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_.,@()[\] ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Mouse' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region Audifonos
+            if (txtAudifonos.Text.Equals(String.Empty))
+            {
+                _mensaje = "Audifonos esta vacio";
+                return false;
+            }
+
+            if (txtAudifonos.Text.Length < 2)
+            {
+                _mensaje = "Audifonos debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtAudifonos.Text.Length > 50)
+            {
+                txtAudifonos.Text = Regex.Replace(txtAudifonos.Text, @"\s{2,}", " ");
+                if (txtAudifonos.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para Audifonos rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtAudifonos.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_.,@()[\] ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Audifonos' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region CPU
+            if (txtCPU.Text.Equals(String.Empty))
+            {
+                _mensaje = "CPU esta vacio";
+                return false;
+            }
+
+            if (txtCPU.Text.Length < 2)
+            {
+                _mensaje = "CPU debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtCPU.Text.Length > 50)
+            {
+                txtCPU.Text = Regex.Replace(txtCPU.Text, @"\s{2,}", " ");
+                if (txtCPU.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para CPU rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtCPU.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_.,@()[\] ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'CPU' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region RAM
+            if (txtRAM.Text.Equals(String.Empty))
+            {
+                _mensaje = "RAM esta vacio";
+                return false;
+            }
+
+            if (txtRAM.Text.Length < 2)
+            {
+                _mensaje = "RAM debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtRAM.Text.Length > 50)
+            {
+                txtRAM.Text = Regex.Replace(txtRAM.Text, @"\s{2,}", " ");
+                if (txtRAM.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para RAM rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtRAM.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_.,@()[\] ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'RAM' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region GPU
+            if (txtGPU.Text.Equals(String.Empty))
+            {
+                _mensaje = "GPU esta vacio";
+                return false;
+            }
+
+            if (txtGPU.Text.Length < 2)
+            {
+                _mensaje = "GPU debe tener 2 o más caracteres";
+                return false;
+            }
+
+            if (txtGPU.Text.Length > 50)
+            {
+                txtGPU.Text = Regex.Replace(txtGPU.Text, @"\s{2,}", " ");
+                if (txtGPU.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para GPU rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtGPU.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ1234567890\-_.,@()[\] ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'GPU' no son permitidos";
+                return false;
+            }
+            #endregion
+
+            return true;
         }
 
         #endregion

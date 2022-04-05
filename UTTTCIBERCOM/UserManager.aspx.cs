@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data.Linq;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -342,52 +343,71 @@ namespace UTTTCIBERCOM
                         this.Response.Redirect(this.session.Pantalla, true);
                     }
                 }
-
-                DataContext dcConsulta = new DcGeneralDataContext();
-                if (this.session.Parametros["idEmp"] != null)
-                {
-                    if (updateDatos())
-                    {
-                        if (ConfigurationManager.AppSettings["session"] == "0")
-                        {
-                            this.Response.Redirect("/Login.aspx", true);
-                        }
-                        if (ConfigurationManager.AppSettings["session"] == "1")
-                        {
-                            this.session = (SessionManager)Session["SessionManager"];
-                            if (!session.IsLoged)
-                                this.Response.Redirect("/Login.aspx", true);
-
-                            this.session.Pantalla = "/UserPrincipal.aspx";
-                            this.session.Parametros["idPC"] = null;
-                            this.session.Parametros["idRenta"] = null;
-                            this.session.Parametros["idEmp"] = null;
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
-                        }
-                    }
-                }
                 else
                 {
-                    if (llenarDatos())
-                    {
-                        if (ConfigurationManager.AppSettings["session"] == "0")
-                        {
-                            this.Response.Redirect("/Login.aspx", true);
-                        }
-                        if (ConfigurationManager.AppSettings["session"] == "1")
-                        {
-                            this.session = (SessionManager)Session["SessionManager"];
-                            if (!session.IsLoged)
-                                this.Response.Redirect("/Login.aspx", true);
+                    this.btnFin.ValidationGroup = "gvSave";
+                    Page.Validate("gvSave");
 
-                            this.session.Pantalla = "/UserPrincipal.aspx";
-                            this.session.Parametros["idPC"] = null;
-                            this.session.Parametros["idRenta"] = null;
-                            this.session.Parametros["idEmp"] = null;
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
+                    if (!Page.IsValid)
+                        return;
+
+                    String mensaje = "";
+                    if (validar(ref mensaje)){
+
+                        DataContext dcConsulta = new DcGeneralDataContext();
+                        if (this.session.Parametros["idEmp"] != null)
+                        {
+                            if (updateDatos())
+                            {
+                                if (ConfigurationManager.AppSettings["session"] == "0")
+                                {
+                                    this.Response.Redirect("/Login.aspx", true);
+                                }
+                                if (ConfigurationManager.AppSettings["session"] == "1")
+                                {
+                                    this.session = (SessionManager)Session["SessionManager"];
+                                    if (!session.IsLoged)
+                                        this.Response.Redirect("/Login.aspx", true);
+
+                                    this.session.Pantalla = "/UserPrincipal.aspx";
+                                    this.session.Parametros["idPC"] = null;
+                                    this.session.Parametros["idRenta"] = null;
+                                    this.session.Parametros["idEmp"] = null;
+                                    Session["SessionManager"] = this.session;
+                                    this.Response.Redirect(this.session.Pantalla, false);
+                                }
+                            }
                         }
+                        else
+                        {
+                            if (llenarDatos())
+                            {
+                                if (ConfigurationManager.AppSettings["session"] == "0")
+                                {
+                                    this.Response.Redirect("/Login.aspx", true);
+                                }
+                                if (ConfigurationManager.AppSettings["session"] == "1")
+                                {
+                                    this.session = (SessionManager)Session["SessionManager"];
+                                    if (!session.IsLoged)
+                                        this.Response.Redirect("/Login.aspx", true);
+
+                                    this.session.Pantalla = "/UserPrincipal.aspx";
+                                    this.session.Parametros["idPC"] = null;
+                                    this.session.Parametros["idRenta"] = null;
+                                    this.session.Parametros["idEmp"] = null;
+                                    Session["SessionManager"] = this.session;
+                                    this.Response.Redirect(this.session.Pantalla, false);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.lblMensaje.Text = mensaje;
+                        this.lblMensaje.Visible = true;
+                        this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        return;
                     }
                 }
             }
@@ -525,7 +545,7 @@ namespace UTTTCIBERCOM
                     else if (res > 150 && res < 160)
                         this.lblMensaje.Text = "El Area no es correcta";
                     else if (res > 160 && res < 170)
-                        this.lblMensaje.Text = "El Are no existe";
+                        this.lblMensaje.Text = "El Area no existe";
                     else
                         this.lblMensaje.Text = "Error al procesar los datos llenados";
 
@@ -539,6 +559,194 @@ namespace UTTTCIBERCOM
             {
                 throw;
             }
+        }
+
+        private bool validar(ref String _mensaje)
+        {
+            #region Nombre
+            if (txtNombre.Text.Equals(String.Empty))
+            {
+                _mensaje = "El nombre esta vacio";
+                return false;
+            }
+
+            if (txtNombre.Text.Length < 3)
+            {
+                _mensaje = "El nombre debe tener 3 o más caracteres";
+                return false;
+            }
+
+            if (txtNombre.Text.Length > 50)
+            {
+                txtNombre.Text = Regex.Replace(txtNombre.Text, @"\s{2,}", " ");
+                if (txtNombre.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres para Nombre rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ. ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Nombre' no son permitidos";
+                return false;
+            }
+
+            if (Regex.IsMatch(txtNombre.Text, @"(.)\1{2,}"))
+            {
+                _mensaje = "El nombre tiene caracteres repetidos que no son correctos";
+                return false;
+            }
+            #endregion
+            #region A Paterno
+            if (txtAPaterno.Text.Equals(String.Empty))
+            {
+                _mensaje = "El Apellido Paterno esta vacio";
+                return false;
+            }
+
+            if (txtAPaterno.Text.Length < 3)
+            {
+                _mensaje = "El Apellido Paterno debe tener 3 o más caracteres";
+                return false;
+            }
+
+            if (txtAPaterno.Text.Length > 50)
+            {
+                txtAPaterno.Text = Regex.Replace(txtAPaterno.Text, @"\s{2,}", " ");
+                if (txtAPaterno.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres para Apellido Paterno rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtAPaterno.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ. ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Apellido Paterno' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region A Materno
+            if (txtAMaterno.Text.Equals(String.Empty))
+            {
+                _mensaje = "El Apellido Materno esta vacio";
+                return false;
+            }
+
+            if (txtAMaterno.Text.Length < 3)
+            {
+                _mensaje = "El Apellido Materno debe tener 3 o más caracteres";
+                return false;
+            }
+
+            if (txtAMaterno.Text.Length > 50)
+            {
+                txtAMaterno.Text = Regex.Replace(txtAMaterno.Text, @"\s{2,}", " ");
+                if (txtAMaterno.Text.Length > 50)
+                {
+                    _mensaje = "Los caracteres permitidos para Apellido Materno rebasan lo permitido (50 caracteres)";
+                    return false;
+                }
+            }
+
+            if (!Regex.IsMatch(txtAMaterno.Text, @"^[a-zA-ZñÑáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙüïÏÜ. ]+$"))
+            {
+                _mensaje = "Los caracteres insertados para 'Apellido Materno' no son permitidos";
+                return false;
+            }
+            #endregion
+            #region Fecha Nacimiento
+            if (txtFechaNacimiento.Text.Equals(String.Empty))
+            {
+                _mensaje = "La fecha de nacimiento esta vacia";
+                return false;
+            }
+
+            if (!Regex.IsMatch(txtFechaNacimiento.Text, @"^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})(\s)([0-1][0-9]|2[0-3])(:)([0-5][0-9])(:)([0-5][0-9])$"))
+            {
+                if (!Regex.IsMatch(txtFechaNacimiento.Text, @"^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$"))
+                {
+                    _mensaje = "La fecha de nacimiento no corresponde con el formato solicitado";
+                    return false;
+                }
+            }
+            #endregion
+            #region Edad
+            if (txtEdad.Text.Equals(String.Empty))
+            {
+                _mensaje = "La Edad esta vacia";
+                return false;
+            }
+            if (int.TryParse(txtEdad.Text, out int i) == false)
+            {
+                _mensaje = "La Edad no es un número";
+                return false;
+            }
+            else
+            {
+                if(i<15 || i > 90)
+                {
+                    _mensaje = "La Edad no esta en un rango permitido";
+                    return false;
+                }
+            }
+            #endregion
+            #region CURP
+            if (!Regex.IsMatch(txtCURP.Text, @"^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$"))
+            {
+                _mensaje = "La CURP no corresponde con el formato solicitado";
+                return false;
+            }
+            #endregion
+            #region RFC
+            if (!Regex.IsMatch(txtRFC.Text, @"^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))([A-Z\d]{3})?$"))
+            {
+                _mensaje = "El RFC no corresponde con el formato solicitado";
+                return false;
+            }
+            #endregion
+            #region Fecha Ingreso
+            if (txtFechaIngreso.Text.Equals(String.Empty))
+            {
+                _mensaje = "La fecha de ingreso esta vacia";
+                return false;
+            }
+
+            if (!Regex.IsMatch(txtFechaIngreso.Text, @"^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})(\s)([0-1][0-9]|2[0-3])(:)([0-5][0-9])(:)([0-5][0-9])$"))
+            {
+                if (!Regex.IsMatch(txtFechaIngreso.Text, @"^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$"))
+                {
+                    _mensaje = "La fecha de ingreso no corresponde con el formato solicitado";
+                    return false;
+                }
+            }
+            #endregion
+            #region Rol
+            if (txtRol.Text.Equals(String.Empty))
+            {
+                _mensaje = "El Rol esta vacia";
+                return false;
+            }
+            if (int.TryParse(txtRol.Text, out int rol) == false)
+            {
+                _mensaje = "El Rol no es un número";
+                return false;
+            }
+            #endregion
+            #region Area
+            if (txtArea.Text.Equals(String.Empty))
+            {
+                _mensaje = "El Rol esta vacia";
+                return false;
+            }
+            if (int.TryParse(txtArea.Text, out int area) == false)
+            {
+                _mensaje = "El Area no es un número";
+                return false;
+            }
+            #endregion
+            return true;
         }
 
         #endregion

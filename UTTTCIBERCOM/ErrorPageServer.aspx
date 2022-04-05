@@ -63,7 +63,7 @@
                                     <h3 class="h2">Parece que te perdiste
                                     </h3>
                                     <p>El recurso al que intentas acceder no esta disponible</p>
-                                    <a href="#" class="link_404">Volver al inicio</a>
+                                    <a href="http://www.JoseEduardoRivas.somee.com" class="link_404">Volver al inicio</a>
                                 </div>
                             </div>
                         </div>

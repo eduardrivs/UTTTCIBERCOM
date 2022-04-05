@@ -61,9 +61,10 @@ namespace UTTTCIBERCOM
                     {
                         if (this.session.Parametros["idRenta"] == null)
                         {
-                            this.txtFechaInicio.Text = pc.tempInicioRenta.ToString();
+                            if (DateTime.TryParse(pc.tempInicioRenta.ToString(), out DateTime fechInicio))
+                                this.txtFechaInicio.Text = fechInicio.ToString("dd-MM-yyyy HH:mm:ss");
                             nuevaRenta.dteFechaInicio = pc.tempInicioRenta;
-                            this.txtFechaFinal.Text = DateTime.Now.ToString();
+                            this.txtFechaFinal.Text = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                             nuevaRenta.dteFechaFinal = DateTime.Now;
                             this.txtTiempoTotal.Text = (DateTime.Now - pc.tempInicioRenta.GetValueOrDefault()).TotalHours.ToString();
                             if (double.TryParse(this.txtTiempoTotal.Text, out double tTotal))
@@ -350,29 +351,38 @@ namespace UTTTCIBERCOM
                 {
                     if (this.session.Parametros["idRenta"] == null)
                     {
-                        COMPUTADORA pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idPC"].ToString()));
-                        dcConsulta.GetTable<RENTA>().InsertOnSubmit(nuevaRenta);
-                        pc.tempInicioRenta = null;
-                        dcConsulta.SubmitChanges();
-
-                        if (ConfigurationManager.AppSettings["session"] == "0")
+                        if (decimal.TryParse(txtPago.Text, out decimal pago) == false)
                         {
-                            this.Response.Redirect("/Login.aspx", true);
+                            this.lblMensaje.Visible = true;
+                            this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                            this.lblMensaje.Text = "Error al procesar los datos llenados";
                         }
-                        if (ConfigurationManager.AppSettings["session"] == "1")
+                        else
                         {
-                            this.session = (SessionManager)Session["SessionManager"];
-                            if (!session.IsLoged)
-                                this.Response.Redirect("/Login.aspx", true);
+                            COMPUTADORA pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idPC"].ToString()));
+                            dcConsulta.GetTable<RENTA>().InsertOnSubmit(nuevaRenta);
+                            pc.tempInicioRenta = null;
+                            dcConsulta.SubmitChanges();
 
-                            if (this.session.Parametros["idRenta"] == null)
-                                this.session.Pantalla = "/RentPrincipal.aspx";
-                            else
-                                this.session.Pantalla = "/RentasPrincipal.aspx";
-                            this.session.Parametros["idPC"] = null;
-                            this.session.Parametros["idRenta"] = null;
-                            Session["SessionManager"] = this.session;
-                            this.Response.Redirect(this.session.Pantalla, false);
+                            if (ConfigurationManager.AppSettings["session"] == "0")
+                            {
+                                this.Response.Redirect("/Login.aspx", true);
+                            }
+                            if (ConfigurationManager.AppSettings["session"] == "1")
+                            {
+                                this.session = (SessionManager)Session["SessionManager"];
+                                if (!session.IsLoged)
+                                    this.Response.Redirect("/Login.aspx", true);
+
+                                if (this.session.Parametros["idRenta"] == null)
+                                    this.session.Pantalla = "/RentPrincipal.aspx";
+                                else
+                                    this.session.Pantalla = "/RentasPrincipal.aspx";
+                                this.session.Parametros["idPC"] = null;
+                                this.session.Parametros["idRenta"] = null;
+                                Session["SessionManager"] = this.session;
+                                this.Response.Redirect(this.session.Pantalla, false);
+                            }
                         }
                     }
                     else
