@@ -69,6 +69,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtAMaterno;
 
         /// <summary>
+        /// Control rvftxtIdEmp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtIdEmp;
+
+        /// <summary>
         /// Control txtIdEmp.
         /// </summary>
         /// <remarks>
@@ -87,6 +96,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.CheckBox chbxActivo;
 
         /// <summary>
+        /// Control rvftxtCorreo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtCorreo;
+
+        /// <summary>
         /// Control txtCorreo.
         /// </summary>
         /// <remarks>
@@ -94,6 +112,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCorreo;
+
+        /// <summary>
+        /// Control rvftxtUsername.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtUsername;
 
         /// <summary>
         /// Control txtUsername.
@@ -105,6 +132,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtUsername;
 
         /// <summary>
+        /// Control rvftxtPassword.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtPassword;
+
+        /// <summary>
         /// Control txtPassword.
         /// </summary>
         /// <remarks>
@@ -112,6 +148,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
+
+        /// <summary>
+        /// Control rvftxtPassword2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtPassword2;
 
         /// <summary>
         /// Control txtPassword2.

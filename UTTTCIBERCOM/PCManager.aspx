@@ -66,7 +66,7 @@
         </nav>
 
         <!-- Cuerpo -->
-        <div class="mt-2 row container-fluid">
+        <div class="mt-2 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-plus-square-fill"></i>
@@ -107,7 +107,7 @@
                             <asp:TextBox ID="txtFechaAlta" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
                             <asp:ImageButton ID="imgPopup" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
                         </div>
-                        <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaAlta" Format="dd-MM-yyyy HH:mm:ss tt"/>
+                        <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaAlta" Format="dd-MM-yyyy HH:mm:ss"/>
                     </div>
                     <div class="my-3">
                         <div class="d-flex justify-content-between">
@@ -129,7 +129,7 @@
                             <asp:TextBox ID="txtTempRenta" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
                             <asp:ImageButton ID="imgPopup2" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
                         </div>
-                        <ajaxToolkit:CalendarExtender ID="CalendarExtender2" PopupButtonID="imgPopup2" runat="server" TargetControlID="txtTempRenta" Format="dd-MM-yyyy HH:mm:ss tt" />
+                        <ajaxToolkit:CalendarExtender ID="CalendarExtender2" PopupButtonID="imgPopup2" runat="server" TargetControlID="txtTempRenta" Format="dd-MM-yyyy HH:mm:ss" />
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">

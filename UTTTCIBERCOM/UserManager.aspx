@@ -62,7 +62,7 @@
         </nav>
 
         <!-- Contenido -->
-        <div class="mt-4 row container-fluid">
+        <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-person-plus-fill"></i>
@@ -79,62 +79,92 @@
                 <asp:Label ID="lblAction" Text="Agregar empleado" runat="server" Font-Size="200%"/>
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
-                        <div><label for="txtNombre">Nombre:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtNombre">Nombre:</label>
+                            <asp:RequiredFieldValidator ID="rvfNombre" runat="server" class="text-danger me-5" ControlToValidate="txtNombre" ErrorMessage="&quot;El nombre es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtAPaterno">A.Paterno:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtAPaterno">A.Paterno:</label>
+                            <asp:RequiredFieldValidator ID="fvrtxtAPaterno" runat="server" class="text-danger me-5" ControlToValidate="txtAPaterno" ErrorMessage="&quot;El Apellido Paterno es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtAPaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtAMaterno">A.Materno:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtAMaterno">A.Materno:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtAMaterno" runat="server" class="text-danger me-5" ControlToValidate="txtAMaterno" ErrorMessage="&quot;El Apellido Materno es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtAMaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtFechaNacimiento">Fecha de nacimiento:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtFechaNacimiento">Fecha de nacimiento:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtFechaNacimiento" runat="server" class="text-danger me-5" ControlToValidate="txtFechaNacimiento" ErrorMessage="&quot;La fecha de nacimiento es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <div class="d-flex">
                             <asp:TextBox ID="txtFechaNacimiento" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
                             <asp:ImageButton ID="imgPopup" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
                         </div>
-                        <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaNacimiento" Format="dd-MM-yyyy HH:mm:ss tt" />
+                        <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaNacimiento" Format="dd-MM-yyyy HH:mm:ss" />
                     </div>
                     <div class="my-3">
-                        <div><label for="txtEdad">Edad:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtEdad">Edad:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtEdad" runat="server" class="text-danger me-5" ControlToValidate="txtEdad" ErrorMessage="&quot;La edad es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtEdad" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
-                        <div><label for="txtCURP">CURP:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtCURP">CURP:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtCURP" runat="server" class="text-danger me-5" ControlToValidate="txtCURP" ErrorMessage="&quot;La CURP es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtCURP" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtRFC">RFC:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtRFC">RFC:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtRFC" runat="server" class="text-danger me-5" ControlToValidate="txtRFC" ErrorMessage="&quot;El RFC es obligatorios&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtRFC" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtFechaIngreso">Fecha de ingreso:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtFechaIngreso">Fecha de ingreso:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtFechaIngreso" runat="server" class="text-danger me-5" ControlToValidate="txtFechaIngreso" ErrorMessage="&quot;La fecha de ingreso es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <div class="d-flex">
                             <asp:TextBox ID="txtFechaIngreso" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
                             <asp:ImageButton ID="imgPopup2" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
                         </div>
-                        <ajaxToolkit:CalendarExtender ID="calendar2" PopupButtonID="imgPopup2" runat="server" TargetControlID="txtFechaIngreso" Format="dd-MM-yyyy HH:mm:ss tt" />
+                        <ajaxToolkit:CalendarExtender ID="calendar2" PopupButtonID="imgPopup2" runat="server" TargetControlID="txtFechaIngreso" Format="dd-MM-yyyy HH:mm:ss" />
                     </div>
                     <div class="my-3">
-                        <div><label for="txtRol">ID Rol:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtRol">ID Rol:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtRol" runat="server" class="text-danger me-5" ControlToValidate="txtRol" ErrorMessage="&quot;El Rol es obligatorios&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtRol" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtArea">ID Area:</label></div>
+                        <div class="d-flex justify-content-between">
+                            <label for="txtArea">ID Area:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtArea" runat="server" class="text-danger me-5" ControlToValidate="txtArea" ErrorMessage="&quot;El Area es obligatorios&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                        </div>
                         <asp:TextBox ID="txtArea" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>
                     </div>
                 </div>
                 <div class="mt-2 pe-5 text-end">
                     <%--<label for="txtActivo">Activo:</label>--%>
+                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2"/>
                     <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo"/>
                     <%--<ajaxToolkit:ToggleButtonExtender ID="tbeActivo" runat="server" />--%>
                     <%--<asp:TextBox ID="txtActivo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>--%>
-                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2"/>
                     <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
                     <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click"/>
                 </div>
