@@ -43,6 +43,23 @@ namespace UTTTCIBERCOM.app
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
                         this.Response.Redirect("/Login.aspx", true);
+                    if (int.TryParse(Session["idUser"].ToString(), out int idUserSession))
+                    {
+                        DataContext dcSession = new DcGeneralDataContext();
+                        USUARIO user = dcSession.GetTable<USUARIO>().FirstOrDefault(c=>c.Id == idUserSession);
+                        if (user != null)
+                        {
+                            EMPLEADO emp = dcSession.GetTable<EMPLEADO>().FirstOrDefault(c=>c.Id == user.idEmpleado);
+                            if (emp != null)
+                            {
+                                if(emp.idRol != 1)
+                                {
+                                    this.btnNewPC1.Visible = false;
+                                    this.btnNewPC2.Visible = false;
+                                }
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception error)

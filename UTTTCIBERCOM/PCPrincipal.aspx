@@ -36,7 +36,7 @@
                             <asp:Button Text="Computadoras" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                             <div class="d-lg-none d-inline">
-                                <div class="my-4" runat="server">
+                                <div ID="btnNewPC1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-plus-square-fill"></i>
                                     <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                                 </div>
@@ -65,7 +65,7 @@
         <!-- Contenido -->
         <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
-                <div class="my-4" runat="server">
+                <div ID="btnNewPC2" class="my-4" runat="server">
                     <i class="me-2 bi bi-plus-square-fill"></i>
                     <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                 </div>

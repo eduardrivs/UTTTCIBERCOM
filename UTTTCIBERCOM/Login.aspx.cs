@@ -55,7 +55,7 @@ namespace UTTTCIBERCOM.app
             
             using(dataContext = new DcGeneralDataContext())
             {
-                baseEntity = dataContext.GetTable<USUARIO>().FirstOrDefault(c => (c.username.Equals(username) || c.email.Equals(username)) && (c.password.Equals(password)));
+                baseEntity = dataContext.GetTable<USUARIO>().FirstOrDefault(c => (c.username.Equals(username) || c.email.Equals(username)) && (c.password.Equals(Seguridad.Encriptar(password))));
             }
 
             if(baseEntity != null)

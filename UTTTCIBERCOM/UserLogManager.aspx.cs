@@ -42,6 +42,26 @@ namespace UTTTCIBERCOM
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
                         this.Response.Redirect("/Login.aspx", true);
+                    if (int.TryParse(Session["idUser"].ToString(), out int idUserSession))
+                    {
+                        DataContext dcSession = new DcGeneralDataContext();
+                        USUARIO user = dcSession.GetTable<USUARIO>().FirstOrDefault(c => c.Id == idUserSession);
+                        if (user != null)
+                        {
+                            EMPLEADO emp = dcSession.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == user.idEmpleado);
+                            if (emp != null)
+                            {
+                                if (emp.idRol != 1)
+                                {
+                                    this.btnNewUser1.Visible = false;
+                                    this.btnNewUser2.Visible = false;
+                                    //
+                                    this.btnNewEmp1.Visible = false;
+                                    this.btnNewEmp2.Visible = false;
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -563,18 +583,29 @@ namespace UTTTCIBERCOM
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
                 USUARIO updateUser = dcConsulta.GetTable<USUARIO>().FirstOrDefault(c => c.Id == user.Id);
+                USUARIO extraUser = dcConsulta.GetTable<USUARIO>().FirstOrDefault(c => c.username == updateUser.username);
 
                 if(this.txtPassword.Text.Equals(this.txtPassword2.Text))
                 {
                     updateUser.email = this.txtCorreo.Text;
                     updateUser.username = this.txtUsername.Text;
-                    if(!String.IsNullOrEmpty(this.txtPassword.Text))
-                        updateUser.password = this.txtPassword.Text;
-                    updateUser.isValid = this.chbxActivo.Checked;
+                    if (extraUser == null)
+                    {
+                        if (!String.IsNullOrEmpty(this.txtPassword.Text))
+                            updateUser.password = Seguridad.Encriptar(this.txtPassword.Text);
+                        updateUser.isValid = this.chbxActivo.Checked;
 
-                    dcConsulta.SubmitChanges();
+                        dcConsulta.SubmitChanges();
 
-                    return true;
+                        return true;
+                    }
+                    else
+                    {
+                        this.lblMensaje.Visible = true;
+                        this.lblMensaje.Text = "El nombre de usuario ya existe";
+                        this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        return false;
+                    }
                 }
                 else
                 {
@@ -614,7 +645,7 @@ namespace UTTTCIBERCOM
                     {
                         newUser.email = this.txtCorreo.Text;
                         newUser.username = this.txtUsername.Text;
-                        newUser.password = this.txtPassword.Text;
+                        newUser.password = Seguridad.Encriptar(this.txtPassword.Text);
                         newUser.isValid = this.chbxActivo.Checked;
                         newUser.idEmpleado = newIdEmp;
 

@@ -41,6 +41,26 @@ namespace UTTTCIBERCOM
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
                         this.Response.Redirect("/Login.aspx", true);
+                    if (int.TryParse(Session["idUser"].ToString(), out int idUserSession))
+                    {
+                        DataContext dcSession = new DcGeneralDataContext();
+                        USUARIO user = dcSession.GetTable<USUARIO>().FirstOrDefault(c => c.Id == idUserSession);
+                        if (user != null)
+                        {
+                            EMPLEADO emp = dcSession.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == user.idEmpleado);
+                            if (emp != null)
+                            {
+                                if (emp.idRol != 1)
+                                {
+                                    this.btnNewUser1.Visible = false;
+                                    this.btnNewUser2.Visible = false;
+                                    //
+                                    this.btnNewEmp1.Visible = false;
+                                    this.btnNewEmp2.Visible = false;
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -53,6 +73,15 @@ namespace UTTTCIBERCOM
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
+                
+                ListItem i;
+                List<CatRol> listRoles = dcConsulta.GetTable<CatRol>().ToList();
+                foreach (var r in listRoles)
+                {
+                    i = new ListItem(r.strRol.ToString(), r.Id.ToString());
+                    ddlRol.Items.Add(i);
+                }
+
                 if (this.session.Parametros["idEmp"] != null)
                 {
                     this.lblAction.Text = "Editar empleado";
@@ -63,12 +92,15 @@ namespace UTTTCIBERCOM
                         this.txtNombre.Text = emp.strNombre.ToString();
                         this.txtAPaterno.Text = emp.strAPaterno.ToString();
                         this.txtAMaterno.Text = emp.strAMaterno.ToString();
-                        this.txtFechaNacimiento.Text = emp.dteFechaNacimiento.ToString();
+                        if (DateTime.TryParse(emp.dteFechaNacimiento.ToString(), out DateTime fechaNacimiento))
+                            this.txtFechaNacimiento.Text = fechaNacimiento.ToString("dd-MM-yyyy HH:mm:ss");
                         this.txtEdad.Text = emp.intEdad.ToString();
                         this.txtCURP.Text = emp.strCURP.ToString();
                         this.txtRFC.Text = emp.strRFC.ToString();
-                        this.txtFechaIngreso.Text = emp.dteFechaIngreso.ToString();
-                        this.txtRol.Text = emp.idRol.ToString();
+                        if (DateTime.TryParse(emp.dteFechaIngreso.ToString(), out DateTime fechaIngreso))
+                            this.txtFechaIngreso.Text = fechaIngreso.ToString("dd-MM-yyyy HH:mm:ss");
+                        this.ddlRol.SelectedValue = emp.idRol.ToString();
+                        //this.txtRol.Text = emp.idRol.ToString();
                         this.txtArea.Text = emp.idArea.ToString();
                         this.chbxActivo.Checked = emp.boolActivo;
                     }
@@ -323,7 +355,7 @@ namespace UTTTCIBERCOM
             try
             {
                 if(String.IsNullOrEmpty(this.txtNombre.Text + this.txtAPaterno.Text + this.txtAMaterno.Text + this.txtFechaNacimiento.Text
-                    + this.txtEdad.Text + this.txtCURP.Text + this.txtRFC.Text + txtFechaIngreso.Text + this.txtRol.Text + this.txtArea.Text))
+                    + this.txtEdad.Text + this.txtCURP.Text + this.txtRFC.Text + txtFechaIngreso.Text + this.txtArea.Text))
                 {
                     if (ConfigurationManager.AppSettings["session"] == "0")
                     {
@@ -433,7 +465,7 @@ namespace UTTTCIBERCOM
                 res = DateTime.TryParse(this.txtFechaNacimiento.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaNacimiento) ? res + 1 : 105;
                 res = int.TryParse(this.txtEdad.Text, out int newEdad) ? res + 1 : 115;
                 res = DateTime.TryParse(this.txtFechaIngreso.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaIngreso) ? res + 1 : 125;
-                res = int.TryParse(this.txtRol.Text, out int newIdRol) ? res + 1 : 135;
+                res = int.TryParse(this.ddlRol.SelectedValue, out int newIdRol) ? res + 1 : 135;
                 CatRol catRol = dcConsulta.GetTable<CatRol>().FirstOrDefault(c => c.Id == newIdRol);
                 if (catRol == null)
                     res = 145;
@@ -502,7 +534,7 @@ namespace UTTTCIBERCOM
                 res = DateTime.TryParse(this.txtFechaNacimiento.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaNacimiento) ? res + 1 : 105;
                 res = int.TryParse(this.txtEdad.Text, out int newEdad) ? res + 1 : 115;
                 res = DateTime.TryParse(this.txtFechaIngreso.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaIngreso) ? res + 1 : 125;
-                res = int.TryParse(this.txtRol.Text, out int newIdRol) ? res + 1 : 135;
+                res = int.TryParse(this.ddlRol.SelectedValue, out int newIdRol) ? res + 1 : 135;
                 CatRol catRol = dcConsulta.GetTable<CatRol>().FirstOrDefault(c => c.Id == newIdRol);
                 if (catRol == null)
                     res = 145;
@@ -722,18 +754,18 @@ namespace UTTTCIBERCOM
                 }
             }
             #endregion
-            #region Rol
-            if (txtRol.Text.Equals(String.Empty))
-            {
-                _mensaje = "El Rol esta vacia";
-                return false;
-            }
-            if (int.TryParse(txtRol.Text, out int rol) == false)
-            {
-                _mensaje = "El Rol no es un número";
-                return false;
-            }
-            #endregion
+            //#region Rol
+            //if (txtRol.Text.Equals(String.Empty))
+            //{
+            //    _mensaje = "El Rol esta vacia";
+            //    return false;
+            //}
+            //if (int.TryParse(txtRol.Text, out int rol) == false)
+            //{
+            //    _mensaje = "El Rol no es un número";
+            //    return false;
+            //}
+            //#endregion
             #region Area
             if (txtArea.Text.Equals(String.Empty))
             {

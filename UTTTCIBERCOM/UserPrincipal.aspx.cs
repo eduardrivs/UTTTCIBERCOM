@@ -39,6 +39,26 @@ namespace UTTTCIBERCOM.app
                     this.session = (SessionManager)Session["SessionManager"];
                     if (!session.IsLoged)
                         this.Response.Redirect("/Login.aspx", true);
+                    if (int.TryParse(Session["idUser"].ToString(), out int idUserSession))
+                    {
+                        DataContext dcSession = new DcGeneralDataContext();
+                        USUARIO user = dcSession.GetTable<USUARIO>().FirstOrDefault(c => c.Id == idUserSession);
+                        if (user != null)
+                        {
+                            EMPLEADO emp = dcSession.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == user.idEmpleado);
+                            if (emp != null)
+                            {
+                                if (emp.idRol != 1)
+                                {
+                                    this.btnNewUser1.Visible = false;
+                                    this.btnNewUser2.Visible = false;
+                                    //
+                                    this.btnNewEmp1.Visible = false;
+                                    this.btnNewEmp2.Visible = false;
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -308,18 +328,25 @@ namespace UTTTCIBERCOM.app
         {
             try
             {
-                int idPersona = int.Parse(e.CommandArgument.ToString());
-                switch (e.CommandName)
+                if (!this.btnNewUser1.Visible)
                 {
-                    case "Editar":
-                        this.editar(idPersona);
-                        break;
-                    case "Eliminar":
-                        this.eliminar(idPersona);
-                        break;
-                    case "Usuario":
-                        this.usuario(idPersona);
-                        break;
+                    this.showMessage("No cuentas con los permisos para realizar esa accion");
+                }
+                else
+                {
+                    int idPersona = int.Parse(e.CommandArgument.ToString());
+                    switch (e.CommandName)
+                    {
+                        case "Editar":
+                            this.editar(idPersona);
+                            break;
+                        case "Eliminar":
+                            this.eliminar(idPersona);
+                            break;
+                        case "Usuario":
+                            this.usuario(idPersona);
+                            break;
+                    }
                 }
             }
             catch (Exception _e)
