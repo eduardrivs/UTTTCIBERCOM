@@ -24,6 +24,24 @@ namespace UTTTCIBERCOM.app
         protected global::System.Web.UI.HtmlControls.HtmlForm renta;
 
         /// <summary>
+        /// Control btnNewPC1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnNewPC1;
+
+        /// <summary>
+        /// Control btnNewPC2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnNewPC2;
+
+        /// <summary>
         /// Control txtBuscar.
         /// </summary>
         /// <remarks>

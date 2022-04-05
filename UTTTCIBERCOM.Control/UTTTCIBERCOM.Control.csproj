@@ -68,6 +68,7 @@
     <Compile Include="EmailManager.cs" />
     <Compile Include="Filters\FiltroAutenticacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seguridad.cs" />
     <Compile Include="SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>

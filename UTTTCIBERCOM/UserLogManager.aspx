@@ -43,11 +43,11 @@
                             <asp:Button Text="Empleados" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnUserPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Empleados</a>--%>
                             <div class="d-lg-none d-inline">
-                                <div class="my-4" runat="server">
+                                <div ID="btnNewEmp1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-plus-fill"></i>
                                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                                 </div>
-                                <div class="my-4" runat="server">
+                                <div ID="btnNewUser1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-badge"></i>
                                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                                 </div>
@@ -64,11 +64,11 @@
         <!-- Contenido -->
         <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
-                <div class="my-4" runat="server">
+                <div ID="btnNewEmp2" class="my-4" runat="server">
                     <i class="me-2 bi bi-person-plus-fill"></i>
                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
                 </div>
-                <div class="my-4" runat="server">
+                <div ID="btnNewUser2" class="my-4" runat="server">
                     <i class="me-2 bi-person-badge"></i>
                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                 </div>

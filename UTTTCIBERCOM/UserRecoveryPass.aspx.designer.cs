@@ -15,13 +15,13 @@ namespace UTTTCIBERCOM
     {
 
         /// <summary>
-        /// Control form1.
+        /// Control renta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm renta;
 
         /// <summary>
         /// Control txtNombre.
@@ -42,6 +42,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
+        /// Control cuerpoUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl cuerpoUsuario;
+
+        /// <summary>
         /// Control dgvPersonas.
         /// </summary>
         /// <remarks>
@@ -51,6 +60,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.GridView dgvPersonas;
 
         /// <summary>
+        /// Control rvftxtPass1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtPass1;
+
+        /// <summary>
         /// Control txtPass1.
         /// </summary>
         /// <remarks>
@@ -58,6 +76,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPass1;
+
+        /// <summary>
+        /// Control rvftxtPass2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtPass2;
 
         /// <summary>
         /// Control txtPass2.
