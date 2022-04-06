@@ -172,7 +172,7 @@
                     </div>
                     <div class="col-12 col-lg-10 my-2">
                         <%--<label for="txtActivo">Activo:</label>--%>
-                        <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2" />
+                        <asp:Label ID="Hola :3" Text="text" runat="server" Visible="false" CssClass="mx-2" />
                         <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo" />
                         <%--<ajaxToolkit:ToggleButtonExtender ID="tbeActivo" runat="server" />--%>
                         <%--<asp:TextBox ID="txtActivo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>--%>

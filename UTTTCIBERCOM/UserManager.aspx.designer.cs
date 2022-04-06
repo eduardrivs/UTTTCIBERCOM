@@ -303,13 +303,13 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.TextBox txtArea;
 
         /// <summary>
-        /// Control lblMensaje.
+        /// Control Hola :3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.WebControls.Label Hola :3;
 
         /// <summary>
         /// Control chbxActivo.
