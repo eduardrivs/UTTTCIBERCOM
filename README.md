@@ -6,12 +6,11 @@ Este proyecto es el proyecto final para la materia de Desarrollo de Software Pro
 
 ## Version actual
 
-*Version 2.1*
+*Version 1.1.0*
 Version completa para la materia, con correcciones de accesibilidad.
----
-Ultimas correcciones:
-* Correccion de usuario administrador
-* Error al obtener el id del empleado segun el id de su usuario
+
+## Ultimas correcciones:
+* Arreglo de versiones
 
 ## Autores
 
