@@ -6,7 +6,7 @@ Este proyecto es el proyecto final para la materia de Desarrollo de Software Pro
 
 ## Version actual
 
-**Version 2.1**
+*Version 2.1*
 Version completa para la materia, con correcciones de accesibilidad.
 ---
 Ultimas correcciones:
@@ -15,6 +15,6 @@ Ultimas correcciones:
 
 ## Autores
 
-* **José Eduardo Rivas Cuevas** - *Trabajo Inicial* - [villanuevand](https://github.com/eduardrivs)
+* **José Eduardo Rivas Cuevas** - *Trabajo Inicial* - [github](https://github.com/eduardrivs)
 
 ---
