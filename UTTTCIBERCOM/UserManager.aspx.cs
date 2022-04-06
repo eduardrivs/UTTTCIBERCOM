@@ -94,6 +94,11 @@ namespace UTTTCIBERCOM
                 {
                     this.lblAction.Text = "Editar empleado";
                     emp = dcConsulta.GetTable<EMPLEADO>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idEmp"].ToString()));
+                    if (emp.Id == 1)
+                    {
+                        ddlRol.Items.Clear();
+                        ddlRol.Items.Add(new ListItem("No se puede cambiar el rol de este usuario", "1"));
+                    }
 
                     if (emp != null && !this.IsPostBack)
                     {
