@@ -113,9 +113,9 @@
                         <%--<asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" AutoPostBack="true"></asp:TextBox>--%>
                         <asp:DropDownList ID="ddlEmp" class="btn btn-secondary dropdown-toggle me-2" runat="server" AutoPostBack="true"></asp:DropDownList>
                     </div>
-                    <div class="my-3">
+                    <%--<div class="my-3">
                         <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo" />
-                    </div>
+                    </div>--%>
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="my-3">

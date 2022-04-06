@@ -76,7 +76,7 @@
                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                 </div>
                 <div id="btnInfo2" class="my-4 pt-2" runat="server" visible="false">
-                    <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo"/>
+                    <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo" />
                 </div>
             </div>
 
@@ -108,7 +108,7 @@
                     <div class="my-3">
                         <div class="d-flex justify-content-between">
                             <label for="txtFechaNacimiento">Fecha de nacimiento:</label>
-                            <asp:RequiredFieldValidator ID="rvftxtFechaNacimiento" runat="server" class="text-danger me-5" ControlToValidate="txtFechaNacimiento" ErrorMessage="&quot;La fecha de nacimiento es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rvftxtFechaNacimiento" runat="server" class="text-danger me-5" ControlToValidate="txtFechaNacimiento" ErrorMessage="&quot;La fecha es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
                         </div>
                         <div class="d-flex">
                             <asp:TextBox ID="txtFechaNacimiento" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
@@ -166,14 +166,19 @@
                         <asp:TextBox ID="txtArea" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>
                     </div>
                 </div>
-                <div class="mt-2 pe-5 text-end">
-                    <%--<label for="txtActivo">Activo:</label>--%>
-                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2" />
-                    <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo" />
-                    <%--<ajaxToolkit:ToggleButtonExtender ID="tbeActivo" runat="server" />--%>
-                    <%--<asp:TextBox ID="txtActivo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>--%>
-                    <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
-                    <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click" />
+                <div class="mt-2 pe-5 text-end row">
+                    <div class="col-12 col-lg-2 my-2">
+                        <asp:Button Text="Editar Usuario" runat="server" class="btnForm mx-1" OnClick="btnUserLogManagerList_Click" />
+                    </div>
+                    <div class="col-12 col-lg-10 my-2">
+                        <%--<label for="txtActivo">Activo:</label>--%>
+                        <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2" />
+                        <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo" />
+                        <%--<ajaxToolkit:ToggleButtonExtender ID="tbeActivo" runat="server" />--%>
+                        <%--<asp:TextBox ID="txtActivo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>--%>
+                        <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
+                        <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click" />
+                    </div>
                 </div>
             </div>
         </div>

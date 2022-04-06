@@ -69,10 +69,11 @@ namespace UTTTCIBERCOM
                             this.txtTiempoTotal.Text = (DateTime.Now - pc.tempInicioRenta.GetValueOrDefault()).TotalHours.ToString();
                             if (double.TryParse(this.txtTiempoTotal.Text, out double tTotal))
                                 nuevaRenta.dteTiempoTotal = tTotal;
-                            if (int.TryParse(this.Session["idUser"].ToString(), out int idEmp))
+                            if (int.TryParse(this.Session["idUser"].ToString(), out int idUser))
                             {
                                 ListItem iemp;
-                                List<EMPLEADO> EmpLista = dcConsulta.GetTable<EMPLEADO>().Where(c => c.Id == idEmp).ToList();
+                                USUARIO currentUser = dcConsulta.GetTable<USUARIO>().FirstOrDefault(c=>c.Id == idUser);
+                                List<EMPLEADO> EmpLista = dcConsulta.GetTable<EMPLEADO>().Where(c => c.Id == currentUser.idEmpleado).ToList();
                                 if (EmpLista.Count > 0)
                                 {
                                     foreach (var r in EmpLista)
@@ -80,8 +81,11 @@ namespace UTTTCIBERCOM
                                         iemp = new ListItem(r.strNombre.ToString() + " " + r.strAPaterno, r.Id.ToString());
                                         ddlEmpleado.Items.Add(iemp);
                                     }
-                                    ddlEmpleado.SelectedValue = idEmp.ToString();
-                                    nuevaRenta.idEmpleado = idEmp;
+                                    if (EmpLista.Count == 1)
+                                    {
+                                        ddlEmpleado.SelectedValue = EmpLista.FirstOrDefault().Id.ToString();
+                                        nuevaRenta.idEmpleado = EmpLista.FirstOrDefault().Id;
+                                    }
                                 }
                             }
                             

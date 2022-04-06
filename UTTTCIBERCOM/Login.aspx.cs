@@ -21,6 +21,7 @@ namespace UTTTCIBERCOM.app
         private SessionManager session;
         DataContext dataContext;
         USUARIO baseEntity = null;
+        bool banner = false;
 
         #endregion
 
@@ -60,7 +61,14 @@ namespace UTTTCIBERCOM.app
 
             if(baseEntity != null)
             {
-                if (baseEntity.isValid)
+                using (dataContext = new DcGeneralDataContext())
+                {
+                    EMPLEADO emp = dataContext.GetTable<EMPLEADO>().FirstOrDefault(c => (c.Id == baseEntity.idEmpleado));
+                    if (emp != null)
+                        banner = emp.boolActivo;
+                }
+
+                if (banner)
                 {
                     session = new SessionManager(baseEntity.idEmpleado);
                     session.Pantalla = "/RentPrincipal.aspx";

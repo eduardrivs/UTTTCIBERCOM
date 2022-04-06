@@ -140,7 +140,7 @@
                                 <ItemStyle HorizontalAlign="Center" Width="50px" />
 
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Usuario">
+                            <%--<asp:TemplateField HeaderText="Usuario">
 
                                 <ItemTemplate>
                                     <asp:ImageButton runat="server" ID="imgUsuario" CommandName="Usuario" CommandArgument='<%#Bind("id") %>' ImageUrl="~/content/images/editrecord_16x16.png" />
@@ -148,7 +148,7 @@
                                 <HeaderStyle HorizontalAlign="Center" />
                                 <ItemStyle HorizontalAlign="Center" Width="50px" />
 
-                            </asp:TemplateField>
+                            </asp:TemplateField>--%>
                         </Columns>
 
                     </asp:GridView>
