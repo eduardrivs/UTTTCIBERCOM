@@ -326,44 +326,25 @@ namespace UTTTCIBERCOM
                         {
                             if (updateDatos())
                             {
-                                if (ConfigurationManager.AppSettings["session"] == "0")
-                                {
-                                    this.Response.Redirect("/Login.aspx", true);
-                                }
-                                if (ConfigurationManager.AppSettings["session"] == "1")
-                                {
-                                    this.session = (SessionManager)Session["SessionManager"];
-                                    if (!session.IsLoged)
-                                        this.Response.Redirect("/Login.aspx", true);
+                                this.session.Pantalla = "/PCPrincipal.aspx";
+                                this.session.Parametros["idPC"] = null;
+                                this.session.Parametros["idRenta"] = null;
+                                Session["SessionManager"] = this.session;
+                                this.Response.Redirect(this.session.Pantalla, false);
 
-                                    this.session.Pantalla = "/PCPrincipal.aspx";
-                                    this.session.Parametros["idPC"] = null;
-                                    this.session.Parametros["idRenta"] = null;
-                                    Session["SessionManager"] = this.session;
-                                    this.Response.Redirect(this.session.Pantalla, false);
-                                }
+                                this.ClientScript.RegisterClientScriptBlock(this.GetType(), "clientscript", "alert('Computadora actualizada correctamente'); parent.location.href='/PCPrincipal.aspx'", true);
                             }
                         }
                         else
                         {
                             if (llenarDatos())
                             {
-                                if (ConfigurationManager.AppSettings["session"] == "0")
-                                {
-                                    this.Response.Redirect("/Login.aspx", true);
-                                }
-                                if (ConfigurationManager.AppSettings["session"] == "1")
-                                {
-                                    this.session = (SessionManager)Session["SessionManager"];
-                                    if (!session.IsLoged)
-                                        this.Response.Redirect("/Login.aspx", true);
-
-                                    this.session.Pantalla = "/PCPrincipal.aspx";
-                                    this.session.Parametros["idPC"] = null;
-                                    this.session.Parametros["idRenta"] = null;
-                                    Session["SessionManager"] = this.session;
-                                    this.Response.Redirect(this.session.Pantalla, false);
-                                }
+                                this.session.Pantalla = "/PCPrincipal.aspx";
+                                this.session.Parametros["idPC"] = null;
+                                this.session.Parametros["idRenta"] = null;
+                                Session["SessionManager"] = this.session;
+                                
+                                this.ClientScript.RegisterClientScriptBlock(this.GetType(), "clientscript", "alert('Computadora agregada correctamente'); parent.location.href='/PCPrincipal.aspx'", true);
                             }
                         }
                     }

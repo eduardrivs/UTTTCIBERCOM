@@ -1,5 +1,6 @@
 ﻿using Data.Linq.Entity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
@@ -19,6 +20,7 @@ namespace UTTTCIBERCOM
 
         private SessionManager session;
         EMPLEADO emp;
+        EMPLEADO newEmp = new EMPLEADO();
         #endregion
 
         #region Eventos
@@ -76,13 +78,16 @@ namespace UTTTCIBERCOM
             try
             {
                 DataContext dcConsulta = new DcGeneralDataContext();
-                
-                ListItem i;
-                List<CatRol> listRoles = dcConsulta.GetTable<CatRol>().ToList();
-                foreach (var r in listRoles)
+
+                if (!this.IsPostBack)
                 {
-                    i = new ListItem(r.strRol.ToString(), r.Id.ToString());
-                    ddlRol.Items.Add(i);
+                    ListItem i;
+                    List<CatRol> listRoles = dcConsulta.GetTable<CatRol>().ToList();
+                    foreach (var r in listRoles)
+                    {
+                        i = new ListItem(r.strRol.ToString(), r.Id.ToString());
+                        ddlRol.Items.Add(i);
+                    }
                 }
 
                 if (this.session.Parametros["idEmp"] != null)
@@ -427,10 +432,17 @@ namespace UTTTCIBERCOM
                                     if (!session.IsLoged)
                                         this.Response.Redirect("/Login.aspx", true);
 
-                                    this.session.Pantalla = "/UserPrincipal.aspx";
-                                    this.session.Parametros["idPC"] = null;
-                                    this.session.Parametros["idRenta"] = null;
-                                    this.session.Parametros["idEmp"] = null;
+                                    //this.session.Pantalla = "/UserPrincipal.aspx";
+                                    //this.session.Parametros["idPC"] = null;
+                                    //this.session.Parametros["idRenta"] = null;
+                                    //this.session.Parametros["idEmp"] = null;
+                                    //Session["SessionManager"] = this.session;
+
+                                    Hashtable parametrosRagion = new Hashtable();
+                                    parametrosRagion.Add("idEmp", newEmp.Id);
+                                    this.session.Parametros = parametrosRagion;
+                                    this.session.Pantalla = "/UserLogManager.aspx";
+
                                     Session["SessionManager"] = this.session;
                                     this.Response.Redirect(this.session.Pantalla, false);
                                 }
@@ -451,6 +463,33 @@ namespace UTTTCIBERCOM
                 throw;
             }
 
+        }
+
+        protected void btnUserLogManagerList_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.session.Parametros["idEmp"] != null)
+                {
+                    Hashtable parametrosRagion = new Hashtable();
+                    parametrosRagion.Add("idEmp", int.Parse(this.session.Parametros["idEmp"].ToString()));
+                    this.session.Parametros = parametrosRagion;
+                    this.session.Pantalla = "/UserLogManager.aspx";
+
+                    Session["SessionManager"] = this.session;
+                    this.Response.Redirect(this.session.Pantalla, false);
+                }
+                else
+                {
+                    this.lblMensaje.Text = "Primero registre al empleado en proceso";
+                    this.lblMensaje.Visible = true;
+                    this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         #endregion
@@ -532,7 +571,6 @@ namespace UTTTCIBERCOM
             {
                 int res = 0;
                 DataContext dcConsulta = new DcGeneralDataContext();
-                EMPLEADO newEmp = new EMPLEADO();
 
                 res = DateTime.TryParse(this.txtFechaNacimiento.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaNacimiento) ? res + 1 : 105;
                 res = int.TryParse(this.txtEdad.Text, out int newEdad) ? res + 1 : 115;

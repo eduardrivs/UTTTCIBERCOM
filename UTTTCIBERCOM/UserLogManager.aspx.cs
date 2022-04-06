@@ -94,7 +94,7 @@ namespace UTTTCIBERCOM
                             this.txtCorreo.Text = user.email.ToString();
                             this.txtUsername.Text = user.username.ToString();
                             this.txtPassword.Text = user.password.ToString();
-                            this.chbxActivo.Checked = user.isValid;
+                            //this.chbxActivo.Checked = user.isValid;
                             
                             //this.txtIdEmp.AutoPostBack = false;
                             this.btnDelete.Enabled = true;
@@ -171,7 +171,7 @@ namespace UTTTCIBERCOM
                 else
                 {
                     this.lblAction.Text = "Nuevo Usuario";
-                    this.lblInstruccion.Text = "Seleccione el empleado al cual agrear el nuevo usuario";
+                    this.lblInstruccion.Text = "Seleccione el empleado al cual agrear el usuario a crear";
 
                     if (this.IsPostBack)
                     {
@@ -622,7 +622,7 @@ namespace UTTTCIBERCOM
 
                     if (!String.IsNullOrEmpty(this.txtPassword.Text))
                         updateUser.password = Seguridad.Encriptar(this.txtPassword.Text);
-                    updateUser.isValid = this.chbxActivo.Checked;
+                    updateUser.isValid = true;
                     dcConsulta.SubmitChanges();
 
                     return true;
@@ -669,7 +669,7 @@ namespace UTTTCIBERCOM
                         newUser.email = this.txtCorreo.Text;
                         newUser.username = this.txtUsername.Text;
                         newUser.password = Seguridad.Encriptar(this.txtPassword.Text);
-                        newUser.isValid = this.chbxActivo.Checked;
+                        newUser.isValid = true;
                         newUser.idEmpleado = newIdEmp;
 
                         dcConsulta.GetTable<USUARIO>().InsertOnSubmit(newUser);
