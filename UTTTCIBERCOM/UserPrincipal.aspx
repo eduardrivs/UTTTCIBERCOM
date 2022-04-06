@@ -36,15 +36,15 @@
                             <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                         </div>
-                        <div class="menu menuActivo d-inline">
+                        <div class="menu menuActivo d-inline-block">
                             <asp:Button Text="Empleados" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnUserPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Empleados</a>--%>
                             <div class="d-lg-none d-inline">
-                                <div ID="btnNewEmp1" class="my-4" runat="server">
+                                <div id="btnNewEmp1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-plus-fill"></i>
                                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
                                 </div>
-                                <div ID="btnNewUser1" class="my-4" runat="server">
+                                <div id="btnNewUser1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-badge"></i>
                                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                                 </div>
@@ -52,6 +52,9 @@
                         </div>
                         <div class="menu">
                             <asp:Button Text="Cerrar sesión" runat="server" class="menuLinkBtn text-center" OnClick="btnLogout_Click" />
+                        </div>
+                        <div id="btnInfo1" class="menu d-block d-lg-none" runat="server" visible="false">
+                            <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo" />
                         </div>
                     </div>
                 </div>
@@ -61,13 +64,16 @@
         <!-- Contenido -->
         <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
-                <div ID="btnNewEmp2" class="my-4" runat="server">
+                <div id="btnNewEmp2" class="my-4" runat="server">
                     <i class="me-2 bi bi-person-plus-fill"></i>
                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
                 </div>
-                <div ID="btnNewUser2" class="my-4" runat="server">
+                <div id="btnNewUser2" class="my-4" runat="server">
                     <i class="me-2 bi-person-badge"></i>
                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
+                </div>
+                <div id="btnInfo2" class="my-4 pt-2" runat="server" visible="false">
+                    <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo"/>
                 </div>
             </div>
 

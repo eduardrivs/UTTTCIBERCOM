@@ -32,11 +32,11 @@
                             <asp:Button Text="Rentas" runat="server" class="menuLinkBtn text-center" OnClick="btnRentPrincipal_Click" />
                             <%--<a href="#" class="menuLinkActivo">Rentas</a>--%>
                         </div>
-                        <div class="menu menuActivo d-inline">
+                        <div class="menu menuActivo d-inline-block">
                             <asp:Button Text="Computadoras" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                             <div class="d-lg-none d-inline">
-                                <div ID="btnNewPC1" class="my-4" runat="server">
+                                <div id="btnNewPC1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-plus-square-fill"></i>
                                     <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                                 </div>
@@ -57,6 +57,9 @@
                         <div class="menu">
                             <asp:Button Text="Cerrar sesión" runat="server" class="menuLinkBtn text-center" OnClick="btnLogout_Click" />
                         </div>
+                        <div id="btnInfo1" class="menu d-block d-lg-none" runat="server" visible="false">
+                            <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,7 +68,7 @@
         <!-- Contenido -->
         <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
-                <div ID="btnNewPC2" class="my-4" runat="server">
+                <div id="btnNewPC2" class="my-4" runat="server">
                     <i class="me-2 bi bi-plus-square-fill"></i>
                     <asp:Button Text="Nuevo Equipo" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                 </div>
@@ -76,6 +79,9 @@
                 <div class="my-4" runat="server">
                     <i class="me-2 bi bi-calendar2-x"></i>
                     <asp:Button Text="Terminar Renta" runat="server" class="menuLinkBtnActivo" OnClick="btnRentManager_Click" />
+                </div>
+                <div id="btnInfo2" class="my-4 pt-2" runat="server" visible="false">
+                    <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo"/>
                 </div>
             </div>
             <!-- Cuerpo -->

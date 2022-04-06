@@ -17,7 +17,7 @@
 <body>
     <form id="renta" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-        
+
         <!-- Barra de Navegacion -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-theme sticky-top">
             <div class="container-fluid">
@@ -39,15 +39,15 @@
                             <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                         </div>
-                        <div class="menu menuActivo d-inline">
+                        <div class="menu menuActivo d-inline-block">
                             <asp:Button Text="Empleados" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnUserPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Empleados</a>--%>
                             <div class="d-lg-none d-inline">
-                                <div ID="btnNewEmp1" class="my-4" runat="server">
+                                <div id="btnNewEmp1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-plus-fill"></i>
                                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                                 </div>
-                                <div ID="btnNewUser1" class="my-4" runat="server">
+                                <div id="btnNewUser1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-badge"></i>
                                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                                 </div>
@@ -55,6 +55,9 @@
                         </div>
                         <div class="menu">
                             <asp:Button Text="Cerrar sesión" runat="server" class="menuLinkBtn text-center" OnClick="btnLogout_Click" />
+                        </div>
+                        <div id="btnInfo1" class="menu d-block d-lg-none" runat="server" visible="false">
+                            <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo" />
                         </div>
                     </div>
                 </div>
@@ -64,19 +67,22 @@
         <!-- Contenido -->
         <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
-                <div ID="btnNewEmp2" class="my-4" runat="server">
+                <div id="btnNewEmp2" class="my-4" runat="server">
                     <i class="me-2 bi bi-person-plus-fill"></i>
                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
                 </div>
-                <div ID="btnNewUser2" class="my-4" runat="server">
+                <div id="btnNewUser2" class="my-4" runat="server">
                     <i class="me-2 bi-person-badge"></i>
                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
+                </div>
+                <div id="btnInfo2" class="my-4 pt-2" runat="server" visible="false">
+                    <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo"/>
                 </div>
             </div>
 
             <!-- Cuerpo -->
             <div class="bodySize ps-5 ms-3 ms-lg-0 row d-flex">
-                <asp:Label ID="lblAction" Text="Agregar empleado" runat="server" Font-Size="200%"/>
+                <asp:Label ID="lblAction" Text="Agregar empleado" runat="server" Font-Size="200%" />
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
                         <div class="d-flex justify-content-between">
@@ -106,7 +112,7 @@
                         </div>
                         <div class="d-flex">
                             <asp:TextBox ID="txtFechaNacimiento" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
-                            <asp:ImageButton ID="imgPopup" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
+                            <asp:ImageButton ID="imgPopup" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false" />
                         </div>
                         <ajaxToolkit:CalendarExtender ID="calendar1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtFechaNacimiento" Format="dd-MM-yyyy HH:mm:ss" />
                     </div>
@@ -140,7 +146,7 @@
                         </div>
                         <div class="d-flex">
                             <asp:TextBox ID="txtFechaIngreso" runat="server" Width="80%" CssClass="me-2" ViewStateMode="Disabled" onkeypress="return validaFecha(event);"></asp:TextBox>
-                            <asp:ImageButton ID="imgPopup2" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false"/>
+                            <asp:ImageButton ID="imgPopup2" ImageUrl="~/content/images/calendar.png" ImageAlign="Bottom" Height="35px" runat="server" CausesValidation="false" />
                         </div>
                         <ajaxToolkit:CalendarExtender ID="calendar2" PopupButtonID="imgPopup2" runat="server" TargetControlID="txtFechaIngreso" Format="dd-MM-yyyy HH:mm:ss" />
                     </div>
@@ -162,12 +168,12 @@
                 </div>
                 <div class="mt-2 pe-5 text-end">
                     <%--<label for="txtActivo">Activo:</label>--%>
-                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2"/>
-                    <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo"/>
+                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2" />
+                    <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo" />
                     <%--<ajaxToolkit:ToggleButtonExtender ID="tbeActivo" runat="server" />--%>
                     <%--<asp:TextBox ID="txtActivo" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);"></asp:TextBox>--%>
                     <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
-                    <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click"/>
+                    <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click" />
                 </div>
             </div>
         </div>

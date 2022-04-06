@@ -56,6 +56,9 @@ namespace UTTTCIBERCOM.app
                                 {
                                     this.btnNewPC1.Visible = false;
                                     this.btnNewPC2.Visible = false;
+                                    //
+                                    this.btnInfo1.Visible = true;
+                                    this.btnInfo2.Visible = true;
                                 }
                             }
                         }

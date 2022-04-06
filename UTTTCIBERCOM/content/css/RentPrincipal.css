@@ -301,3 +301,11 @@
 .linkActivo {
     font-weight: bolder;
 }
+
+.txtInfo {
+    color: gray;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    text-decoration: none;
+    font-size:0.8em;
+}

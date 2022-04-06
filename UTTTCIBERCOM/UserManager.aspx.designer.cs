@@ -51,6 +51,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnNewUser1;
 
         /// <summary>
+        /// Control btnInfo1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnInfo1;
+
+        /// <summary>
         /// Control btnNewEmp2.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace UTTTCIBERCOM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnNewUser2;
+
+        /// <summary>
+        /// Control btnInfo2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnInfo2;
 
         /// <summary>
         /// Control lblAction.
