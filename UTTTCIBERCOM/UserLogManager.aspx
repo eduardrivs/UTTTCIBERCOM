@@ -17,7 +17,7 @@
 <body>
     <form id="renta" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-        
+
         <!-- Barra de Navegacion -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-theme sticky-top">
             <div class="container-fluid">
@@ -39,15 +39,15 @@
                             <asp:Button Text="Computadoras" runat="server" class="menuLinkBtn text-center" OnClick="btnPCPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Computadoras</a>--%>
                         </div>
-                        <div class="menu menuActivo d-inline">
+                        <div class="menu menuActivo d-inline-block">
                             <asp:Button Text="Empleados" runat="server" class="menuLinkBtnActivo text-center" OnClick="btnUserPrincipal_Click" />
                             <%--<a href="#" class="menuLink">Empleados</a>--%>
                             <div class="d-lg-none d-inline">
-                                <div ID="btnNewEmp1" class="my-4" runat="server">
+                                <div id="btnNewEmp1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-plus-fill"></i>
                                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnPCManager_Click" />
                                 </div>
-                                <div ID="btnNewUser1" class="my-4" runat="server">
+                                <div id="btnNewUser1" class="my-4" runat="server">
                                     <i class="me-2 bi bi-person-badge"></i>
                                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
                                 </div>
@@ -55,6 +55,9 @@
                         </div>
                         <div class="menu">
                             <asp:Button Text="Cerrar sesión" runat="server" class="menuLinkBtn text-center" OnClick="btnLogout_Click" />
+                        </div>
+                        <div id="btnInfo1" class="menu d-block d-lg-none" runat="server" visible="false">
+                            <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo" />
                         </div>
                     </div>
                 </div>
@@ -64,30 +67,39 @@
         <!-- Contenido -->
         <div class="mt-4 row container-fluid mb-5 mb-lg-0">
             <div class="text-start ps-4 d-lg-block d-none" style="border-right: 1px solid #555; width: 20%;">
-                <div ID="btnNewEmp2" class="my-4" runat="server">
+                <div id="btnNewEmp2" class="my-4" runat="server">
                     <i class="me-2 bi bi-person-plus-fill"></i>
                     <asp:Button Text="Nuevo Empleado" runat="server" class="menuLinkBtnActivo" OnClick="btnUserManager_Click" />
                 </div>
-                <div ID="btnNewUser2" class="my-4" runat="server">
+                <div id="btnNewUser2" class="my-4" runat="server">
                     <i class="me-2 bi-person-badge"></i>
                     <asp:Button Text="Nuevo Usuario" runat="server" class="menuLinkBtnActivo" OnClick="btnUserLogManager_Click" />
+                </div>
+                <div id="btnInfo2" class="my-4 pt-2" runat="server" visible="false">
+                    <asp:Label Text="Se han bloqueado ciertas acciones debido a los permisos de tu cuenta" runat="server" CssClass="txtInfo"/>
                 </div>
             </div>
 
             <!-- Cuerpo -->
             <div class="bodySize ps-5 ms-3 ms-lg-0 row d-flex">
-                <asp:Label ID="lblAction" Text="Agregar usuario nuevo" runat="server" Font-Size="200%"/>
+                <asp:Label ID="lblAction" Text="Agregar usuario nuevo" runat="server" Font-Size="200%" />
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
-                        <div><label for="txtNombre">Nombre:</label></div>
+                        <div>
+                            <label for="txtNombre">Nombre:</label>
+                        </div>
                         <asp:TextBox ID="txtNombre" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtAPaterno">A.Paterno:</label></div>
+                        <div>
+                            <label for="txtAPaterno">A.Paterno:</label>
+                        </div>
                         <asp:TextBox ID="txtAPaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtAMaterno">A.Materno:</label></div>
+                        <div>
+                            <label for="txtAMaterno">A.Materno:</label>
+                        </div>
                         <asp:TextBox ID="txtAMaterno" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaLetras(event);" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="my-3">
@@ -95,10 +107,10 @@
                             <label for="txtIdEmp">ID Empleado:</label>
                             <asp:RequiredFieldValidator ID="rvftxtIdEmp" runat="server" class="text-danger me-5" ControlToValidate="txtIdEmp" ErrorMessage="&quot;El Id empleado es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
                         </div>
-                        <asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" AutoPostBack="true" ></asp:TextBox>
+                        <asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" AutoPostBack="true"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo"/>
+                        <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo" />
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
@@ -131,14 +143,16 @@
                         <asp:TextBox ID="txtPassword2" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" TextMode="Password"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><asp:Label ID="lblMensaje2" Text="text" runat="server" Visible="false" CssClass="mx-2"/></div>
+                        <div>
+                            <asp:Label ID="lblMensaje2" Text="text" runat="server" Visible="false" CssClass="mx-2" />
+                        </div>
                     </div>
                 </div>
                 <div class="mt-2 pe-5 text-end">
-                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2"/>
-                    <asp:Button ID="btnDelete" Text="Eliminar" runat="server" class="btnForm mx-1" OnClick="btnDelete_Click" Enabled="false"/>
+                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2" />
+                    <asp:Button ID="btnDelete" Text="Eliminar" runat="server" class="btnForm mx-1" OnClick="btnDelete_Click" Enabled="false" />
                     <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
-                    <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click"/>
+                    <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click" />
                 </div>
             </div>
         </div>
