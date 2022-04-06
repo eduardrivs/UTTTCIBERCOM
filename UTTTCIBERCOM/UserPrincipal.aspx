@@ -89,10 +89,9 @@
                     </nav>
                 </div>
                 <!-- Tabla de contenido -->
-                <!-- Tabla de contenido -->
                 <div class="table-responsive p-4" style="width: 100%">
                     <asp:GridView ID="dgvEmpleados" runat="server"
-                        AllowPaging="False" AutoGenerateColumns="False" DataSourceID="DataSourceEmpleados"
+                        AllowPaging="true" ShowFooter="true" AutoGenerateColumns="False" DataSourceID="DataSourceEmpleados"
                         Width="100%" CellPadding="3" GridLines="Horizontal"
                         OnRowCommand="dgvEmpleados_RowCommand" BackColor="White"
                         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
@@ -109,8 +108,14 @@
                                 SortExpression="intEdad" />
                             <asp:BoundField DataField="dteFechaIngreso" HeaderText="Fecha Ingreso"
                                 SortExpression="dteFechaIngreso" />
-                            <asp:BoundField DataField="boolActivo" HeaderText="Estatus"
-                                SortExpression="boolActivo" />
+                            <%--<asp:BoundField DataField="boolActivo" HeaderText="Estatus"
+                                SortExpression="boolActivo" />--%>
+
+                            <asp:TemplateField HeaderText="Estatus">
+                                <ItemTemplate>
+                                    <%# (Boolean.Parse(Eval("boolActivo").ToString())) ? "Activo" : "Inactivo" %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Editar">
 
                                 <ItemTemplate>

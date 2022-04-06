@@ -88,7 +88,7 @@
             </div>
             <!-- Para dispositivo grande -->
             <div class="ps-5 d-none d-lg-block" style="width: 80%;">
-                <div class="table-responsive-lg p-4" style="width: 100%">
+                <div class="table-responsive p-4" style="width: 100%">
                     <asp:ListView ID="lstViewComputadoras" runat="server" DataSourceID="DataSourceComputadora" GroupItemCount="5" OnItemCommand="dgvComputadora_RowCommand">
                         <ItemTemplate>
                             <td runat="server">
@@ -141,19 +141,24 @@
                             </td>
                         </SelectedItemTemplate>
                     </asp:ListView>
-                    <div class="mt-5">
-                        <span class="me-5">En uso: <strong>
+                    <div class="mt-5 row">
+                        <div class="col-12 col-lg-3">
+                            <span class="me-5">En uso: <strong>
                             <asp:Label ID="txtPCUsando" runat="server" Text="a" /></strong></span>
                         <span>Libres: <strong>
                             <asp:Label ID="txtPCLibres" runat="server" Text="b" /></strong></span>
+                        </div>
+                        <div class="col-12 col-lg-9 text-end">
+                            <asp:Label ID="lblInstrucciones" runat="server" Text="De clic en la computadora que desea iniciar o terminar una renta" />
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Para dispositivo pequeño -->
             <div class="ps-3 d-block d-lg-none" style="width: 100%;">
-                <div class="table-responsive-lg" style="width: 100%">
-                    <asp:ListView ID="ListView1" runat="server" DataSourceID="DataSourceComputadora" GroupItemCount="5">
+                <div class="" style="width: 100%">
+                    <asp:ListView ID="ListView1" runat="server" DataSourceID="DataSourceComputadora" GroupItemCount="4">
                         <ItemTemplate>
                             <td runat="server">
                                 <%--<asp:ImageButton runat="server" ID="imgEliminar" Width="50%" CommandName="Eliminar" CommandArgument='<%# Bind("id") %>' ImageUrl="~/content/images/PCOff.png" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />--%>
@@ -206,11 +211,16 @@
                             </td>
                         </SelectedItemTemplate>
                     </asp:ListView>
-                    <div class="mt-5">
-                        <span class="me-5">En uso: <strong>
+                    <div class="mt-5 row">
+                        <div class="col-12 col-lg-3">
+                            <span class="me-5">En uso: <strong>
                             <asp:Label ID="txtPCUsando2" runat="server" Text="a" /></strong></span>
                         <span>Libres: <strong>
                             <asp:Label ID="txtPCLibres2" runat="server" Text="b" /></strong></span>
+                        </div>
+                        <div class="col-12 col-lg-9 text-end">
+                            <asp:Label ID="lblInstrucciones2" runat="server" Text="De clic en la computadora que desea iniciar o terminar una renta" />
+                        </div>
                     </div>
                 </div>
             </div>
