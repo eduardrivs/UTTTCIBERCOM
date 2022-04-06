@@ -107,7 +107,7 @@
                 <!-- Tabla de contenido -->
                 <div class="table-responsive p-4" style="width: 100%">
                     <asp:GridView ID="dgvRentas" runat="server"
-                        AllowPaging="false" AutoGenerateColumns="False" DataSourceID="DataSourceRentas"
+                        AllowPaging="true" ShowFooter="true" AutoGenerateColumns="False" DataSourceID="DataSourceRentas"
                         Width="100%" CellPadding="3" GridLines="Horizontal"
                         OnRowCommand="dgvRentas_RowCommand" BackColor="White"
                         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
@@ -118,12 +118,14 @@
                                 SortExpression="dteFechaInicio" />
                             <asp:BoundField DataField="dteFechaFinal" HeaderText="Fecha Final" ReadOnly="True"
                                 SortExpression="dteFechaFinal" />
-                            <asp:BoundField DataField="idEmpleado" HeaderText="Empleado" ReadOnly="True"
-                                SortExpression="idEmpleado" />
+                            <%--<asp:BoundField DataField="idEmpleado" HeaderText="Empleado" ReadOnly="True"
+                                SortExpression="idEmpleado" />--%>
                             <asp:BoundField DataField="idEquipo" HeaderText="Equipo" ReadOnly="True"
-                                SortExpression="idEquipo" />
+                                SortExpression="idEquipo" ItemStyle-HorizontalAlign="Left"/>
                             <asp:BoundField DataField="monTotal" HeaderText="Total" ReadOnly="True"
                                 SortExpression="monTotal" />
+                            <asp:BoundField DataField="monPago" HeaderText="Pago" ReadOnly="True"
+                                SortExpression="monPago" />
                             <asp:TemplateField HeaderText="Editar">
 
                                 <ItemTemplate>
@@ -155,7 +157,7 @@
     <asp:LinqDataSource ID="DataSourceRentas" runat="server"
         ContextTypeName="Data.Linq.Entity.DcGeneralDataContext"
         OnSelecting="DataSourceRentas_Selecting"
-        Select="new (dteFechaInicio, dteFechaFinal, idEmpleado, idEquipo, monTotal, Id)"
+        Select="new (dteFechaInicio, dteFechaFinal, idEmpleado, idEquipo, monTotal, monPago, Id)"
         TableName="RENTA" EntityTypeName="">
     </asp:LinqDataSource>
 

@@ -98,11 +98,11 @@
                 <!-- Tabla de contenido -->
                 <div class="table-responsive p-4">
                     <asp:GridView ID="GridView1" runat="server"
-                        AllowPaging="False" AutoGenerateColumns="False" DataSourceID="DataSourcePC"
+                        AllowPaging="True" ShowFooter="True" AutoGenerateColumns="False" DataSourceID="DataSourcePC"
                         Width="100%" CellPadding="3" GridLines="Horizontal"
                         OnRowCommand="dgvPC_RowCommand" BackColor="White"
                         BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px"
-                        ViewStateMode="Disabled" class="table table-sm mt-2" ShowFooter="False">
+                        ViewStateMode="Disabled" class="table table-sm mt-2">
                         <AlternatingRowStyle BackColor="#F7F7F7" />
                         <Columns>
                             <asp:BoundField DataField="strNombre" HeaderText="Nombre" ReadOnly="True"

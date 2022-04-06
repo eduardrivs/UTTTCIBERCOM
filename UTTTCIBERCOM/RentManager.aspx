@@ -104,8 +104,10 @@
                         <asp:TextBox ID="txtTiempoTotal" runat="server" Width="90%" ViewStateMode="Disabled" Enabled="false" onkeypress="return validaDinero(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
-                        <div><label for="txtIdEmplado">Id Empleado:</label></div>
-                        <asp:TextBox ID="txtIdEmplado" runat="server" Width="90%" ViewStateMode="Disabled" Enabled="false" onkeypress="return validaNumeros(event);"></asp:TextBox>
+                        <div><label for="txtIdEmplado">Empleado:</label></div>
+                        <%--<asp:TextBox ID="txtIdEmplado" runat="server" Width="90%" ViewStateMode="Disabled" Enabled="false" onkeypress="return validaNumeros(event);"></asp:TextBox>--%>
+                        <asp:DropDownList ID="ddlEmpleado" class="btn btn-secondary dropdown-toggle me-2" runat="server"></asp:DropDownList>
+
                     </div>
                    <%-- <asp:UpdatePanel ID="txtIdEquipo" runat="server">
                         <ContentTemplate>

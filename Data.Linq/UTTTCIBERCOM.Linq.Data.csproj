@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Entity\EMPLEADO.cs" />
     <Compile Include="Entity\RENTA.cs" />
+    <Compile Include="Entity\RentasEmpleado.cs" />
     <Compile Include="Entity\USUARIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

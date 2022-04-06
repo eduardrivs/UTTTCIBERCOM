@@ -51,6 +51,15 @@ namespace UTTTCIBERCOM.app
         protected global::System.Web.UI.WebControls.Label txtPCLibres;
 
         /// <summary>
+        /// Control lblInstrucciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInstrucciones;
+
+        /// <summary>
         /// Control ListView1.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace UTTTCIBERCOM.app
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label txtPCLibres2;
+
+        /// <summary>
+        /// Control lblInstrucciones2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInstrucciones2;
 
         /// <summary>
         /// Control DataSourceComputadora.

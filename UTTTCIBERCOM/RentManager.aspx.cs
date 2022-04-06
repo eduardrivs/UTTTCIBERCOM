@@ -69,9 +69,22 @@ namespace UTTTCIBERCOM
                             this.txtTiempoTotal.Text = (DateTime.Now - pc.tempInicioRenta.GetValueOrDefault()).TotalHours.ToString();
                             if (double.TryParse(this.txtTiempoTotal.Text, out double tTotal))
                                 nuevaRenta.dteTiempoTotal = tTotal;
-                            this.txtIdEmplado.Text = this.Session["idUser"].ToString();
                             if (int.TryParse(this.Session["idUser"].ToString(), out int idEmp))
-                                nuevaRenta.idEmpleado = idEmp;
+                            {
+                                ListItem iemp;
+                                List<EMPLEADO> EmpLista = dcConsulta.GetTable<EMPLEADO>().Where(c => c.Id == idEmp).ToList();
+                                if (EmpLista.Count > 0)
+                                {
+                                    foreach (var r in EmpLista)
+                                    {
+                                        iemp = new ListItem(r.strNombre.ToString() + " " + r.strAPaterno, r.Id.ToString());
+                                        ddlEmpleado.Items.Add(iemp);
+                                    }
+                                    ddlEmpleado.SelectedValue = idEmp.ToString();
+                                    nuevaRenta.idEmpleado = idEmp;
+                                }
+                            }
+                            
                             ListItem i = new ListItem(pc.strNombre, pc.Id.ToString());
                             this.ddlEquipo.Items.Add(i);
                             nuevaRenta.idEquipo = pc.Id;
@@ -114,16 +127,38 @@ namespace UTTTCIBERCOM
                                 this.txtFechaInicio.Text = nuevaRenta.dteFechaInicio.ToString();
                                 this.txtFechaFinal.Text = nuevaRenta.dteFechaFinal.ToString();
                                 this.txtTiempoTotal.Text = nuevaRenta.dteTiempoTotal.ToString();
-                                this.txtIdEmplado.Text = nuevaRenta.idEmpleado.ToString();
+                                if (int.TryParse(nuevaRenta.idEmpleado.ToString(), out int idEmp))
+                                {
+                                    ListItem iemp;
+                                    List<EMPLEADO> EmpLista = dcConsulta.GetTable<EMPLEADO>().ToList();
+                                    if (EmpLista.Count > 0)
+                                    {
+                                        foreach (var r in EmpLista)
+                                        {
+                                            iemp = new ListItem(r.strNombre.ToString() + " " + r.strAPaterno, r.Id.ToString());
+                                            ddlEmpleado.Items.Add(iemp);
+                                        }
+                                        ddlEmpleado.SelectedValue = idEmp.ToString();
+                                    }
+                                }
 
                                 ListItem i;
                                 List<COMPUTADORA> PCLista = dcConsulta.GetTable<COMPUTADORA>().ToList();
-                                foreach (var r in PCLista)
+                                if (PCLista.Count > 0)
                                 {
-                                    i = new ListItem(r.strNombre.ToString(), r.Id.ToString());
-                                    ddlEquipo.Items.Add(i);
+                                    foreach (var r in PCLista)
+                                    {
+                                        i = new ListItem(r.strNombre.ToString(), r.Id.ToString());
+                                        ddlEquipo.Items.Add(i);
+                                    }
+                                    ddlEquipo.SelectedIndex = nuevaRenta.idEquipo - 1;
                                 }
-                                ddlEquipo.SelectedIndex = nuevaRenta.idEquipo - 1;
+                                else
+                                {
+                                    this.lblMensaje.Visible = true;
+                                    this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                                    this.lblMensaje.Text = "Actualemnte no existen rentas activas";
+                                }
 
                                 this.txtSubtotal.Text = nuevaRenta.monSubtotal.ToString();
                                 this.txtIVA.Text = nuevaRenta.monIVA.ToString();
@@ -136,7 +171,7 @@ namespace UTTTCIBERCOM
                             this.txtFechaInicio.Enabled = true;
                             this.txtFechaFinal.Enabled = true;
                             this.txtTiempoTotal.Enabled = true;
-                            this.txtIdEmplado.Enabled = true;
+                            //this.txtIdEmplado.Enabled = true;
                             this.txtSubtotal.Enabled = true;
                             this.txtIVA.Enabled = true;
                             this.txtTotal.Enabled = true;
@@ -155,7 +190,7 @@ namespace UTTTCIBERCOM
                 {
                     COMPUTADORA pc = null;
                     if (int.TryParse(this.ddlEquipo.Text, out int idPCW))
-                         pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == idPCW && c.tempInicioRenta != null);
+                         pc = dcConsulta.GetTable<COMPUTADORA>().FirstOrDefault(c => c.Id == idPCW);
                     if (pc != null)
                     {
                         this.session.Parametros["idPC"] = pc.Id;
@@ -170,11 +205,22 @@ namespace UTTTCIBERCOM
                         this.ddlEquipo.AutoPostBack = true;
 
                         ListItem i;
-                        List<COMPUTADORA> PCLista = dcConsulta.GetTable<COMPUTADORA>().ToList();
-                        foreach (var r in PCLista)
+                        List<COMPUTADORA> PCLista = dcConsulta.GetTable<COMPUTADORA>().Where(c => c.tempInicioRenta != null).ToList();
+                        if (PCLista.Count > 0)
                         {
-                            i = new ListItem(r.strNombre.ToString(), r.Id.ToString());
-                            ddlEquipo.Items.Add(i);
+                            ddlEquipo.Items.Add(new ListItem("Seleccione el equipo rentado","0"));
+                            foreach (var r in PCLista)
+                            {
+                                i = new ListItem(r.strNombre.ToString(), r.Id.ToString());
+                                ddlEquipo.Items.Add(i);
+                            }
+                            ddlEquipo.DataBind();
+                        }
+                        else
+                        {
+                            this.lblMensaje.Visible = true;
+                            this.lblMensaje.ForeColor = System.Drawing.Color.Red;
+                            this.lblMensaje.Text = "Actualmente no existen rentas activas";
                         }
                     }
                 }
@@ -462,7 +508,7 @@ namespace UTTTCIBERCOM
                 res = DateTime.TryParse(this.txtFechaInicio.Text, out DateTime newFechaInicio) ? res+1 : res-1;
                 res = DateTime.TryParse(this.txtFechaFinal.Text, out DateTime newFechaFinal) ? res+1 : res-1;
                 res = double.TryParse(this.txtTiempoTotal.Text, out double newTiempoTotal) ? res+1 : res-1;
-                res = int.TryParse(this.txtIdEmplado.Text, out int newIdEmpleado) ? res+1 : res-1;
+                res = int.TryParse(this.ddlEmpleado.SelectedValue, out int newIdEmpleado) ? res+1 : res-1;
                 res = int.TryParse(this.ddlEquipo.Text, out int newIdEquipo) ? res+1 : res-1;
                 res = decimal.TryParse(this.txtSubtotal.Text, out decimal newMonSubtotal) ? res+1 : res-1;
                 res = decimal.TryParse(this.txtIVA.Text, out decimal newMonIVA) ? res+1 : res-1;

@@ -197,6 +197,7 @@ namespace UTTTCIBERCOM
 
                 List<RENTA> listaRentas =
                     dcConsulta.GetTable<RENTA>().ToList();
+
                 e.Result = listaRentas;
             }
             catch (Exception _e)
