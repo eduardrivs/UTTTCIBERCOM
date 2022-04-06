@@ -105,12 +105,12 @@ namespace UTTTCIBERCOM
                         this.txtNombre.Text = emp.strNombre.ToString();
                         this.txtAPaterno.Text = emp.strAPaterno.ToString();
                         this.txtAMaterno.Text = emp.strAMaterno.ToString();
-                        if (DateTime.TryParse(emp.dteFechaNacimiento.ToString(), out DateTime fechaNacimiento))
+                        if (DateTime.TryParse(emp.dteFechaNacimiento.ToString(), CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime fechaNacimiento))
                             this.txtFechaNacimiento.Text = fechaNacimiento.ToString("dd-MM-yyyy HH:mm:ss");
                         this.txtEdad.Text = emp.intEdad.ToString();
                         this.txtCURP.Text = emp.strCURP.ToString();
                         this.txtRFC.Text = emp.strRFC.ToString();
-                        if (DateTime.TryParse(emp.dteFechaIngreso.ToString(), out DateTime fechaIngreso))
+                        if (DateTime.TryParse(emp.dteFechaIngreso.ToString(), CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime fechaIngreso))
                             this.txtFechaIngreso.Text = fechaIngreso.ToString("dd-MM-yyyy HH:mm:ss");
                         this.ddlRol.SelectedValue = emp.idRol.ToString();
                         //this.txtRol.Text = emp.idRol.ToString();
