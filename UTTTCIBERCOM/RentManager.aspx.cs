@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Linq;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -61,7 +62,7 @@ namespace UTTTCIBERCOM
                     {
                         if (this.session.Parametros["idRenta"] == null)
                         {
-                            if (DateTime.TryParse(pc.tempInicioRenta.ToString(), out DateTime fechInicio))
+                            if (DateTime.TryParse(pc.tempInicioRenta.ToString(), CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime fechInicio))
                                 this.txtFechaInicio.Text = fechInicio.ToString("dd-MM-yyyy HH:mm:ss");
                             nuevaRenta.dteFechaInicio = pc.tempInicioRenta;
                             this.txtFechaFinal.Text = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
@@ -509,8 +510,8 @@ namespace UTTTCIBERCOM
                 DataContext dcConsulta = new DcGeneralDataContext();
                 RENTA updateRenta = dcConsulta.GetTable<RENTA>().FirstOrDefault(c => c.Id == int.Parse(this.session.Parametros["idRenta"].ToString()));
 
-                res = DateTime.TryParse(this.txtFechaInicio.Text, out DateTime newFechaInicio) ? res+1 : res-1;
-                res = DateTime.TryParse(this.txtFechaFinal.Text, out DateTime newFechaFinal) ? res+1 : res-1;
+                res = DateTime.TryParse(this.txtFechaInicio.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaInicio) ? res+1 : res-1;
+                res = DateTime.TryParse(this.txtFechaFinal.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime newFechaFinal) ? res+1 : res-1;
                 res = double.TryParse(this.txtTiempoTotal.Text, out double newTiempoTotal) ? res+1 : res-1;
                 res = int.TryParse(this.ddlEmpleado.SelectedValue, out int newIdEmpleado) ? res+1 : res-1;
                 res = int.TryParse(this.ddlEquipo.Text, out int newIdEquipo) ? res+1 : res-1;

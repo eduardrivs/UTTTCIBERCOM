@@ -89,8 +89,8 @@ namespace UTTTCIBERCOM
                         this.txtCPU.Text = pc.strCPU.ToString();
                         this.txtRAM.Text = pc.strRAM.ToString();
                         this.txtGPU.Text = pc.strGPU.ToString();
-                        if (DateTime.TryParse(pc.dteFechaAlta.ToString(), out DateTime fechaTemp))
-                            this.txtFechaAlta.Text = fechaTemp.ToString("dd-MM-yyyy HH:mm:ss");
+                        if (DateTime.TryParse(pc.tempInicioRenta.ToString(), out DateTime fechaTemp))
+                            this.txtTempRenta.Text = fechaTemp.ToString("dd-MM-yyyy HH:mm:ss");
                     }
                 }
             }
@@ -330,7 +330,6 @@ namespace UTTTCIBERCOM
                                 this.session.Parametros["idPC"] = null;
                                 this.session.Parametros["idRenta"] = null;
                                 Session["SessionManager"] = this.session;
-                                this.Response.Redirect(this.session.Pantalla, false);
 
                                 this.ClientScript.RegisterClientScriptBlock(this.GetType(), "clientscript", "alert('Computadora actualizada correctamente'); parent.location.href='/PCPrincipal.aspx'", true);
                             }
@@ -387,9 +386,12 @@ namespace UTTTCIBERCOM
                 if (String.IsNullOrEmpty(txtTempRenta.Text))
                     res++;
                 else
-                    res = DateTime.TryParse(this.txtTempRenta.Text, out newTempRenta) ? res + 1 : 145;
+                    res = DateTime.TryParse(this.txtTempRenta.Text, CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out newTempRenta) ? res + 1 : 145;
 
-                if (res == 4)
+                res = (newDteAlta <= DateTime.Now)? res+1 : 155;
+                res = (newTempRenta < DateTime.Now)? res+1 : 165;
+
+                if (res == 6)
                 {
                     updatePC.strNombre = this.txtNombre.Text;
                     updatePC.strDescripcion = this.txtDescripcion.Text;
@@ -424,6 +426,10 @@ namespace UTTTCIBERCOM
                         this.lblMensaje.Text = "La tarifa no es correcta";
                     else if (res > 140 && res < 150)
                         this.lblMensaje.Text = "La renta actual no es correcta";
+                    else if (res > 150 && res < 160)
+                        this.lblMensaje.Text = "La fecha de alta no puede ser mayor al dia de hoy";
+                    else if (res > 160 && res < 170)
+                        this.lblMensaje.Text = "La renta actual no puede ser mayor a la fecha y hora actuales";
                     else
                         this.lblMensaje.Text = "Error al procesar los datos llenados";
 

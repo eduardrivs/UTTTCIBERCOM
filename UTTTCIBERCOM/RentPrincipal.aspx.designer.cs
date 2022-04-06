@@ -60,13 +60,13 @@ namespace UTTTCIBERCOM.app
         protected global::System.Web.UI.WebControls.Label lblInstrucciones;
 
         /// <summary>
-        /// Control ListView1.
+        /// Control lstViewComputadoras2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ListView1;
+        protected global::System.Web.UI.WebControls.ListView lstViewComputadoras2;
 
         /// <summary>
         /// Control txtPCUsando2.

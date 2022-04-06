@@ -158,7 +158,7 @@
             <!-- Para dispositivo pequeño -->
             <div class="ps-3 d-block d-lg-none" style="width: 100%;">
                 <div class="" style="width: 100%">
-                    <asp:ListView ID="ListView1" runat="server" DataSourceID="DataSourceComputadora" GroupItemCount="4">
+                    <asp:ListView ID="lstViewComputadoras2" runat="server" DataSourceID="DataSourceComputadora" GroupItemCount="4" OnItemCommand="dgvComputadora_RowCommand">
                         <ItemTemplate>
                             <td runat="server">
                                 <%--<asp:ImageButton runat="server" ID="imgEliminar" Width="50%" CommandName="Eliminar" CommandArgument='<%# Bind("id") %>' ImageUrl="~/content/images/PCOff.png" OnClientClick="javascript:return confirm('¿Está seguro de querer eliminar el registro seleccionado?', 'Mensaje de sistema')" />--%>
