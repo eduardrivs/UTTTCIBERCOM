@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div class="mt-2 pe-5 text-end">
-                    <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2"/>
+                    <asp:Label ID="lblMensaje" Text="Hola :3" runat="server" Visible="false" CssClass="mx-2"/>
                     <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnRentPrincipal_Click" />
                     <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnFinalRenta_Click" Enabled="false"/>
                 </div>
