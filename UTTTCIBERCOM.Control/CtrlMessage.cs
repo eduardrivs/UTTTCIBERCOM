@@ -34,6 +34,17 @@ namespace UTTTCIBERCOM.Control
 
         }
 
+        public static bool showInfo(this System.Web.UI.Page _page, String _message)
+        {
+            _page.ClientScript.RegisterStartupScript(_page.GetType(),
+                   Guid.NewGuid().ToString(),
+                   "alert( '" + _message + "');", true);
+
+            return true;
+            //_page.ClientScript.RegisterClientScriptBlock(_page.GetType(), "ClientScript", "<script type='text/javascript'> $(function(){ $('#dlgResultado').dialog({ modal: true, resizable: false, autoOpen: true, draggable: false, open: function(type, data){$(this).parent().appendTo('form')} }); }); </script>");
+
+        }
+
         public static void showMessageException(this System.Web.UI.Page _page, String _message)
         {
             String mensaje = "Error de tipo " + _message + ". Ponerse en contacto con su administrador de sistema";

@@ -96,7 +96,7 @@
                             <label for="txtDescripcion">Descripcion:</label>
                             <asp:RequiredFieldValidator ID="rvfDescripcion" runat="server" class="text-danger me-5" ControlToValidate="txtDescripcion" ErrorMessage="&quot;La descripcion es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
                         </div>
-                        <asp:TextBox ID="txtDescripcion" runat="server" Width="90%" Height="100px" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50"></asp:TextBox>
+                        <asp:TextBox ID="txtDescripcion" runat="server" Width="90%" Height="100px" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" MaxLength="50" TextMode="MultiLine"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div class="d-flex justify-content-between">

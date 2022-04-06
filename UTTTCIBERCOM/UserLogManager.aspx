@@ -83,6 +83,9 @@
             <!-- Cuerpo -->
             <div class="bodySize ps-5 ms-3 ms-lg-0 row d-flex">
                 <asp:Label ID="lblAction" Text="Agregar usuario nuevo" runat="server" Font-Size="200%" />
+                <div class="my-2">
+                    <asp:Label ID="lblInstruccion" Text="Seleccione un empleado para asignar o editar el usuario" runat="server" />
+                </div>
                 <div class="col-12 col-lg-6">
                     <div class="my-3">
                         <div>
@@ -104,10 +107,11 @@
                     </div>
                     <div class="my-3">
                         <div class="d-flex justify-content-between">
-                            <label for="txtIdEmp">ID Empleado:</label>
-                            <asp:RequiredFieldValidator ID="rvftxtIdEmp" runat="server" class="text-danger me-5" ControlToValidate="txtIdEmp" ErrorMessage="&quot;El Id empleado es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                            <label for="ddlEmp">ID Empleado:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtIdEmp" runat="server" class="text-danger me-5" ControlToValidate="ddlEmp" ErrorMessage="&quot;El Id empleado es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
                         </div>
-                        <asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" AutoPostBack="true"></asp:TextBox>
+                        <%--<asp:TextBox ID="txtIdEmp" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaNumeros(event);" AutoPostBack="true"></asp:TextBox>--%>
+                        <asp:DropDownList ID="ddlEmp" class="btn btn-secondary dropdown-toggle me-2" runat="server" AutoPostBack="true"></asp:DropDownList>
                     </div>
                     <div class="my-3">
                         <asp:CheckBox ID="chbxActivo" runat="server" Text=" Activo" />
@@ -123,22 +127,22 @@
                     </div>
                     <div class="my-3">
                         <div class="d-flex justify-content-between">
-                            <label for="txtUsername">Username:</label>
-                            <asp:RequiredFieldValidator ID="rvftxtUsername" runat="server" class="text-danger me-5" ControlToValidate="txtUsername" ErrorMessage="&quot;El nombre de usuario es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                            <label for="txtUsername">Nombre usuario:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtUsername" runat="server" class="text-danger me-5" ControlToValidate="txtUsername" ErrorMessage="&quot;El nombre es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
                         </div>
                         <asp:TextBox ID="txtUsername" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericos(event);"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div class="d-flex justify-content-between">
-                            <label for="txtPassword">Password:</label>
-                            <asp:RequiredFieldValidator ID="rvftxtPassword" runat="server" class="text-danger me-5" ControlToValidate="txtPassword" ErrorMessage="&quot;La contraseña es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                            <label for="txtPassword">Contraseña:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtPassword" Enabled="false" runat="server" class="text-danger me-5" ControlToValidate="txtPassword" ErrorMessage="&quot;La contraseña es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
                         </div>
                         <asp:TextBox ID="txtPassword" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" TextMode="Password"></asp:TextBox>
                     </div>
                     <div class="my-3">
                         <div class="d-flex justify-content-between">
-                            <label for="txtPassword2">Password:</label>
-                            <asp:RequiredFieldValidator ID="rvftxtPassword2" runat="server" class="text-danger me-5" ControlToValidate="txtPassword2" ErrorMessage="&quot;La contraseña es obligatorio&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
+                            <label for="txtPassword2">Repita su contraseña:</label>
+                            <asp:RequiredFieldValidator ID="rvftxtPassword2" Enabled="false" runat="server" class="text-danger me-5" ControlToValidate="txtPassword2" ErrorMessage="&quot;La contraseña es obligatoria&quot;" ValidationGroup="gvSave"></asp:RequiredFieldValidator>
                         </div>
                         <asp:TextBox ID="txtPassword2" runat="server" Width="90%" ViewStateMode="Disabled" onkeypress="return validaAlfanumericosGrande(event);" TextMode="Password"></asp:TextBox>
                     </div>
@@ -150,7 +154,7 @@
                 </div>
                 <div class="mt-2 pe-5 text-end">
                     <asp:Label ID="lblMensaje" Text="text" runat="server" Visible="false" CssClass="mx-2" />
-                    <asp:Button ID="btnDelete" Text="Eliminar" runat="server" class="btnForm mx-1" OnClick="btnDelete_Click" Enabled="false" />
+                    <asp:Button ID="btnDelete" Text="Eliminar usuario existente" runat="server" class="btnForm mx-1 me-5" OnClick="btnDelete_Click" Enabled="false" />
                     <asp:Button Text="Regresar" runat="server" class="btnForm mx-1" OnClick="btnUserPrincipal_Click" />
                     <asp:Button ID="btnFin" Text="Finalizar" runat="server" class="btnFormAct mx-1" OnClick="btnSave_Click" />
                 </div>
