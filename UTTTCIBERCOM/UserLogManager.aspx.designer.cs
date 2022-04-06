@@ -96,6 +96,15 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.Label lblAction;
 
         /// <summary>
+        /// Control lblInstruccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInstruccion;
+
+        /// <summary>
         /// Control txtNombre.
         /// </summary>
         /// <remarks>
@@ -132,13 +141,13 @@ namespace UTTTCIBERCOM
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rvftxtIdEmp;
 
         /// <summary>
-        /// Control txtIdEmp.
+        /// Control ddlEmp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdEmp;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEmp;
 
         /// <summary>
         /// Control chbxActivo.
