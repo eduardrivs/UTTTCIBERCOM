@@ -526,11 +526,11 @@ namespace UTTTCIBERCOM
                     updateEmp.strNombre = this.txtNombre.Text;
                     updateEmp.strAPaterno = this.txtAPaterno.Text;
                     updateEmp.strAMaterno = this.txtAMaterno.Text;
-                    updateEmp.dteFechaNacimiento = newFechaNacimiento;
+                    updateEmp.dteFechaNacimiento = DateTime.Parse(newFechaNacimiento.ToString("MM-dd-yyyy HH:mm:ss"));
                     updateEmp.intEdad = newEdad;
                     updateEmp.strCURP = this.txtCURP.Text;
                     updateEmp.strRFC = this.txtRFC.Text;
-                    updateEmp.dteFechaIngreso = newFechaIngreso;
+                    updateEmp.dteFechaIngreso = DateTime.Parse(newFechaIngreso.ToString("MM-dd-yyyy HH:mm:ss"));
                     updateEmp.idRol = newIdRol;
                     updateEmp.idArea = newIdArea;
                     updateEmp.boolActivo = this.chbxActivo.Checked;
@@ -594,11 +594,11 @@ namespace UTTTCIBERCOM
                     newEmp.strNombre = this.txtNombre.Text;
                     newEmp.strAPaterno = this.txtAPaterno.Text;
                     newEmp.strAMaterno = this.txtAMaterno.Text;
-                    newEmp.dteFechaNacimiento = newFechaNacimiento;
+                    newEmp.dteFechaNacimiento = DateTime.Parse(newFechaNacimiento.ToString("MM-dd-yyyy HH:mm:ss")); ;
                     newEmp.intEdad = newEdad;
                     newEmp.strCURP = this.txtCURP.Text;
                     newEmp.strRFC = this.txtRFC.Text;
-                    newEmp.dteFechaIngreso = newFechaIngreso;
+                    newEmp.dteFechaIngreso = DateTime.Parse(newFechaIngreso.ToString("MM-dd-yyyy HH:mm:ss"));
                     newEmp.idRol = newIdRol;
                     newEmp.idArea = newIdArea;
                     newEmp.boolActivo = this.chbxActivo.Checked;

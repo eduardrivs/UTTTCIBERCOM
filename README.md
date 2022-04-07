@@ -6,11 +6,11 @@ Este proyecto es el proyecto final para la materia de Desarrollo de Software Pro
 
 ## Version actual
 
-*Version 1.1.2*
+*Version 1.1.2.1*
 Version completa para la materia, con correcciones de accesibilidad.
 
 ## Ultimas correcciones:
-* Arreglo de problemas con el manejo de fechas del servidor
+* Arreglo de problemas con el manejo de fechas del servidor (fixed)
 * Arreglo de invulnerabilidad a usuario administrador
 * Arreglo de versiones
 
