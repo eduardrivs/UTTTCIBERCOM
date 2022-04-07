@@ -78,7 +78,7 @@ namespace UTTTCIBERCOM
                     {
                         this.txtNombre.Text = pc.strNombre.ToString();
                         this.txtDescripcion.Text = pc.strDescripcion.ToString();
-                        if(DateTime.TryParse(pc.dteFechaAlta.ToString(), out DateTime fechaAlta))
+                        if(DateTime.TryParse(pc.dteFechaAlta.ToString(), CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime fechaAlta))
                             this.txtFechaAlta.Text = fechaAlta.ToString("dd-MM-yyyy HH:mm:ss");
                         this.txtArea.Text = pc.idArea.ToString();
                         this.txtTarifa.Text = pc.monTarifa.ToString();
@@ -89,7 +89,7 @@ namespace UTTTCIBERCOM
                         this.txtCPU.Text = pc.strCPU.ToString();
                         this.txtRAM.Text = pc.strRAM.ToString();
                         this.txtGPU.Text = pc.strGPU.ToString();
-                        if (DateTime.TryParse(pc.tempInicioRenta.ToString(), out DateTime fechaTemp))
+                        if (DateTime.TryParse(pc.tempInicioRenta.ToString(), CultureInfo.CreateSpecificCulture("es-MX"), DateTimeStyles.None, out DateTime fechaTemp))
                             this.txtTempRenta.Text = fechaTemp.ToString("dd-MM-yyyy HH:mm:ss");
                     }
                 }
@@ -395,7 +395,7 @@ namespace UTTTCIBERCOM
                 {
                     updatePC.strNombre = this.txtNombre.Text;
                     updatePC.strDescripcion = this.txtDescripcion.Text;
-                    updatePC.dteFechaAlta = newDteAlta;
+                    updatePC.dteFechaAlta = DateTime.Parse(newDteAlta.ToString("MM-dd-yyyy HH:mm:ss"));
                     updatePC.idArea = newIdArea;
                     updatePC.monTarifa = newTarifa;
                     updatePC.strTeclado = this.txtTeclado.Text;
@@ -470,7 +470,7 @@ namespace UTTTCIBERCOM
                 {
                     newPC.strNombre = this.txtNombre.Text;
                     newPC.strDescripcion = this.txtDescripcion.Text;
-                    newPC.dteFechaAlta = newDteAlta;
+                    newPC.dteFechaAlta = DateTime.Parse(newDteAlta.ToString("MM-dd-yyyy HH:mm:ss"));
                     newPC.idArea = newIdArea;
                     newPC.monTarifa = newTarifa;
                     newPC.strTeclado = this.txtTeclado.Text;
@@ -483,7 +483,7 @@ namespace UTTTCIBERCOM
                     if (String.IsNullOrEmpty(this.txtTempRenta.Text))
                         newPC.tempInicioRenta = null;
                     else
-                        newPC.tempInicioRenta = newTempRenta;
+                        newPC.tempInicioRenta = DateTime.Parse(newTempRenta.ToString("MM-dd-yyyy HH:mm:ss"));
 
                     dcConsulta.GetTable<COMPUTADORA>().InsertOnSubmit(newPC);
                     dcConsulta.SubmitChanges();
